@@ -1,0 +1,18 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: intro
+parts: 
+  - caption: Introduzione a Python
+    chapters:
+      - file: intro/variabili
+      - file: intro/array
+      - file: intro/condizione
+      - file: intro/cicli
+  - caption: Ottimizzazione
+    chapters:
+      - file: ottimizzazione/intro
+  - caption: Approssimazione di dati
+    chapters:
+      - file: approssimazione/intro
