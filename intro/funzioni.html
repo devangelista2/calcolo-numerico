@@ -386,6 +386,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#input-posizionali-e-non-posizionali">Input posizionali e non posizionali</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#la-documentazione-e-la-funzione-help">La documentazione e la funzione <code class="docutils literal notranslate"><span class="pre">help</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#funzioni-senza-output">Funzioni senza output</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#funzioni-multi-output">Funzioni multi-output</a></li>
@@ -454,6 +455,112 @@ document.write(`
 </div>
 </div>
 </div>
+<section id="input-posizionali-e-non-posizionali">
+<h2>Input posizionali e non posizionali<a class="headerlink" href="#input-posizionali-e-non-posizionali" title="Link to this heading">#</a></h2>
+<p>Consideriamo una funzione <code class="docutils literal notranslate"><span class="pre">calcola_differenza(n1,</span> <span class="pre">n2)</span></code>, che calcola la differenza tra <code class="docutils literal notranslate"><span class="pre">n1</span></code> e <code class="docutils literal notranslate"><span class="pre">n2</span></code>. Andiamo a definire due numeri <code class="docutils literal notranslate"><span class="pre">a</span></code> e <code class="docutils literal notranslate"><span class="pre">b</span></code>, e andiamo ad analizzare in che modo questi valori vengono passati alla funzione.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">calcola_differenza</span><span class="p">(</span><span class="n">n1</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">n2</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Dati in input due numeri n1 ed n2, restituisce la differenza tra n1 e n2.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    </span>
+<span class="sd">    n1 (int): Primo numero</span>
+<span class="sd">    n2 (int): Secondo numero</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    (int): Risultato di n1 - n2</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">risultato</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">n1</span> <span class="o">-</span> <span class="n">n2</span> <span class="c1"># Computazione</span>
+    <span class="k">return</span> <span class="n">risultato</span> <span class="c1"># Output</span>
+
+<span class="c1"># Definiamo due numeri</span>
+<span class="n">a</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">b</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">differenza</span> <span class="o">=</span> <span class="n">calcola_differenza</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s2"> = </span><span class="si">{</span><span class="n">differenza</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5 - 2 = 3.
+</pre></div>
+</div>
+</div>
+</div>
+<p>Notiamo come in questo caso, essendo la funzione stata chiamata sugli input <code class="docutils literal notranslate"><span class="pre">a</span></code> e <code class="docutils literal notranslate"><span class="pre">b</span></code> in questo ordine, ha associato <code class="docutils literal notranslate"><span class="pre">n1</span></code> (primo parametro di input) ad <code class="docutils literal notranslate"><span class="pre">a</span></code>, mentre <code class="docutils literal notranslate"><span class="pre">n2</span></code> (secondo parametro di input) a <code class="docutils literal notranslate"><span class="pre">b</span></code>. Questo comportamento avviene di default quando richiamiamo una funzione. I valori <code class="docutils literal notranslate"><span class="pre">a</span></code> e <code class="docutils literal notranslate"><span class="pre">b</span></code>, in questo caso, sono passati come valori <strong>posizionali</strong>, poiché inseriti nello stesso ordine in cui vengono chiamati dalla funzione.</p>
+<p>E’ possibile anche passare parametri <strong>non posizionali</strong> ad una funzione. Per farlo, è sufficiente dichiarare esplicitamente quale variabile associare al valore di input <code class="docutils literal notranslate"><span class="pre">n1</span></code>, e quale al valore di input <code class="docutils literal notranslate"><span class="pre">n2</span></code>. In questo modo, è possibile anche scambiare l’ordine in cui vengono inseriti i valori, senza variare il risultato.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Calcoliamo la differenza con input non posizionali</span>
+<span class="n">differenza_2</span> <span class="o">=</span> <span class="n">calcola_differenza</span><span class="p">(</span><span class="n">n2</span><span class="o">=</span><span class="n">a</span><span class="p">,</span> <span class="n">n1</span><span class="o">=</span><span class="n">b</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">differenza_2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-3
+</pre></div>
+</div>
+</div>
+</div>
+<p>Come si vede, sebbene le variabili <code class="docutils literal notranslate"><span class="pre">a</span></code> e <code class="docutils literal notranslate"><span class="pre">b</span></code> siano state date in input nello stesso ordine di prima, specificando la corrispondenza delle variabili, la funzione ha associato <code class="docutils literal notranslate"><span class="pre">n1</span> <span class="pre">=</span> <span class="pre">b</span></code> e <code class="docutils literal notranslate"><span class="pre">n2</span> <span class="pre">=</span> <span class="pre">a</span></code>.</p>
+<p>### Valori di default
+L’inserimento di input non posizionali diventa particolarmente utile quando si considerano funzioni con tanti valori di input. In questo caso, è spesso possibile assegnare dei valori di default ad alcune variabili di input, che assumeranno tale valore se non esplicitamente dichiarato.</p>
+<p>Consideriamo ad esempio una funzione <code class="docutils literal notranslate"><span class="pre">calcola_operazione(n1,</span> <span class="pre">n2,</span> <span class="pre">op)</span></code> che, inserita un’operazione sottoforma di stringa per la variabile <code class="docutils literal notranslate"><span class="pre">op</span></code>, applica l’operazione corrispondente tra i numeri <code class="docutils literal notranslate"><span class="pre">a</span></code> e <code class="docutils literal notranslate"><span class="pre">b</span></code>. Supponaiamo di volere associare da <code class="docutils literal notranslate"><span class="pre">op</span></code> il valore <code class="docutils literal notranslate"><span class="pre">&quot;somma&quot;</span></code>, di default.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">calcola_operazione</span><span class="p">(</span><span class="n">n1</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">n2</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">op</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;somma&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Dati in input due numeri n1 ed n2 e un&#39;operazione, restituisce il risultato</span>
+<span class="sd">    dell&#39;operazione applicata ad n1 e n2.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    </span>
+<span class="sd">    n1 (int): Primo numero</span>
+<span class="sd">    n2 (int): Secondo numero</span>
+<span class="sd">    op (str): Operazione</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    (int): Risultato di op(n1, n2)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;somma&quot;</span><span class="p">:</span>
+        <span class="n">risultato</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">n1</span> <span class="o">+</span> <span class="n">n2</span>
+    <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;differenza&quot;</span><span class="p">:</span>
+        <span class="n">risultato</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">n1</span> <span class="o">-</span> <span class="n">n2</span>
+    <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;prodotto&quot;</span><span class="p">:</span>
+        <span class="n">risultato</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">n1</span> <span class="o">*</span> <span class="n">n2</span>
+    <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;rapporto&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">n2</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">risultato</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">n1</span> <span class="o">/</span> <span class="n">n2</span>
+        <span class="k">else</span><span class="p">:</span>  
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Errore: divisione per 0.&quot;</span><span class="p">)</span>
+            <span class="n">risultato</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Operazione </span><span class="si">{</span><span class="n">op</span><span class="si">}</span><span class="s2"> non definita.&quot;</span><span class="p">)</span>
+        <span class="n">risultato</span> <span class="o">=</span> <span class="kc">None</span>
+    
+    <span class="k">return</span> <span class="n">risultato</span> <span class="c1"># Output</span>
+
+<span class="c1"># Definiamo due numeri</span>
+<span class="n">a</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">b</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">somma</span> <span class="o">=</span> <span class="n">calcola_operazione</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">op</span><span class="o">=</span><span class="s2">&quot;somma&quot;</span><span class="p">)</span>
+<span class="n">differenza</span> <span class="o">=</span> <span class="n">calcola_operazione</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">op</span><span class="o">=</span><span class="s2">&quot;differenza&quot;</span><span class="p">)</span>
+<span class="n">prodotto</span> <span class="o">=</span> <span class="n">calcola_operazione</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">op</span><span class="o">=</span><span class="s2">&quot;prodotto&quot;</span><span class="p">)</span>
+<span class="n">rapporto</span> <span class="o">=</span> <span class="n">calcola_operazione</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">op</span><span class="o">=</span><span class="s2">&quot;rapporto&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">somma</span><span class="p">,</span> <span class="n">differenza</span><span class="p">,</span> <span class="n">prodotto</span><span class="p">,</span> <span class="n">rapporto</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4 2 3 3.0
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 <section id="la-documentazione-e-la-funzione-help">
 <h2>La documentazione e la funzione <code class="docutils literal notranslate"><span class="pre">help</span></code><a class="headerlink" href="#la-documentazione-e-la-funzione-help" title="Link to this heading">#</a></h2>
 <p>Come detto, lo scopo della documentazione è quello di permettere ad utenti terzi di utilizzare la funzione senza necessariamente conoscerne l’implementazione. Tutte le funzioni di Python presentano una documentazione sul loro utilizzo.</p>
@@ -615,7 +722,7 @@ None
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;function quadrato at 0x105bb3740&gt;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;function quadrato at 0x1081800e0&gt;
 9
 </pre></div>
 </div>
@@ -700,6 +807,22 @@ None
 </section>
 <section id="funzioni-lambda">
 <h2>Funzioni <code class="docutils literal notranslate"><span class="pre">lambda</span></code><a class="headerlink" href="#funzioni-lambda" title="Link to this heading">#</a></h2>
+<p>In alcune situazioni si vuole definire una funzione molto semplice, che possa essere scritta su una sola riga, in modo da semplificare la lettura del codice. Per farlo, in Python è possibile utilizzare le funzioni <code class="docutils literal notranslate"><span class="pre">lambda</span></code>. La sintassi è molto semplice:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Definiamo una funzione che, preso in input un valore x, ritorna x**2</span>
+<span class="n">quadrato</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">quadrato</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>9
+</pre></div>
+</div>
+</div>
+</div>
+<p>Infatti, è sufficiente richiamare il comando <code class="docutils literal notranslate"><span class="pre">lambda</span></code>, seguito dai valori di input, separati da una virgola, i <code class="docutils literal notranslate"><span class="pre">:</span></code>, e  infine l’operazione da eseguire. Assegnando questa scrittura ad una qualunque variabile, questa viene interpretata come una funzione.</p>
 </section>
 </section>
 
@@ -767,6 +890,7 @@ None
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#input-posizionali-e-non-posizionali">Input posizionali e non posizionali</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#la-documentazione-e-la-funzione-help">La documentazione e la funzione <code class="docutils literal notranslate"><span class="pre">help</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#funzioni-senza-output">Funzioni senza output</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#funzioni-multi-output">Funzioni multi-output</a></li>

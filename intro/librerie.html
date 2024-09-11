@@ -61,7 +61,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Python per l’algebra lineare: numpy" href="numpy.html" />
-    <link rel="prev" title="Funzioni e librerie" href="funzioni.html" />
+    <link rel="prev" title="Funzioni" href="funzioni.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -179,7 +179,7 @@
 <li class="toctree-l1"><a class="reference internal" href="array.html">Array: Liste e Tuple</a></li>
 <li class="toctree-l1"><a class="reference internal" href="condizione.html">La condizione <code class="docutils literal notranslate"><span class="pre">if</span></code> e la logica booleana</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cicli.html">I cicli <code class="docutils literal notranslate"><span class="pre">for</span></code> e <code class="docutils literal notranslate"><span class="pre">while</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="funzioni.html">Funzioni e librerie</a></li>
+<li class="toctree-l1"><a class="reference internal" href="funzioni.html">Funzioni</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Incrementare le funzionalità di base tramite le librerie</a></li>
 <li class="toctree-l1"><a class="reference internal" href="numpy.html">Python per l’algebra lineare: <code class="docutils literal notranslate"><span class="pre">numpy</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="matplotlib.html">Visualizzazione con <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code></a></li>
@@ -363,7 +363,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -379,6 +381,17 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pacchetti-built-in">Pacchetti <code class="docutils literal notranslate"><span class="pre">built-in</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importare-una-libreria-con-renaming">Importare una libreria con renaming</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#moduli-definiti-dall-utente">Moduli definiti dall’utente</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pip-e-conda"><code class="docutils literal notranslate"><span class="pre">pip</span></code> e <code class="docutils literal notranslate"><span class="pre">conda</span></code></a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -390,6 +403,182 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="incrementare-le-funzionalita-di-base-tramite-le-librerie">
 <h1>Incrementare le funzionalità di base tramite le librerie<a class="headerlink" href="#incrementare-le-funzionalita-di-base-tramite-le-librerie" title="Link to this heading">#</a></h1>
+<p>Tutti i programmi esistenti, dai videogiochi, ai modelli di intelligenza artificiali, possono essere implementati utilizzando le funzionalità viste fino ad ora. Ma per farlo, oltre ad una conoscenza dettagliata di tutti gli aspetti che compongono tali software, sarebbe necessario scrivere un programma gigantesco, composto da milioni di righe di codice.</p>
+<p>Per evitare che chiunque voglia intraprendere un progetto complesso in Python debba riscriversi da zero tutte le funzioni di base, negli anni sono stati implementati una serie di <strong>pacchetti</strong> di funzioni, ciascuno contenente delle specifiche funzionalità. Quando ce ne fosse bisogno, è quindi possibile caricare in memoria tali pacchetti, così da avere a disposizione tutta una gamma di funzioni in grado di aiutarci a risolvere il nostro problema.</p>
+<section id="pacchetti-built-in">
+<h2>Pacchetti <code class="docutils literal notranslate"><span class="pre">built-in</span></code><a class="headerlink" href="#pacchetti-built-in" title="Link to this heading">#</a></h2>
+<p>La maggior parte dei pacchetti che implementano funzioni genericamente utili, sono <code class="docutils literal notranslate"><span class="pre">built-in</span></code>, ovvero possono essere richiamate direttamente da Python, senza dover scaricare nulla di extra.</p>
+<p>Per caricare in memoria una libreria <code class="docutils literal notranslate"><span class="pre">built-in</span></code>, basta semplicemente utilizzare il comando <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">NOME_LIBRERIA</span></code>. Per convenzione, il caricamento delle librerie viene sempre fatto come prima cosa, all’interno del proprio script di codice.</p>
+<p>Vediamo ad esempio le librerie <code class="docutils literal notranslate"><span class="pre">built-in</span></code> <code class="docutils literal notranslate"><span class="pre">random</span></code> e <code class="docutils literal notranslate"><span class="pre">math</span></code>, che implementano funzioni per lavorare con estrazioni casuali e tutte le funzioni matematiche di base, rispettivamente.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Importiamo le librerie random e math</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">math</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Per richiamare una funzione di libreria, è necessario indicare il nome della funzione, preceduto dal nome della libreria che lo contiene, separati da un <code class="docutils literal notranslate"><span class="pre">.</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Estriamo un numero casuale tra 0 e 1</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="c1"># La funzione random() del pacchetto random, </span>
+                    <span class="c1"># estrae un numero in (0, 1)</span>
+
+<span class="c1"># Calcoliamo y = e^x</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;e^</span><span class="si">{</span><span class="n">x</span><span class="si">:</span><span class="s2">0.3f</span><span class="si">}</span><span class="s2"> = </span><span class="si">{</span><span class="n">y</span><span class="si">:</span><span class="s2">0.3f</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>e^0.262 = 1.300.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="importare-una-libreria-con-renaming">
+<h2>Importare una libreria con renaming<a class="headerlink" href="#importare-una-libreria-con-renaming" title="Link to this heading">#</a></h2>
+<p>Quando all’interno di uno stesso codice è necessario utilizzare varie volte una stessa libreria, scrivere tutte le volte il nome della libreria prima delle funzioni può diventare inefficiente, specialmente se il nome della libreria è lungo.</p>
+<p>Per risolvere questo problema, Python introduce la possibilità di dare un nome personalizzato alla libreria importata, così da renderla più semplice da utilizzare nei riferimenti delle funzioni.</p>
+<p>Vediamo ad esempio come importare la libreria <code class="docutils literal notranslate"><span class="pre">random</span></code>, chiamandola con il nome personalizzato <code class="docutils literal notranslate"><span class="pre">rnd</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">random</span> <span class="k">as</span> <span class="nn">rnd</span>
+
+<span class="c1"># Genero un numero casuale</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">rnd</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9875969204172768
+</pre></div>
+</div>
+</div>
+</div>
+<p>Se invece abbiamo intenzione di utilizzare la libreria con molta frequenza, Python offre anche la possibilità di integrare le funzioni di libreria con il linguaggio Python base, in maniera da poterle utilizzare senza dover utilizzare alcun riferimento per utilizzarne le funzioni.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Se la libreria contiene una funzione che ha lo stesso nome di un’altra funzione di Python, questo procedimento andrà a sovrascrivere la funzione originale. Quindi, utilizzare questa funzione con cautela.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="c1"># Genero un numero casuale</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">random</span><span class="p">()</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">asin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.019882370075315355
+</pre></div>
+</div>
+</div>
+</div>
+<p>Un’altra funzionalità interessante utilizzabile quando si va ad importare una libreria in uno script Python, è la possibilità di importare non l’intera libreria, ma solo alcune funzioni specifiche in modo da ridurre il tempo richiesto per il caricamento della libreria stessa.</p>
+<p>Vediamo ad esempio come importare le funzioni seno, coseno e tangente dalla libreria <code class="docutils literal notranslate"><span class="pre">math</span></code>, senza importare l’intera libreria.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">sin</span><span class="p">,</span> <span class="n">cos</span><span class="p">,</span> <span class="n">tan</span>
+<span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="c1"># Genero un numero casuale</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">random</span><span class="p">()</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="c1"># Importata</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="moduli-definiti-dall-utente">
+<h2>Moduli definiti dall’utente<a class="headerlink" href="#moduli-definiti-dall-utente" title="Link to this heading">#</a></h2>
+<p>Chiaramente, è assolutamente possibile scrivere una propria <em>libreria</em>, ovvero una propria collezione di funzioni, che possono essere d’aiuto per sviluppare progetti più complessi. Anzi, ogni progetto che si rispetti implementa dei moduli personalizzati di funzioni che migliorano la lettura del codice, dislocando le funzionalità in più file, ciascuno contenente delle specifiche funzioni.</p>
+<p>Supponiamo ad esempio di scrivere un paio di funzioni di utilità per un programma di contabilità: una che prende in input un prezzo di EUR e lo converte in USD con un certo cambio (di default il cambio attuale di 1 EUR = 1.10 USD), l’altro che viceversa converte un prezzo in USD, in EUR.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">eur_to_usd</span><span class="p">(</span><span class="n">prezzo</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">tasso</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.10</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Preso in input il prezzo in EUR e il tasso di cambio, lo converte in USD </span>
+<span class="sd">    e ritorna tale valore.</span>
+
+<span class="sd">    Parameters:</span>
+
+<span class="sd">    prezzo (float): il prezzo in euro.</span>
+<span class="sd">    tasso (float): il tasso di cambio da EUR in USD.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    (float): il prezzo in dollari.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">prezzo</span> <span class="o">*</span> <span class="n">tasso</span>
+
+<span class="k">def</span> <span class="nf">usd_to_eur</span><span class="p">(</span><span class="n">prezzo</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">tasso</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.91</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Preso in input il prezzo in USD e il tasso di cambio, lo converte in EUR </span>
+<span class="sd">    e ritorna tale valore.</span>
+
+<span class="sd">    Parameters:</span>
+
+<span class="sd">    prezzo (float): il prezzo in dollari.</span>
+<span class="sd">    tasso (float): il tasso di cambio da USD in EUR.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    (float): il prezzo in euro.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">prezzo</span> <span class="o">*</span> <span class="n">tasso</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>E supponiamo di salvare il file con queste funzioni all’interno della cartella del progetto, chiamandolo <code class="docutils literal notranslate"><span class="pre">conversioni.py</span></code>.</p>
+<p>A questo punto, è possibile importare queste funzioni in un’altro script per poterle utilizzare in un qualunque programma, semplicemente facendo:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">conversioni</span>
+
+<span class="c1"># Prezzo in euro</span>
+<span class="n">prezzo_EUR</span> <span class="o">=</span> <span class="mi">550</span>
+<span class="n">prezzo_USD</span> <span class="o">=</span> <span class="n">conversioni</span><span class="o">.</span><span class="n">eur_to_usd</span><span class="p">(</span><span class="n">prezzo_EUR</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>o, se il file <code class="docutils literal notranslate"><span class="pre">conversioni.py</span></code> si trova all’interno di una cartella <code class="docutils literal notranslate"><span class="pre">utilita</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">utilita</span> <span class="kn">import</span> <span class="n">conversioni</span>
+
+<span class="c1"># Prezzo in euro</span>
+<span class="n">prezzo_EUR</span> <span class="o">=</span> <span class="mi">550</span>
+<span class="n">prezzo_USD</span> <span class="o">=</span> <span class="n">conversioni</span><span class="o">.</span><span class="n">eur_to_usd</span><span class="p">(</span><span class="n">prezzo_EUR</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="pip-e-conda">
+<h2><code class="docutils literal notranslate"><span class="pre">pip</span></code> e <code class="docutils literal notranslate"><span class="pre">conda</span></code><a class="headerlink" href="#pip-e-conda" title="Link to this heading">#</a></h2>
+<p>Quando si lavora con funzioni più specifiche o di uso meno comune, quasi sicuramente non sarà disponibile una libreria <code class="docutils literal notranslate"><span class="pre">built-in</span></code> che implementa tali funzionalità. In tal caso, è possibile attingere dalla quasi infinita lista di librerie disponibili online, pensate per svolgere pressoché qualuqune compito.</p>
+<p>Per scaricare ed installare sul proprio environment virtuale una libreria specifica, è possibile utilizzare uno dei due più comuni <code class="docutils literal notranslate"><span class="pre">package-manager</span></code> ad oggi: <code class="docutils literal notranslate"><span class="pre">pip</span></code> e <code class="docutils literal notranslate"><span class="pre">conda</span></code>. Il loro funzionamento è molto simile: in generale, su <code class="docutils literal notranslate"><span class="pre">pip</span></code> sono disponibili molte più librerie, ma spesso si vengono a generare dei conflitti (poiché <code class="docutils literal notranslate"><span class="pre">pip</span></code> non ha un controllo sulle incompatibilità tra versioni), mentre su <code class="docutils literal notranslate"><span class="pre">conda</span></code> sono disponibili meno librerie, ma si occupa lui di gestire la compatibilità tra le versioni delle librerie.</p>
+<p>In ogni caso, per installare una libreria con <code class="docutils literal notranslate"><span class="pre">pip</span></code>, posizionarsi sul virtual environment corretto con il comando:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">activate</span> <span class="o">&lt;</span><span class="n">nome_environment</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>E poi lanciare il comando:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">&lt;</span><span class="n">nome_libreria</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Similmente, per installare una libreria tramite <code class="docutils literal notranslate"><span class="pre">conda</span></code>, il comando in genere è:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="o">&lt;</span><span class="n">nome_libreria</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>tranne per alcune librerie, che hanno dei comandi particolari per essere installate. Fare riferimento alla pagina di installazione della libreria per questi specifici casi.</p>
+<p>Una volta installato una libreria, questa sarà disponibile nello stesso modo in cui lo sono le librerie built-in. Quindi, possono essere importate semplicemente con il comando:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="o">&lt;</span><span class="n">nome_libreria</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -428,7 +617,7 @@ document.write(`
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Funzioni e librerie</p>
+        <p class="prev-next-title">Funzioni</p>
       </div>
     </a>
     <a class="right-next"
@@ -446,6 +635,24 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pacchetti-built-in">Pacchetti <code class="docutils literal notranslate"><span class="pre">built-in</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importare-una-libreria-con-renaming">Importare una libreria con renaming</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#moduli-definiti-dall-utente">Moduli definiti dall’utente</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pip-e-conda"><code class="docutils literal notranslate"><span class="pre">pip</span></code> e <code class="docutils literal notranslate"><span class="pre">conda</span></code></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
