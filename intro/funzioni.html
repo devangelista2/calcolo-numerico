@@ -392,6 +392,8 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#funzioni-multi-output">Funzioni multi-output</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#funzioni-come-oggetti">Funzioni come oggetti</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#funzioni-lambda">Funzioni <code class="docutils literal notranslate"><span class="pre">lambda</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variabili-locali-vs-variabili-globali">Variabili locali vs variabili globali</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#approfondimento-wrappers">Approfondimento: Wrappers</a></li>
 </ul>
             </nav>
         </div>
@@ -722,7 +724,7 @@ None
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;function quadrato at 0x1081800e0&gt;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;function quadrato at 0x107a600e0&gt;
 9
 </pre></div>
 </div>
@@ -824,6 +826,104 @@ None
 </div>
 <p>Infatti, è sufficiente richiamare il comando <code class="docutils literal notranslate"><span class="pre">lambda</span></code>, seguito dai valori di input, separati da una virgola, i <code class="docutils literal notranslate"><span class="pre">:</span></code>, e  infine l’operazione da eseguire. Assegnando questa scrittura ad una qualunque variabile, questa viene interpretata come una funzione.</p>
 </section>
+<section id="variabili-locali-vs-variabili-globali">
+<h2>Variabili locali vs variabili globali<a class="headerlink" href="#variabili-locali-vs-variabili-globali" title="Link to this heading">#</a></h2>
+<p>Una caratteristica delle funzioni a cui è necessario prestare attenzione è la differenza tra le variabili locali (cioè definite <strong>all’interno della funzione</strong>) e le variabili globali (definite <strong>all’esterno della funzione</strong>).</p>
+<p>Infatti, è possibile accedere dall’interno della funzione a <strong>tutte</strong> le variabili definite all’esterno, come se fossero passate in input. Viceversa, non è possibile accedere dall’esterno della funzione alle variabili definite al suo interno, che verranno create al momento in cui la funzione viene richiamata, e poi eliminate subito dopo.</p>
+<p>Vediamo un esempio:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">saluti</span><span class="p">(</span><span class="n">cognome</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ciao, </span><span class="si">{</span><span class="n">nome</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">cognome</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">None</span>
+
+<span class="c1"># Definiamo una variabile globale &quot;nome&quot;</span>
+<span class="n">nome</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Davide&quot;</span>
+<span class="n">saluti</span><span class="p">(</span><span class="n">cognome</span><span class="o">=</span><span class="s2">&quot;Evangelista&quot;</span><span class="p">)</span>
+
+<span class="c1"># La variabile locale &quot;cognome&quot; non è più in memoria</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cognome</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Ciao, Davide Evangelista.
+</pre></div>
+</div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">15</span><span class="p">],</span> <span class="n">line</span> <span class="mi">10</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="n">saluti</span><span class="p">(</span><span class="n">cognome</span><span class="o">=</span><span class="s2">&quot;Evangelista&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="c1"># La variabile locale &quot;cognome&quot; non è più in memoria</span>
+<span class="ne">---&gt; </span><span class="mi">10</span> <span class="nb">print</span><span class="p">(</span><span class="n">cognome</span><span class="p">)</span>
+
+<span class="ne">NameError</span>: name &#39;cognome&#39; is not defined
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>E’ importante inoltre ricordare che, se una variabile locale è definita con lo stesso nome di una variabile locale, all’interno della funzione avrà valore solo la variabile locale, che andrà a sovrascrivere temporaneamente la corrispondente variabile locale.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">saluti</span><span class="p">(</span><span class="n">nome</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ciao, </span><span class="si">{</span><span class="n">nome</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">None</span>
+
+<span class="c1"># Definiamo una variabile globale &quot;nome&quot;</span>
+<span class="n">nome</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Davide&quot;</span>
+<span class="n">saluti</span><span class="p">(</span><span class="s2">&quot;Luca&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Ciao, Luca.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Modificare una variabile globale all’interno di una funzione, attraverso un’operazione che <strong>modifica l’oggetto senza riassegnarlo</strong> (come ad esempio il metodo <code class="docutils literal notranslate"><span class="pre">.append()</span></code> o <code class="docutils literal notranslate"><span class="pre">.insert()</span></code> per le liste), mantiene le modifiche anche all’esterno della funzione!</p>
+<p>Fare molta attenzione ad utilizzare operazioni che modificano la variabile all’interno delle funzioni!</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">fibonacci_step</span><span class="p">(</span><span class="n">valori</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Data una lista di valori, contenente una porzione della sequenza di Fibonacci, aggiunge il successivo elemento</span>
+<span class="sd">    della sequenza, in testa a tale lista.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    valori (list): La lista con gli attuali valori della sequenza di Fibonacci</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">valori</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">valori</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">valori</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">return</span> <span class="kc">None</span>
+
+<span class="c1"># Definisco una lista iniziale</span>
+<span class="n">valori</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">valori</span><span class="p">)</span>
+
+<span class="c1"># Steps</span>
+<span class="n">fibonacci_step</span><span class="p">(</span><span class="n">valori</span><span class="p">)</span>
+<span class="n">fibonacci_step</span><span class="p">(</span><span class="n">valori</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">valori</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1, 1]
+[1, 1, 2, 3]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="approfondimento-wrappers">
+<h2>Approfondimento: Wrappers<a class="headerlink" href="#approfondimento-wrappers" title="Link to this heading">#</a></h2>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -896,6 +996,8 @@ None
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#funzioni-multi-output">Funzioni multi-output</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#funzioni-come-oggetti">Funzioni come oggetti</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#funzioni-lambda">Funzioni <code class="docutils literal notranslate"><span class="pre">lambda</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variabili-locali-vs-variabili-globali">Variabili locali vs variabili globali</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#approfondimento-wrappers">Approfondimento: Wrappers</a></li>
 </ul>
   </nav></div>
 
