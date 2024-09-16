@@ -177,10 +177,13 @@
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="variabili.html">Variabili e tipi di dato</a></li>
 <li class="toctree-l1"><a class="reference internal" href="array.html">Array: Liste e Tuple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iterabili_stringhe_dizionari.html">Iterabili: stringhe e dizionari</a></li>
 <li class="toctree-l1"><a class="reference internal" href="condizione.html">La condizione <code class="docutils literal notranslate"><span class="pre">if</span></code> e la logica booleana</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cicli.html">I cicli <code class="docutils literal notranslate"><span class="pre">for</span></code> e <code class="docutils literal notranslate"><span class="pre">while</span></code></a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Funzioni</a></li>
 <li class="toctree-l1"><a class="reference internal" href="librerie.html">Incrementare le funzionalità di base tramite le librerie</a></li>
+<li class="toctree-l1"><a class="reference internal" href="path_file.html">Gestione del <code class="docutils literal notranslate"><span class="pre">path</span></code> e files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="errori.html">Gestione degli errori su Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="numpy.html">Python per l’algebra lineare: <code class="docutils literal notranslate"><span class="pre">numpy</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="matplotlib.html">Visualizzazione con <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code></a></li>
 </ul>
@@ -393,7 +396,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#funzioni-come-oggetti">Funzioni come oggetti</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#funzioni-lambda">Funzioni <code class="docutils literal notranslate"><span class="pre">lambda</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variabili-locali-vs-variabili-globali">Variabili locali vs variabili globali</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#approfondimento-wrappers">Approfondimento: Wrappers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#approfondimento-args-e-kwargs">Approfondimento: <code class="docutils literal notranslate"><span class="pre">*args</span></code> e <code class="docutils literal notranslate"><span class="pre">**kwargs</span></code></a></li>
 </ul>
             </nav>
         </div>
@@ -724,7 +727,7 @@ None
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;function quadrato at 0x107a600e0&gt;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;function quadrato at 0x1065142c0&gt;
 9
 </pre></div>
 </div>
@@ -893,8 +896,8 @@ None
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">fibonacci_step</span><span class="p">(</span><span class="n">valori</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Data una lista di valori, contenente una porzione della sequenza di Fibonacci, aggiunge il successivo elemento</span>
-<span class="sd">    della sequenza, in testa a tale lista.</span>
+<span class="sd">    Data una lista di valori, contenente una porzione della sequenza di Fibonacci, </span>
+<span class="sd">    aggiunge il successivo elemento della sequenza, in testa a tale lista.</span>
 
 <span class="sd">    Parameters:</span>
 <span class="sd">    valori (list): La lista con gli attuali valori della sequenza di Fibonacci</span>
@@ -921,8 +924,80 @@ None
 </div>
 </div>
 </section>
-<section id="approfondimento-wrappers">
-<h2>Approfondimento: Wrappers<a class="headerlink" href="#approfondimento-wrappers" title="Link to this heading">#</a></h2>
+<section id="approfondimento-args-e-kwargs">
+<h2>Approfondimento: <code class="docutils literal notranslate"><span class="pre">*args</span></code> e <code class="docutils literal notranslate"><span class="pre">**kwargs</span></code><a class="headerlink" href="#approfondimento-args-e-kwargs" title="Link to this heading">#</a></h2>
+<p>In alcune situazioni, si vuole definire una funzione a cui è possibile passare valori di input variabile, non fissati a priori. Sebbene sia questa una situazione molto rara, è possibile che ciò succeda quando si vogliono definire degli algoritmi numerici con molti parametri di input, alcuni dei quali sono facoltativi.</p>
+<p>Quando ciò accade, vengono in aiuto i parametri <code class="docutils literal notranslate"><span class="pre">*args</span></code> e <code class="docutils literal notranslate"><span class="pre">**kwargs</span></code>, indicanti rispettivamente un numero non specificato di input posizionali e non posizionali. Vediamone un paio di esempi:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">somma</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Dato in input un elenco di valori, ritorna la loro somma.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Nota: il numero variabile di input viene caricato dentro una variabile di nome</span>
+    <span class="c1"># &quot;args&quot;, che praticamente rappresenta una tupla di valori.</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Somma di </span><span class="si">{</span><span class="n">args</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+
+    <span class="c1"># Eseguo la somma dei valori</span>
+    <span class="n">risultato</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">valore</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+        <span class="n">risultato</span> <span class="o">=</span> <span class="n">risultato</span> <span class="o">+</span> <span class="n">valore</span>
+    <span class="k">return</span> <span class="n">risultato</span>
+
+<span class="c1"># Chiamata alla funzione con un numero variabile di argomenti</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">somma</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">somma</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Somma di (1, 2, 3): 6
+Somma di (5, 10): 15
+</pre></div>
+</div>
+</div>
+</div>
+<p>Nell’esempio, la funzione <code class="docutils literal notranslate"><span class="pre">somma</span></code> può accettare qualsiasi numero di parametri grazie all’input <code class="docutils literal notranslate"><span class="pre">*args</span></code>.</p>
+<p>Similmente, con <code class="docutils literal notranslate"><span class="pre">**kwargs</span></code>, possiamo passare un numero variabile di argomenti non posizionali con nome a una funzione. Questi argomenti vengono ricevuti sotto forma di dizionario (e non tupla, come avveniva con <code class="docutils literal notranslate"><span class="pre">*args</span></code>).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">info_studente</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">chiave</span><span class="p">,</span> <span class="n">valore</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">chiave</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">valore</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Chiamata alla funzione con argomenti con nome</span>
+<span class="n">info_studente</span><span class="p">(</span><span class="n">nome</span><span class="o">=</span><span class="s2">&quot;Luca&quot;</span><span class="p">,</span> <span class="n">età</span><span class="o">=</span><span class="mi">21</span><span class="p">,</span> <span class="n">corso</span><span class="o">=</span><span class="s2">&quot;Calcolo Numerico&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>nome: Luca
+età: 21
+corso: Calcolo Numerico
+</pre></div>
+</div>
+</div>
+</div>
+<p>E’ chiaramente possibile passare ad una funzione sia il valore <code class="docutils literal notranslate"><span class="pre">*args</span></code> che il valore <code class="docutils literal notranslate"><span class="pre">**kwargs</span></code>, così che possa prendere in ingresso un numero non specificato sia di valori posizionali che non posizionali.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">visualizza_args</span><span class="p">(</span><span class="n">input_1</span><span class="p">,</span> <span class="n">input_2</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;inputs: </span><span class="si">{</span><span class="n">input_1</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">input_2</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;*args: </span><span class="si">{</span><span class="n">args</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;**kwargs: </span><span class="si">{</span><span class="n">kwargs</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">visualizza_args</span><span class="p">(</span><span class="s2">&quot;input1&quot;</span><span class="p">,</span> <span class="s2">&quot;input2&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">nome</span><span class="o">=</span><span class="s2">&quot;Luca&quot;</span><span class="p">,</span> <span class="n">voto</span><span class="o">=</span><span class="s2">&quot;30&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>inputs: input1, input2.
+*args: (1, 2, 3)
+**kwargs: {&#39;nome&#39;: &#39;Luca&#39;, &#39;voto&#39;: &#39;30&#39;}
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 </section>
 
@@ -997,7 +1072,7 @@ None
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#funzioni-come-oggetti">Funzioni come oggetti</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#funzioni-lambda">Funzioni <code class="docutils literal notranslate"><span class="pre">lambda</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variabili-locali-vs-variabili-globali">Variabili locali vs variabili globali</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#approfondimento-wrappers">Approfondimento: Wrappers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#approfondimento-args-e-kwargs">Approfondimento: <code class="docutils literal notranslate"><span class="pre">*args</span></code> e <code class="docutils literal notranslate"><span class="pre">**kwargs</span></code></a></li>
 </ul>
   </nav></div>
 

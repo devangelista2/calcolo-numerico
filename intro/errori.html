@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Ottimizzazione &#8212; Calcolo Numerico</title>
+    <title>Gestione degli errori su Python &#8212; Calcolo Numerico</title>
   
   
   
@@ -57,11 +57,11 @@
     <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'ottimizzazione/intro';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'intro/errori';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Approssimazione" href="../approssimazione/intro.html" />
-    <link rel="prev" title="Visualizzazione con matplotlib" href="../intro/matplotlib.html" />
+    <link rel="next" title="Python per l’algebra lineare: numpy" href="numpy.html" />
+    <link rel="prev" title="Gestione del path e files" href="path_file.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -174,20 +174,22 @@
             </li>
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduzione a Python</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../intro/variabili.html">Variabili e tipi di dato</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../intro/array.html">Array: Liste e Tuple</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../intro/iterabili_stringhe_dizionari.html">Iterabili: stringhe e dizionari</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../intro/condizione.html">La condizione <code class="docutils literal notranslate"><span class="pre">if</span></code> e la logica booleana</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../intro/cicli.html">I cicli <code class="docutils literal notranslate"><span class="pre">for</span></code> e <code class="docutils literal notranslate"><span class="pre">while</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../intro/funzioni.html">Funzioni</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../intro/librerie.html">Incrementare le funzionalità di base tramite le librerie</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../intro/numpy.html">Python per l’algebra lineare: <code class="docutils literal notranslate"><span class="pre">numpy</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../intro/matplotlib.html">Visualizzazione con <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code></a></li>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="variabili.html">Variabili e tipi di dato</a></li>
+<li class="toctree-l1"><a class="reference internal" href="array.html">Array: Liste e Tuple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iterabili_stringhe_dizionari.html">Iterabili: stringhe e dizionari</a></li>
+<li class="toctree-l1"><a class="reference internal" href="condizione.html">La condizione <code class="docutils literal notranslate"><span class="pre">if</span></code> e la logica booleana</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cicli.html">I cicli <code class="docutils literal notranslate"><span class="pre">for</span></code> e <code class="docutils literal notranslate"><span class="pre">while</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="funzioni.html">Funzioni</a></li>
+<li class="toctree-l1"><a class="reference internal" href="librerie.html">Incrementare le funzionalità di base tramite le librerie</a></li>
+<li class="toctree-l1"><a class="reference internal" href="path_file.html">Gestione del <code class="docutils literal notranslate"><span class="pre">path</span></code> e files</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Gestione degli errori su Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy.html">Python per l’algebra lineare: <code class="docutils literal notranslate"><span class="pre">numpy</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="matplotlib.html">Visualizzazione con <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code></a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Ottimizzazione</span></p>
-<ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Ottimizzazione</a></li>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ottimizzazione/intro.html">Ottimizzazione</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Approssimazione di dati</span></p>
 <ul class="nav bd-sidenav">
@@ -263,7 +265,7 @@
       
       
       
-      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fottimizzazione/intro.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fintro/errori.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -293,7 +295,7 @@
       
       
       
-      <li><a href="../_sources/ottimizzazione/intro.ipynb" target="_blank"
+      <li><a href="../_sources/intro/errori.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -375,7 +377,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Ottimizzazione</h1>
+    <h1>Gestione degli errori su Python</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -389,8 +391,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="ottimizzazione">
-<h1>Ottimizzazione<a class="headerlink" href="#ottimizzazione" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="gestione-degli-errori-su-python">
+<h1>Gestione degli errori su Python<a class="headerlink" href="#gestione-degli-errori-su-python" title="Link to this heading">#</a></h1>
 <p><strong>Work in progress…</strong></p>
 </section>
 
@@ -407,7 +409,7 @@ document.write(`
         },
         kernelOptions: {
             name: "python3",
-            path: "./ottimizzazione"
+            path: "./intro"
         },
         predefinedOutput: true
     }
@@ -425,20 +427,20 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../intro/matplotlib.html"
+       href="path_file.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Visualizzazione con <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code></p>
+        <p class="prev-next-title">Gestione del <code class="docutils literal notranslate"><span class="pre">path</span></code> e files</p>
       </div>
     </a>
     <a class="right-next"
-       href="../approssimazione/intro.html"
+       href="numpy.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Approssimazione</p>
+        <p class="prev-next-title">Python per l’algebra lineare: <code class="docutils literal notranslate"><span class="pre">numpy</span></code></p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
