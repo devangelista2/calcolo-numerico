@@ -506,7 +506,141 @@ False
 </section>
 <section id="lettura-scrittura-di-files">
 <h2>Lettura/scrittura di files<a class="headerlink" href="#lettura-scrittura-di-files" title="Link to this heading">#</a></h2>
-<p><strong>Work in progress…</strong></p>
+<p>I risultati prodotti da uno script Python, spariscono non appena il programma termina. Per mantenere salvate delle informazioni (o per leggere informazioni precedentemente salvate), è necessario utilizzare dei files.</p>
+<p>In Python, questo viene fatto tramite tre diversi standard, dipendentemente dal tipo di informazioni che si vogliono memorizzare/leggere:</p>
+<ol class="arabic simple">
+<li><p>tramite un file <code class="docutils literal notranslate"><span class="pre">.txt</span></code>,</p></li>
+<li><p>tramite un file <code class="docutils literal notranslate"><span class="pre">.json</span></code>,</p></li>
+<li><p>tramite la libreria <code class="docutils literal notranslate"><span class="pre">pickle</span></code>.</p></li>
+</ol>
+<p>Vediamo quando ciascuna delle tre possibilità viene utilizzata, e come salvare/leggere quei files.</p>
+<p>I files <code class="docutils literal notranslate"><span class="pre">.txt</span></code> vengono usati quando si vogliono salvare informazioni di tipo testuale/numerico, in maniera rapida e non strutturata. Per farlo, è necessario aprire il file (tramite la funzione <code class="docutils literal notranslate"><span class="pre">open</span></code>), e inserirci i valori desiderati all’interno.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="c1"># Creiamo una stringa da salvare</span>
+<span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;Questa stringa contiene informazioni importanti, da tenere in memoria.&quot;</span>
+
+<span class="c1"># Definiamo il path</span>
+<span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;logs&quot;</span><span class="p">,</span> <span class="s2">&quot;nome_file.txt&quot;</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s2">&quot;logs&quot;</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Apriamo il file</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="c1"># All&#39;interno del &quot;with&quot; posso lavorare sul file, chiamato &quot;f&quot;</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+
+<span class="c1"># Fuori dal &quot;with&quot;, il file è stato chiso</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Andiamo ad analizzare questo snippet di codice in dettaglio. Come prima cosa, abbiamo aperto i file con la funzione <code class="docutils literal notranslate"><span class="pre">open</span></code>, che prende in input due argomenti: il path per il file (in questo caso abbiamo scritto solo il nome del file perché lo vogliamo salvare nella working directory, avremmo dovuto inserire l’intero percorso relativo se avessimo voluto salvarlo all’interno di una directory specifica), e la modalità di apertura. Tra le possibili modalità di apertura, ricordiamo le più comunemente utilizzate:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;w&quot;</span></code>: sola scrittura. Il file viene <strong>sovrascritto</strong> ogni volta.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;a&quot;</span></code>: sola scrittura. Il contenuto viene aggiunto al file, senza sovrascriverlo.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;r&quot;</span></code>: sola lettura.</p></li>
+</ul>
+<p>La funzione <code class="docutils literal notranslate"><span class="pre">open</span></code> è stata inserita all’interno del comando <code class="docutils literal notranslate"><span class="pre">with</span></code>, che ha lo scopo di tenere aperto il file, solo all’interno del suo corpo. Va variabile associata al file verrà chiusa ed eliminata subito dopo.</p>
+<p>Nella stessa linea del comando <code class="docutils literal notranslate"><span class="pre">with</span></code>, abbiamo assegnato al file il nome di una variabile (in questo caso <code class="docutils literal notranslate"><span class="pre">f</span></code>), che abbiamo poi utilizzato per scrivere al suo interno tramite la funzione <code class="docutils literal notranslate"><span class="pre">f.write()</span></code>.</p>
+<p>Ovviamente, l’operazione richiesta per leggere il contenuto del file è speculare, utilizzando il metodo <code class="docutils literal notranslate"><span class="pre">.read()</span></code> e assegnandolo ad una stringa.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Andiamo a leggere il contenuto del file appena creato</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Questa stringa contiene informazioni importanti, da tenere in memoria.
+</pre></div>
+</div>
+</div>
+</div>
+<p>I file in formato <code class="docutils literal notranslate"><span class="pre">.json</span></code>, invece, vengono utilizzati principalmente per salvare informazioni strutturate, come ad esempio dei dizionari, con lo scopo di salvarsi dei dati di configurazione. Per gestire files <code class="docutils literal notranslate"><span class="pre">.json</span></code>, è necessario importare la libreria built-in <code class="docutils literal notranslate"><span class="pre">json</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="c1"># Generiamo un dizionario di esempio</span>
+<span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;nome_algoritmo&quot;</span><span class="p">:</span> <span class="s2">&quot;MetodoDiscesa&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;parametro1&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+    <span class="s2">&quot;parametro2&quot;</span><span class="p">:</span> <span class="mf">0.01</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1"># Definiamo il path (come prima)</span>
+<span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;logs&quot;</span><span class="p">,</span> <span class="s2">&quot;config.json&quot;</span><span class="p">)</span>
+
+<span class="c1"># Apriamo un file json in lettura</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Similmente, possiamo leggere i file <code class="docutils literal notranslate"><span class="pre">.json</span></code>, convertendoli in dizionari.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="c1"># Definiamo il path (come prima)</span>
+<span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;logs&quot;</span><span class="p">,</span> <span class="s2">&quot;config.json&quot;</span><span class="p">)</span>
+
+<span class="c1"># Apriamo un file json in lettura</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;nome_algoritmo&#39;: &#39;MetodoDiscesa&#39;, &#39;parametro1&#39;: 10, &#39;parametro2&#39;: 0.01}
+</pre></div>
+</div>
+</div>
+</div>
+<p>Parliamo, infine, del formato <code class="docutils literal notranslate"><span class="pre">.pickle</span></code>. Questo è sicuramente il formato più utilizzato per memorizzare informazioni di output da Python. Il suo nome deriva dalla libreria built-in <code class="docutils literal notranslate"><span class="pre">pickle</span></code>, che fornisce le funzionalità necessarie al suo utilizzo.</p>
+<p>Il vantaggio di pickle è che permette di leggere/scrivere su file <strong>ogni</strong> oggetto Python, che verrà memorizzato nella forma in cui è, e ricaricato nello stesso modo.</p>
+<p>La sintassi è praticamente la stessa di prima:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pickle</span>
+
+<span class="c1"># Definiamo un qualunque oggetto Python (ad esempio, una lista)</span>
+<span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;i&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;o&quot;</span><span class="p">)]</span>
+
+<span class="c1"># Definiamo il path</span>
+<span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;logs&quot;</span><span class="p">,</span> <span class="s2">&quot;file.pickle&quot;</span><span class="p">)</span>
+
+<span class="c1"># Salviamo con Pickle</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Leggiamo il file pickle</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1, 3, (&#39;c&#39;, &#39;i&#39;, &#39;a&#39;, &#39;o&#39;)]
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 </section>
 

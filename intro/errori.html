@@ -366,7 +366,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -382,6 +384,15 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lettura-e-comprensione-degli-errori">Lettura e comprensione degli errori</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gestire-gli-errori-con-try-e-except">Gestire gli errori con <code class="docutils literal notranslate"><span class="pre">try</span></code> e <code class="docutils literal notranslate"><span class="pre">except</span></code></a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -393,7 +404,200 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="gestione-degli-errori-su-python">
 <h1>Gestione degli errori su Python<a class="headerlink" href="#gestione-degli-errori-su-python" title="Link to this heading">#</a></h1>
-<p><strong>Work in progress…</strong></p>
+<p>La gestione degli errori è un aspetto fondamentale della programmazione. Gli errori possono verificarsi per molte ragioni, come input non validi, divisioni per zero, o tentativi di accesso a file inesistenti. Python fornisce strumenti per gestire questi errori in modo da evitare che il programma si blocchi inaspettatamente e per facilitare il debugging.</p>
+<section id="lettura-e-comprensione-degli-errori">
+<h2>Lettura e comprensione degli errori<a class="headerlink" href="#lettura-e-comprensione-degli-errori" title="Link to this heading">#</a></h2>
+<p>Quando si verifica un errore in Python, il programma genera un messaggio di errore chiamato traceback. Questo messaggio include informazioni dettagliate sul tipo di errore e dove si è verificato nel codice. Imparare a leggere i tracebacks è essenziale per identificare la causa degli errori.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">divisione</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span>
+
+<span class="c1"># Questo genera un errore perché stiamo tentando di dividere per zero</span>
+<span class="n">divisione</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ZeroDivisionError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">5</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span>     <span class="k">return</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="c1"># Questo genera un errore perché stiamo tentando di dividere per zero</span>
+<span class="ne">----&gt; </span><span class="mi">5</span> <span class="n">divisione</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="nn">Cell In[1], line 2,</span> in <span class="ni">divisione</span><span class="nt">(a, b)</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="k">def</span> <span class="nf">divisione</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+<span class="ne">----&gt; </span><span class="mi">2</span>     <span class="k">return</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span>
+
+<span class="ne">ZeroDivisionError</span>: division by zero
+</pre></div>
+</div>
+</div>
+</div>
+<p>Vediamo come interpretare questo traceback:</p>
+<ul class="simple">
+<li><p><strong>Traceback (most recent call last)</strong>: indica che l’errore si è verificato nell’ultima operazione eseguita.</p></li>
+<li><p><strong>Cell In[..], line 5</strong>: mostra la linea di codice in cui l’errore è stato sollevato.</p></li>
+<li><p><strong>Cell In[..], line 2</strong>: mostra che l’errore si è verificato nella funzione divisione, alla riga 2.</p></li>
+<li><p><strong>ZeroDivisionError: division by zero</strong>: questo è il tipo di errore specifico (in questo caso un ZeroDivisionError), e la spiegazione dell’errore (“division by zero”).</p></li>
+</ul>
+<p>Vediamo ora quali sono i tipi di errore più comuni in Python, e cosa li causa:</p>
+<ol class="arabic simple">
+<li><p><strong>SyntaxError</strong>: si verifica quando il codice contiene errori di sintassi. Questo può accadere, ad esempio, se dimentichi una parentesi o un due punti.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="mi">10</span> <span class="o">&gt;</span> <span class="mi">5</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Errore di sintassi&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span>  <span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="mi">10</span> <span class="o">&gt;</span> <span class="mi">5</span>
+             <span class="o">^</span>
+<span class="ne">SyntaxError</span>: expected &#39;:&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p><strong>TypeError</strong>: si verifica quando tenti di eseguire un’operazione su tipi di dati non compatibili.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;10&quot;</span> <span class="o">+</span> <span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;10&quot;</span> <span class="o">+</span> <span class="mi">5</span><span class="p">)</span>
+
+<span class="ne">TypeError</span>: can only concatenate str (not &quot;int&quot;) to str
+</pre></div>
+</div>
+</div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p><strong>NameError</strong>: si verifica quando tenti di usare una variabile o funzione che non è stata definita.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="ne">NameError</span>: name &#39;x&#39; is not defined
+</pre></div>
+</div>
+</div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p><strong>IndexError</strong>: si verifica quando tenti di accedere a un elemento di una lista usando un indice fuori dai limiti.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lista</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">lista</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">IndexError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="n">lista</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="nb">print</span><span class="p">(</span><span class="n">lista</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span>
+
+<span class="ne">IndexError</span>: list index out of range
+</pre></div>
+</div>
+</div>
+</div>
+<ol class="arabic simple" start="5">
+<li><p><strong>KeyError</strong>: si verifica quando tenti di accedere a una chiave inesistente in un dizionario.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dizionario</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;nome&quot;</span><span class="p">:</span> <span class="s2">&quot;Luca&quot;</span><span class="p">}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">dizionario</span><span class="p">[</span><span class="s2">&quot;età&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyError</span><span class="g g-Whitespace">                                  </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="n">dizionario</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;nome&quot;</span><span class="p">:</span> <span class="s2">&quot;Luca&quot;</span><span class="p">}</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="nb">print</span><span class="p">(</span><span class="n">dizionario</span><span class="p">[</span><span class="s2">&quot;età&quot;</span><span class="p">])</span>
+
+<span class="ne">KeyError</span>: &#39;età&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<ol class="arabic simple" start="6">
+<li><p><strong>ValueError</strong>: si verifica quando una funzione riceve un argomento valido per tipo, ma non per valore.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">int</span><span class="p">(</span><span class="s2">&quot;abc&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">7</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="nb">int</span><span class="p">(</span><span class="s2">&quot;abc&quot;</span><span class="p">)</span>
+
+<span class="ne">ValueError</span>: invalid literal for int() with base 10: &#39;abc&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="gestire-gli-errori-con-try-e-except">
+<h2>Gestire gli errori con <code class="docutils literal notranslate"><span class="pre">try</span></code> e <code class="docutils literal notranslate"><span class="pre">except</span></code><a class="headerlink" href="#gestire-gli-errori-con-try-e-except" title="Link to this heading">#</a></h2>
+<p>Per prevenire l’interruzione del codice a causa di un errore, Python consente di gestire le eccezioni usando i blocchi <code class="docutils literal notranslate"><span class="pre">try</span></code> e <code class="docutils literal notranslate"><span class="pre">except</span></code>. Il codice che potrebbe causare un errore viene inserito all’interno del blocco <code class="docutils literal notranslate"><span class="pre">try</span></code>, e se si verifica un errore, il programma passa al blocco <code class="docutils literal notranslate"><span class="pre">except</span></code>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Attenzione a non abusare della funzionalità di <code class="docutils literal notranslate"><span class="pre">try</span></code> e <code class="docutils literal notranslate"><span class="pre">except</span></code>, poiché tali funzioni possono rendere difficile debuggare il programma, se usate in maniera poco controllata.</p>
+</div>
+<p>Vediamone un esempio:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">divisione</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">risultato</span> <span class="o">=</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span>
+    <span class="k">except</span> <span class="ne">ZeroDivisionError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Errore: divisione per zero non consentita!&quot;</span><span class="p">)</span>
+        <span class="n">risultato</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">return</span> <span class="n">risultato</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">divisione</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>  <span class="c1"># Genera errore 10 / 0</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Errore: divisione per zero non consentita!
+None
+</pre></div>
+</div>
+</div>
+</div>
+<p>In questo esempio, se si verifica un errore di divisione per zero (<code class="docutils literal notranslate"><span class="pre">ZeroDivisionError</span></code>), il programma non si blocca ma stampa un messaggio di errore e restituisce None.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -450,6 +654,22 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lettura-e-comprensione-degli-errori">Lettura e comprensione degli errori</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gestire-gli-errori-con-try-e-except">Gestire gli errori con <code class="docutils literal notranslate"><span class="pre">try</span></code> e <code class="docutils literal notranslate"><span class="pre">except</span></code></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
