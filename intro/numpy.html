@@ -57,11 +57,13 @@
     <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'intro/numpy';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Visualizzazione con matplotlib" href="matplotlib.html" />
-    <link rel="prev" title="Incrementare le funzionalità di base tramite le librerie" href="librerie.html" />
+    <link rel="prev" title="Gestione degli errori su Python" href="errori.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -177,12 +179,16 @@
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="variabili.html">Variabili e tipi di dato</a></li>
 <li class="toctree-l1"><a class="reference internal" href="array.html">Array: Liste e Tuple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iterabili_stringhe_dizionari.html">Iterabili: stringhe e dizionari</a></li>
 <li class="toctree-l1"><a class="reference internal" href="condizione.html">La condizione <code class="docutils literal notranslate"><span class="pre">if</span></code> e la logica booleana</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cicli.html">I cicli <code class="docutils literal notranslate"><span class="pre">for</span></code> e <code class="docutils literal notranslate"><span class="pre">while</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="funzioni.html">Funzioni</a></li>
 <li class="toctree-l1"><a class="reference internal" href="librerie.html">Incrementare le funzionalità di base tramite le librerie</a></li>
+<li class="toctree-l1"><a class="reference internal" href="path_file.html">Gestione del <code class="docutils literal notranslate"><span class="pre">path</span></code> e files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="errori.html">Gestione degli errori su Python</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Python per l’algebra lineare: <code class="docutils literal notranslate"><span class="pre">numpy</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="matplotlib.html">Visualizzazione con <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="esercitazione.html">Esercitazione: algebra lineare con Python</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Ottimizzazione</span></p>
 <ul class="nav bd-sidenav">
@@ -363,7 +369,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -379,6 +387,23 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creazione-di-array-con-numpy">Creazione di array con <code class="docutils literal notranslate"><span class="pre">numpy</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#funzioni-per-la-creazione-di-numpy-array">Funzioni per la creazione di <code class="docutils literal notranslate"><span class="pre">numpy</span></code> array</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#operazioni-tra-ndarray">Operazioni tra <code class="docutils literal notranslate"><span class="pre">ndarray</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#operazioni-logiche-tra-vettori">Operazioni logiche tra vettori</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#slicing-su-ndarray">Slicing su <code class="docutils literal notranslate"><span class="pre">ndarray</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#slicing-di-matrici">Slicing di matrici</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#manipolazione-di-matrici-e-vettori">Manipolazione di matrici e vettori</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#approfondimento-efficienza-di-numpy">Approfondimento: efficienza di <code class="docutils literal notranslate"><span class="pre">numpy</span></code></a></li>
+</ul>
+</li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -390,7 +415,499 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="python-per-l-algebra-lineare-numpy">
 <h1>Python per l’algebra lineare: <code class="docutils literal notranslate"><span class="pre">numpy</span></code><a class="headerlink" href="#python-per-l-algebra-lineare-numpy" title="Link to this heading">#</a></h1>
-<p><strong>Work in progress…</strong></p>
+<p>La <em>Numerical Linear Algebra (NLA)</em> è la materia che si occupa di studiare come le operazioni tra matrici e vettori possono essere utilizzate all’interno di algoritmi con lo scopo di produrre risposte efficienti e accurate a diversi problemi: da quelli di carattere matematico (come la risoluzione approssimata di equazioni differenziali), a quelli di carattere ingegneristico (come la distribuzione ottimale delle risorse, o le predizioni di outcome futuri dai dati).</p>
+<p>Di conseguenza, è di vitale importanza avere un modo efficiente per implementare operazioni matriciali e vettori. Nel seguito (come è comune fare anche nel codice), indicheremo con le lettere maiuscole (<code class="docutils literal notranslate"><span class="pre">A</span></code>, <code class="docutils literal notranslate"><span class="pre">B</span></code>, …) le matrici, con lettere minuscole (<code class="docutils literal notranslate"><span class="pre">v</span></code>, <code class="docutils literal notranslate"><span class="pre">w</span></code>, …) i vettori.</p>
+<p>Come abbiamo già accennato a lezione, la libreria Python più comunemente utilizzata per lavorare con matrici è vettori è <code class="docutils literal notranslate"><span class="pre">numpy</span></code>.</p>
+<p>Durante il corso, faremo largo uso di <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, nonché di alcune librerie add-on (come <code class="docutils literal notranslate"><span class="pre">scipy</span></code> e <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>).</p>
+<p>Nel caso in cui <code class="docutils literal notranslate"><span class="pre">numpy</span></code> non sia ancora installato sul vostro virtual environment, si ricorda di eseguire i seguenti comandi per installarlo:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">activate</span> <span class="n">CN24</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="n">numpy</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Durante il corso utilizzeremo varie funzioni di <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, ma chiaramente ne esistono molte altre. Una lista completa di tutte le funzioni, oltre che una documentazione sul loro utilizzo, può essere trovata sul sito ufficiale <a class="reference external" href="https://numpy.org">numpy.org</a>.</p>
+</div>
+<section id="creazione-di-array-con-numpy">
+<h2>Creazione di array con <code class="docutils literal notranslate"><span class="pre">numpy</span></code><a class="headerlink" href="#creazione-di-array-con-numpy" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">numpy</span></code> implementa un tipo di dato speciale che estende i classici array di Python (come liste, tuple, …), specificatamente pensato per massimizzare l’efficienza di operazioni di algebra lineare, chiamati <code class="docutils literal notranslate"><span class="pre">ndarray</span></code>. Tramite gli <code class="docutils literal notranslate"><span class="pre">ndarray</span></code>, è possibile inizializzare facilmente vettori, matrici, tensori, …</p>
+<p>Questi non solo avranno tutte le funzionalità degli altri array di Python, ma implementeranno in maniera nativa tutte le operazioni tipiche tra vettori e matrici, come la somma elemento per elemento, il prodotto riga-per-colonna, e simili.</p>
+<p>Unico limite degli <code class="docutils literal notranslate"><span class="pre">ndarray</span></code> è che essi possono contere, al loro interno, solo numeri (e non stringhe o altro, come per le liste o le tuple).</p>
+<p>Il metodo classico per la creazione di un <code class="docutils literal notranslate"><span class="pre">ndarray</span></code> è quello di castarlo da un’array classico di Python. Vediamo come creare, ad esempio, un vettore:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># Creo un vettore numpy</span>
+<span class="n">a</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="n">a_vec</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">a_vec</span><span class="p">))</span> <span class="c1"># Verifichiamo il tipo di dato di a_vec</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a_vec</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;numpy.ndarray&#39;&gt;
+[1 2 3]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Una delle proprietà di base degli <code class="docutils literal notranslate"><span class="pre">ndarray</span></code> è la propria <code class="docutils literal notranslate"><span class="pre">shape</span></code>, che rappresenta la loro <strong>dimensione</strong>. Più precisamente, un vettore avrà come <code class="docutils literal notranslate"><span class="pre">shape</span></code> una tupla contenente un singolo elemento, che ne rappresenta la lunghezza, una matrice avrà come <code class="docutils literal notranslate"><span class="pre">shape</span></code> una tupla contenente due elementi: il numero di righe e il numero di colonne, rispettivamente.</p>
+<p>Per inizializzare una matrice a partire da un’array Python, è necessario costruire un’array composto da altri array, ciascuno dei quali rappresenta una riga della matrice che si vuole creare.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Per ovvie ragioni, è <strong>necessario</strong> che l’array che definisce la matrice abbia tutte le righe della stessa lunghezza. In caso contrario, il codice restituirà errore.</p>
+</div>
+<p>Vediamo ad esempio come costruire una matrice e un vettore, e stamparne la <code class="docutils literal notranslate"><span class="pre">shape</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Definiamo un vettore v e una matrice A</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+              <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+
+<span class="c1"># Stampiamo la shape</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;La shape di v è: </span><span class="si">{</span><span class="n">v</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;La shape di A è: </span><span class="si">{</span><span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>La shape di v è: (4,).
+La shape di A è: (2, 3).
+</pre></div>
+</div>
+</div>
+</div>
+<p>Altra proprietà chiave degli <code class="docutils literal notranslate"><span class="pre">ndarray</span></code> è il loro <code class="docutils literal notranslate"><span class="pre">dtype</span></code>. Infatti, proprio per il fatto che sono stati costruiti per eseguire operazioni di algebra lineare, <code class="docutils literal notranslate"><span class="pre">numpy</span></code> implementa vari tipi differenti di aritmetica floating point per i propri array. E’ infatti possibile definire array a precisione singola (<code class="docutils literal notranslate"><span class="pre">np.float32</span></code>), doppia (<code class="docutils literal notranslate"><span class="pre">np.float64</span></code>) o anche mezza (<code class="docutils literal notranslate"><span class="pre">np.float16</span></code>). Questa informazione è rappresentata, appunto, dal <code class="docutils literal notranslate"><span class="pre">dtype</span></code>.</p>
+<p>Se non specificato in fase di creazione, gli <code class="docutils literal notranslate"><span class="pre">ndarray</span></code> hanno <code class="docutils literal notranslate"><span class="pre">dtype</span> <span class="pre">=</span> <span class="pre">np.float64</span></code> se contengono numeri floating point, <code class="docutils literal notranslate"><span class="pre">np.int64</span></code> altrimenti.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Creiamo un vettore</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span> <span class="c1"># np.float64</span>
+
+<span class="c1"># Creiamo lo stesso vettore in precisione singola</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>float64
+float32
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="funzioni-per-la-creazione-di-numpy-array">
+<h2>Funzioni per la creazione di <code class="docutils literal notranslate"><span class="pre">numpy</span></code> array<a class="headerlink" href="#funzioni-per-la-creazione-di-numpy-array" title="Link to this heading">#</a></h2>
+<p>Nella maggior parte delle applicazioni pratiche, le matrici e i vettori utilizzati sono di dimensioni enormi, dell’ordine di migliaia se non di milioni di elementi. Ovviamente, questo rende impossibile definirli a partire da array di Python, come visto precedentemente.</p>
+<p>Fortunatamente, quando gli array che si vuol generare possiedono un pattern specifico, è possibile inizializzarle tramite una serie di funzioni, riportate sotto.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">np.linspace(a,</span> <span class="pre">b,</span> <span class="pre">n)</span></code>: Crea un vettore di lunghezza <code class="docutils literal notranslate"><span class="pre">n</span></code>, che contiene <code class="docutils literal notranslate"><span class="pre">n</span></code> elementi uniformemente distributi nel’intervallo <span class="math notranslate nohighlight">\([a, b]\)</span>, estremi inclusi.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">np.arange(inizio,</span> <span class="pre">fine,</span> <span class="pre">passo)</span></code>: Simile alla funzione Python <code class="docutils literal notranslate"><span class="pre">range</span></code>. Crea un vettore che contiene tutti i numeri interi a partire da <code class="docutils literal notranslate"><span class="pre">inizio</span></code>, fino a <code class="docutils literal notranslate"><span class="pre">fine-1</span></code>, con <code class="docutils literal notranslate"><span class="pre">passo</span></code> fissato.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">np.zeros((m,</span> <span class="pre">n))</span></code>: Crea una matrice di dimensione <code class="docutils literal notranslate"><span class="pre">(m,</span> <span class="pre">n)</span></code> di zeri. Chiaramente, per creare un vettore invece che una matrice, si utilizza la funzione <code class="docutils literal notranslate"><span class="pre">np.zeros((m,</span> <span class="pre">))</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">np.ones((m,</span> <span class="pre">n))</span></code>: Come prima, ma crea una matrice (o vettore) di 1.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">np.zeros_like(a)</span></code>: Crea una matrice o un vettore, della stessa dimensione di un altro array <code class="docutils literal notranslate"><span class="pre">a</span></code>. E’ equivalente a <code class="docutils literal notranslate"><span class="pre">np.zeros(a.shape)</span></code>. Esiste l’equivalente <code class="docutils literal notranslate"><span class="pre">np.ones_like(a)</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">np.diag(v)</span></code>: Dato un vettore <code class="docutils literal notranslate"><span class="pre">v</span></code> di lunghezza <code class="docutils literal notranslate"><span class="pre">n</span></code>, costruisce una matrice diagonale di dimensione <code class="docutils literal notranslate"><span class="pre">(n,</span> <span class="pre">n)</span></code>, la cui diagonale è <code class="docutils literal notranslate"><span class="pre">v</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">np.random.randn(m,</span> <span class="pre">n)</span></code>: Crea una matrice di dimensione <code class="docutils literal notranslate"><span class="pre">(m,</span> <span class="pre">n)</span></code> di numeri casuali distribuiti con distribuzione normale standard.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">np.random.rand(m,</span> <span class="pre">n)</span></code>: Uguale a prima, ma con valori estratti da una distribuzione uniforme nel dominio <span class="math notranslate nohighlight">\([0, 1]\)</span>.</p></li>
+</ul>
+<p>Costruiamo, ad esempio, un vettore di valori casuali in <span class="math notranslate nohighlight">\([0, 1]\)</span> di lunghezza 10.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Creiamo il vettore richiesto</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.01420329 0.10941884 0.46944218 0.75532368 0.57943365 0.18039571
+ 0.08236856 0.67439502 0.88965126 0.28308662]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="operazioni-tra-ndarray">
+<h2>Operazioni tra <code class="docutils literal notranslate"><span class="pre">ndarray</span></code><a class="headerlink" href="#operazioni-tra-ndarray" title="Link to this heading">#</a></h2>
+<p>Una volta imparato come creare degli array, possiamo passare a come utilizzarli. Infatti, come accennato precedentemente, gli <code class="docutils literal notranslate"><span class="pre">ndarray</span></code> implementano nativamente le operazioni classiche di algebra lineare. In particolare, quasi tutte le operazioni standard sono applicate <strong>elemento per elemento</strong>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Creiamo due ndarray</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="c1"># array(1, 2, 3)</span>
+
+<span class="c1"># Eseguiamo operazioni tra loro</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">a</span> <span class="o">-</span> <span class="n">b</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;a = </span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2">, b = </span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s2"> </span><span class="se">\n</span><span class="s2">Somma: </span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s2"> </span><span class="se">\n</span><span class="s2">Differenza: </span><span class="si">{</span><span class="n">d</span><span class="si">}</span><span class="s2"> </span><span class="se">\n</span><span class="s2">Prodotto: </span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2"> </span><span class="se">\n</span><span class="s2">Divisione: </span><span class="si">{</span><span class="n">f</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a = [ 1 -1  0], b = [1. 2. 3.] 
+Somma: [2. 1. 3.] 
+Differenza: [ 0. -3. -3.] 
+Prodotto: [ 1. -2.  0.] 
+Divisione: [ 1.  -0.5  0. ].
+</pre></div>
+</div>
+</div>
+</div>
+<p>Similmente, lavorano elemento per elemento anche tutte le funzioni <em>base</em> di matematica, come l’operazione di seno, coseno, tangente, esponenziale, logaritmo, ecc.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Definiamo un array</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+
+<span class="c1"># Calcoliamone i valori trigonometrici</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;sin(x) = </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;cos(x) = </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;tan(x) = </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">tan</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+<span class="c1"># Ed esponenziale e logaritmo</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;e^x = </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ln(x) = </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;log_10(x) = </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>sin(x) = [ 0.00000000e+00  8.66025404e-01 -8.66025404e-01 -2.44929360e-16].
+cos(x) = [ 1.  -0.5 -0.5  1. ].
+tan(x) = [ 0.00000000e+00 -1.73205081e+00  1.73205081e+00 -2.44929360e-16].
+e^x = [  1.           8.1205274   65.9429652  535.49165552].
+ln(x) = [0.         1.12959244 1.64650057 1.98556831].
+log_10(x) = [0.         0.49057577 0.71506611 0.86232136].
+</pre></div>
+</div>
+</div>
+</div>
+<p>Unica, importante differenza alla regola delle operazioni elemento per elemento è rappresentato dal prodotto riga-per-colonna tra matrici e vettori (anche detto <strong>prodotto scalare</strong> o <strong>prodotto interno</strong> quando applicato a due vettori).</p>
+<p>Si ricorda che, presa una matrice <span class="math notranslate nohighlight">\(A = (a_{i, j})\)</span> di dimensione <span class="math notranslate nohighlight">\(m \times n\)</span>, e un vettore <span class="math notranslate nohighlight">\(x = (x_1, \dots, x_n) \in \mathbb{R}^n\)</span>, il prodotto riga-per-colonna tra <span class="math notranslate nohighlight">\(A\)</span> e <span class="math notranslate nohighlight">\(x\)</span> è definito come:</p>
+<p>\begin{align}
+\left( Ax \right)<em>i = \sum</em>{j = 1}^n a_{i, j} x_j.
+\end{align}</p>
+<p>Questa operazione è implementata su <code class="docutils literal notranslate"><span class="pre">numpy</span></code> tramite l’operatore <code class="docutils literal notranslate"><span class="pre">&#64;</span></code> o, equivalentemente, tramite la funzione <code class="docutils literal notranslate"><span class="pre">np.dot(A,</span> <span class="pre">x)</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Definiamo una matrice A e un vettore x</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+
+<span class="c1"># Calcoliamo y = Ax</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">A</span><span class="nd">@x</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[2 0 1]
+</pre></div>
+</div>
+</div>
+</div>
+<p>E per quanto riguarda i vettori? E’ importante fare una distinzione tra tre tipologie differenti di vettori rappresentabili come <code class="docutils literal notranslate"><span class="pre">ndarray</span></code>. Infatti, un vettore può assumere diverse forme:</p>
+<ol class="arabic simple">
+<li><p>un vettore classico, a dimensione singola, la cui shape è qualcosa del tipo <code class="docutils literal notranslate"><span class="pre">(n,)</span></code>.</p></li>
+<li><p>un vettore colonna, in cui si vede il vettore come fosse una matrice con una sola colonna, e un numero di righe pari alla sua lunghezza. In questo caso, il vettore avrà una shape della forma <code class="docutils literal notranslate"><span class="pre">(n,</span> <span class="pre">1)</span></code>.</p></li>
+<li><p>un vettore riga, in cui si vede il vettore come fosse una matrice con una sola riga, e un numero di colonne pari alla sua lunghezza. In questo caso, il vettore avrà una shape della forma <code class="docutils literal notranslate"><span class="pre">(1,</span> <span class="pre">n)</span></code>.</p></li>
+</ol>
+<p>E’ importante stare attenti a questa distinzione, poiché alcune funzionalità di <code class="docutils literal notranslate"><span class="pre">numpy</span></code> lavorano diversamente se il vettore è un vettore classico, oppure un vettore colonna. Ad esempio, l’operatore <code class="docutils literal notranslate"><span class="pre">&#64;</span></code> restituirà il prodotto scalare standard tra vettori nel caso in cui i due elementi moltiplicati siano due vettori classici, restituirà errore nel caso in cui siano due vettori colonna, e darà il prodotto scalare standard se i vettori saranno il primo un vettore riga, il secondo un vettore colonna.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Definiamo due vettori classici</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">w</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="c1"># Controlliamo che siano vettori classici</span>
+
+<span class="c1"># Calcoliamone il prodotto scalare</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">v</span> <span class="o">@</span> <span class="n">w</span><span class="p">)</span>
+
+<span class="c1"># Definiamo la loro versione come vettori colonna</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">w</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="c1"># Calcoliamone il prodotto scalare</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">v</span> <span class="o">@</span> <span class="n">w</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(3,) (3,)
+0
+(3, 1) (3, 1)
+</pre></div>
+</div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">8</span><span class="p">],</span> <span class="n">line</span> <span class="mi">15</span>
+<span class="g g-Whitespace">     </span><span class="mi">12</span> <span class="nb">print</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">w</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">14</span> <span class="c1"># Calcoliamone il prodotto scalare</span>
+<span class="ne">---&gt; </span><span class="mi">15</span> <span class="nb">print</span><span class="p">(</span><span class="n">v</span> <span class="o">@</span> <span class="n">w</span><span class="p">)</span>
+
+<span class="nn">ValueError: matmul: Input operand 1 has a mismatch</span> in <span class="ni">its core dimension 0, with gufunc signature (n?,k),(k,m?)-&gt;(n?,m?) </span><span class="nt">(size 3 is different from 1)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="operazioni-logiche-tra-vettori">
+<h2>Operazioni logiche tra vettori<a class="headerlink" href="#operazioni-logiche-tra-vettori" title="Link to this heading">#</a></h2>
+<p>Sfruttando la caratteristica di Python per cui le variabili booleane sono sostanzialmente numeri (0 per il <code class="docutils literal notranslate"><span class="pre">False</span></code>, 1 per il <code class="docutils literal notranslate"><span class="pre">True</span></code>), è possibile anche definire degli <code class="docutils literal notranslate"><span class="pre">ndarray</span></code> che contengono valori booleani. Questi saranno particolarmente utili specialmente per svolgere in maniera efficiente operazioni di filtraggio di elementi.</p>
+<p>Sarà possibile chiaramente eseguire operazioni booleane classiche (come <code class="docutils literal notranslate"><span class="pre">and</span></code>, <code class="docutils literal notranslate"><span class="pre">or</span></code>, <code class="docutils literal notranslate"><span class="pre">not</span></code>) e di confronto (<code class="docutils literal notranslate"><span class="pre">==</span></code>, <code class="docutils literal notranslate"><span class="pre">!=</span></code>, ecc.) tra <code class="docutils literal notranslate"><span class="pre">ndarray</span></code> booleani, che verranno applicate elemento per elemento. Di seguito una tabella che rappresenta le principali operazioni possibili tra <code class="docutils literal notranslate"><span class="pre">ndarray</span></code> booleani.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Operatore</p></th>
+<th class="head"><p>Significato</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>==</p></td>
+<td><p>UGUAGLIANZA</p></td>
+</tr>
+<tr class="row-odd"><td><p>!=</p></td>
+<td><p>DISUGUAGLIANZA</p></td>
+</tr>
+<tr class="row-even"><td><p>&gt;, &gt;=</p></td>
+<td><p>MAGGIORE</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;, &lt;=</p></td>
+<td><p>MINORE</p></td>
+</tr>
+<tr class="row-even"><td><p>&amp;</p></td>
+<td><p>AND</p></td>
+</tr>
+<tr class="row-odd"><td><p>|</p></td>
+<td><p>OR</p></td>
+</tr>
+<tr class="row-even"><td><p>!</p></td>
+<td><p>NOT</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Definiamo tre vettori casuali</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="c1"># Generiamo il vettore booleano `v` che vale True quando un elemento di `a`</span>
+<span class="c1"># è maggiore o uguale del corrispettivo elemento di `b`</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">a</span> <span class="o">&gt;=</span> <span class="n">b</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+
+<span class="c1"># E il vettore `w`che vale True quando un elemento di `b` è maggiore o uguale</span>
+<span class="c1"># del corrispettivo elemento di `c`</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">b</span> <span class="o">&gt;=</span> <span class="n">c</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+
+<span class="c1"># Ora uniamoli con un operazione di `and` elemento per elemento</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">w</span> <span class="o">&amp;</span> <span class="n">v</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[ True  True False False False  True False False  True  True]
+[False False  True  True  True False  True  True False  True]
+[False False False False False False False False False  True]
+</pre></div>
+</div>
+</div>
+</div>
+<section id="slicing-su-ndarray">
+<h3>Slicing su <code class="docutils literal notranslate"><span class="pre">ndarray</span></code><a class="headerlink" href="#slicing-su-ndarray" title="Link to this heading">#</a></h3>
+<p>Chiaramente, anche sugli <code class="docutils literal notranslate"><span class="pre">ndarray</span></code> è possibile definire le operazioni di <em>slicing</em>, che verranno come di consueto effettuate tramite la parentesi quadra <code class="docutils literal notranslate"><span class="pre">[]</span></code>. Sui vettori classici, lo slicing funziona esattamente come per liste e tuple, in cui la notazione <code class="docutils literal notranslate"><span class="pre">v[inizio:fine]</span></code> restituisce gli elementi di <code class="docutils literal notranslate"><span class="pre">v</span></code> da <code class="docutils literal notranslate"><span class="pre">inizio</span></code> a <code class="docutils literal notranslate"><span class="pre">fine-1</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Definiamo un array</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="c1"># Slicing</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[ 0  1 -1]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Il vero vantaggio degli <code class="docutils literal notranslate"><span class="pre">ndarray</span></code> rispetto alle liste e tuple in termini di slicing, è la possibilità di utilizzare gli <code class="docutils literal notranslate"><span class="pre">ndarray</span></code> booleani per filtrare gli elementi di un altro <code class="docutils literal notranslate"><span class="pre">ndarray</span></code>. Infatti, se all’interno delle parentesi quadre inseriamo un array booleano della stessa dimensione dell’array su cui stiamo facendo slicing, questo ci ritornerà tutti gli elementi dell’array che corrispondono alle posizioni dei <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Creiamo un array di esempio</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+
+<span class="c1"># Definiamo un vettore booleano</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+
+<span class="c1"># Slicing</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="n">b</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[ 0  1 -1  2  1 -1]
+[ True  True False  True False False]
+[0 1 2]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Questo ci permette di eseguire in maniera estramamente rapida e in un linguaggio molto vicino a quello <em>naturale</em>, operazioni condizionali su vettori.</p>
+<p>Vediamo ad esempio come prendere un vettore casuale, e porre a 0 tutti i suoi valori negativi (operazione, nota come <strong>proiezione sull’asse positivo</strong>, molto comune in alcuni problemi di algebra lineare).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Definiamo un vettore casuale</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="c1"># Proiettiamo sull&#39;asse positivo</span>
+<span class="n">x</span><span class="p">[</span><span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[-0.96341467 -0.36748819 -0.20282506 -0.15068598 -0.61093948  1.96801287
+  0.10279417 -0.51116475]
+[0.         0.         0.         0.         0.         1.96801287
+ 0.10279417 0.        ]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="slicing-di-matrici">
+<h3>Slicing di matrici<a class="headerlink" href="#slicing-di-matrici" title="Link to this heading">#</a></h3>
+<p>Sulle matrici (come anche sugli <code class="docutils literal notranslate"><span class="pre">ndarray</span></code> di dimensione più alta) lo slicing funziona in maniera naturale, con la sola differenza che all’interno della parentesi quadra sarà necessario inserire due indici (o comandi della forma <code class="docutils literal notranslate"><span class="pre">inizio:fine:step</span></code>): uno per gli indici di riga, e uno per gli indici di colonna.</p>
+<p>Vediamo ad esempio come estrarre, da una matrice <code class="docutils literal notranslate"><span class="pre">A</span></code> di shape <code class="docutils literal notranslate"><span class="pre">(3,</span> <span class="pre">3)</span></code>, la sua sottomatrice principale di ordine 2, ovvero la sottomatrice di dimensione <code class="docutils literal notranslate"><span class="pre">(2,</span> <span class="pre">2)</span></code> che si trova nell’angolo in alto a sinistra di <code class="docutils literal notranslate"><span class="pre">A</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Creiamo la matrice</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]])</span>
+
+<span class="c1"># Slicing</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">A</span><span class="p">[:</span><span class="mi">2</span><span class="p">,</span> <span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[1 2]
+ [4 5]]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="manipolazione-di-matrici-e-vettori">
+<h3>Manipolazione di matrici e vettori<a class="headerlink" href="#manipolazione-di-matrici-e-vettori" title="Link to this heading">#</a></h3>
+<p>Ultima proprietà che vediamo degli <code class="docutils literal notranslate"><span class="pre">ndarray</span></code>, sono tutte le operazioni comunemente effettuate nell’algebra lineare su di essi, come ad esempio il calcolo della norma, dell’inversa, del rango, della trasposta, oltre che di operazioni di utilità come la funzione <code class="docutils literal notranslate"><span class="pre">reshape</span></code>, che modifica la forma di un vettore o matrice, senza cambiarne il contenuto.</p>
+<p>Sotto un elenco di tali operazioni. Notare come, alcune di esse, richiedono di accedere ad un sottopacchetto di <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, ovvero <code class="docutils literal notranslate"><span class="pre">np.linalg</span></code>, che come suggerisce il nome, implementa varie operazioni di algebra lineare.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">np.linalg.norm(a,</span> <span class="pre">p)</span></code>: Calcola la norma-<span class="math notranslate nohighlight">\(p\)</span> di un vettore o di una matrice.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">np.linalg.cond(A,</span> <span class="pre">p)</span></code>: Calcola il numero di condizionamento di una matrice in norma <span class="math notranslate nohighlight">\(p\)</span>;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">np.linalg.matrix_rank(A)</span></code>: Calcola il rango della matrice <code class="docutils literal notranslate"><span class="pre">A</span></code>;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">np.linalg.inv(A)</span></code>: Calcola l’inverso della matrice <code class="docutils literal notranslate"><span class="pre">A</span></code>, quando esiste. <strong>ATTENZIONE:</strong> Questa operazione è molto lenta anche per matrici relativamente piccole;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">np.transpose(A)</span></code>: Calcola la trasposta della matrice <code class="docutils literal notranslate"><span class="pre">A</span></code>. E’ equivalente a <code class="docutils literal notranslate"><span class="pre">A.T</span></code>;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">np.reshape(a,</span> <span class="pre">new_shape)</span></code>: Modifica la <code class="docutils literal notranslate"><span class="pre">shape</span></code> di un <code class="docutils literal notranslate"><span class="pre">ndarray</span></code> <code class="docutils literal notranslate"><span class="pre">a</span></code>, nella forma specificata.</p></li>
+</ul>
+<p>Vediamo un esempio di applicazione di tali funzioni.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Definiamo un vettore v</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span> <span class="c1"># (1, 2, 3, ..., 9)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+
+<span class="c1"># E costruiamo la matrice A di shape 3x3 ottenuta modificando v</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+
+<span class="c1"># Controlliamo se A è di rango massimo</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">matrix_rank</span><span class="p">(</span><span class="n">A</span><span class="p">))</span>
+
+<span class="c1"># E, se ha rango massimo, calcoliamone l&#39;inversa</span>
+<span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">matrix_rank</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">==</span> <span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+    <span class="n">A_inv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1. 2. 3. 4. 5. 6. 7. 8. 9.]
+[[1. 2. 3.]
+ [4. 5. 6.]
+ [7. 8. 9.]]
+2
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="approfondimento-efficienza-di-numpy">
+<h3>Approfondimento: efficienza di <code class="docutils literal notranslate"><span class="pre">numpy</span></code><a class="headerlink" href="#approfondimento-efficienza-di-numpy" title="Link to this heading">#</a></h3>
+<p>L’obiettivo di questa sezione di approfondimento è verificare in modo empirico <strong>quanto</strong> <code class="docutils literal notranslate"><span class="pre">numpy</span></code> è più efficiente del Python classico per operazioni su vettori. Per farlo, andremo ad utilizzare la libreria <code class="docutils literal notranslate"><span class="pre">time</span></code> per misurare il tempo richiesto a Python base e <code class="docutils literal notranslate"><span class="pre">numpy</span></code> per svolgere le stesse operazioni.</p>
+<p>In questo esempio, utilizzeremo un vettore di lunghezza 10_000_000 (10 milioni), casuale, e proveremo a calcolare la somma del valore assoluto dei suoi elementi (operazione nota come <em>norma 1</em> del vettore, e solitamente indicata con <span class="math notranslate nohighlight">\(|| v ||_1\)</span>), utilizzando Python classico (attraverso due algoritmi differenti) e le funzioni di <code class="docutils literal notranslate"><span class="pre">numpy</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">math</span>
+
+<span class="c1"># Costruiamo il vettore</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">10_000_000</span><span class="p">)</span>
+
+<span class="c1"># || v ||_1 con Python modo 1</span>
+<span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">norma_1</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)):</span>
+    <span class="n">norma_1</span> <span class="o">=</span> <span class="n">norma_1</span> <span class="o">+</span> <span class="nb">abs</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+<span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tempo impiegato con Python modo 1: </span><span class="si">{</span><span class="n">end_time</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start_time</span><span class="si">}</span><span class="s2">s&quot;</span><span class="p">)</span>
+
+<span class="c1"># || v ||_1 con Python modo 2</span>
+<span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">norma_1</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">((</span><span class="nb">abs</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">v</span><span class="p">))</span> <span class="c1"># list comprehension</span>
+<span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tempo impiegato con Python modo 2: </span><span class="si">{</span><span class="n">end_time</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start_time</span><span class="si">}</span><span class="s2">s&quot;</span><span class="p">)</span>
+
+<span class="c1"># || v ||_1 con numpy</span>
+<span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">norma_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
+<span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tempo impiegato con Numpy: </span><span class="si">{</span><span class="n">end_time</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start_time</span><span class="si">}</span><span class="s2">s&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Tempo impiegato con Python modo 1: 1.0507698059082031s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Tempo impiegato con Python modo 2: 0.6027250289916992s
+Tempo impiegato con Numpy: 0.012057065963745117s
+</pre></div>
+</div>
+</div>
+</div>
+<p>Da questo esempio appare chiaro come Numpy, avendo implementato funzione pre-compilate, è estremamente più efficiente di Python standard, ed è quindi più preposto a eseguire operazioni di algebra lineare, dove l’efficienza è importantissima.</p>
+</section>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -424,12 +941,12 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="librerie.html"
+       href="errori.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Incrementare le funzionalità di base tramite le librerie</p>
+        <p class="prev-next-title">Gestione degli errori su Python</p>
       </div>
     </a>
     <a class="right-next"
@@ -447,6 +964,30 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creazione-di-array-con-numpy">Creazione di array con <code class="docutils literal notranslate"><span class="pre">numpy</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#funzioni-per-la-creazione-di-numpy-array">Funzioni per la creazione di <code class="docutils literal notranslate"><span class="pre">numpy</span></code> array</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#operazioni-tra-ndarray">Operazioni tra <code class="docutils literal notranslate"><span class="pre">ndarray</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#operazioni-logiche-tra-vettori">Operazioni logiche tra vettori</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#slicing-su-ndarray">Slicing su <code class="docutils literal notranslate"><span class="pre">ndarray</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#slicing-di-matrici">Slicing di matrici</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#manipolazione-di-matrici-e-vettori">Manipolazione di matrici e vettori</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#approfondimento-efficienza-di-numpy">Approfondimento: efficienza di <code class="docutils literal notranslate"><span class="pre">numpy</span></code></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
