@@ -60,7 +60,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'intro/cicli';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Ottimizzazione" href="../ottimizzazione/intro.html" />
+    <link rel="next" title="Funzioni e librerie" href="funzioni.html" />
     <link rel="prev" title="La condizione if e la logica booleana" href="condizione.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -148,14 +148,8 @@
   
   
   
-    
-    
-      
-    
-    
-    <img src="../_static/logo.png" class="logo__image only-light" alt="Calcolo Numerico - Home"/>
-    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Calcolo Numerico - Home"/>`);</script>
   
+    <p class="title logo__title">Calcolo Numerico</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -185,6 +179,10 @@
 <li class="toctree-l1"><a class="reference internal" href="array.html">Array: Liste e Tuple</a></li>
 <li class="toctree-l1"><a class="reference internal" href="condizione.html">La condizione <code class="docutils literal notranslate"><span class="pre">if</span></code> e la logica booleana</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">I cicli <code class="docutils literal notranslate"><span class="pre">for</span></code> e <code class="docutils literal notranslate"><span class="pre">while</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="funzioni.html">Funzioni e librerie</a></li>
+<li class="toctree-l1"><a class="reference internal" href="librerie.html">Incrementare le funzionalità di base tramite le librerie</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy.html">Python per l’algebra lineare: <code class="docutils literal notranslate"><span class="pre">numpy</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="matplotlib.html">Visualizzazione con <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code></a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Ottimizzazione</span></p>
 <ul class="nav bd-sidenav">
@@ -365,7 +363,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -381,6 +381,15 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ciclo-for">Ciclo <code class="docutils literal notranslate"><span class="pre">for</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ciclo-while">Ciclo <code class="docutils literal notranslate"><span class="pre">while</span></code></a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -392,6 +401,163 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="i-cicli-for-e-while">
 <h1>I cicli <code class="docutils literal notranslate"><span class="pre">for</span></code> e <code class="docutils literal notranslate"><span class="pre">while</span></code><a class="headerlink" href="#i-cicli-for-e-while" title="Link to this heading">#</a></h1>
+<p>I cicli sono fondamentali per automatizzare operazioni che richiedono una ripetizione di alcune istruzioni. Ad esempio, durante il corso utilizzeremo più volte i cicli per implementare algoritmi iterativi, con lo scopo di risolvere un problema di algebra lineare.</p>
+<p>In Python, ci sono due tipologie principali di cicli: i cicli a orizzonte determinato (ciclo <code class="docutils literal notranslate"><span class="pre">for</span></code>), e quelli a orizzonte indeterminato (ciclo <code class="docutils literal notranslate"><span class="pre">while</span></code>).</p>
+<section id="ciclo-for">
+<h2>Ciclo <code class="docutils literal notranslate"><span class="pre">for</span></code><a class="headerlink" href="#ciclo-for" title="Link to this heading">#</a></h2>
+<p>La sintassi del ciclo for è la seguente:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="o">&lt;</span><span class="n">VARIABILE</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">ITERABILE</span><span class="o">&gt;</span><span class="p">:</span>
+    <span class="o">&lt;</span><span class="n">RIPETIZIONE</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Andiamo a spiegare i singoli termini che compaiono nell’algoritmo sopra. La definizione del ciclo inizia definendo una variabile (sopra indicata dal placeholder <code class="docutils literal notranslate"><span class="pre">&lt;VARIABILE&gt;</span></code>, che viene inizializzata all’interno del ciclo e non deve, quindi, essere già stata utilizzata precedentemente nel codice), assieme ad un iterabile (una <code class="docutils literal notranslate"><span class="pre">lista</span></code>, <code class="docutils literal notranslate"><span class="pre">tupla</span></code>, <code class="docutils literal notranslate"><span class="pre">stringa</span></code> o un <code class="docutils literal notranslate"><span class="pre">generatore</span></code>). All’inizio del ciclo, <code class="docutils literal notranslate"><span class="pre">&lt;VARIABILE&gt;</span></code> viene inizializzata col primo valore dell’iterabile, e il codice all’interno del corpo del ciclo viene eseguito assegnando tale valore alla variabile.</p>
+<p>Dopodiché, il valore di <code class="docutils literal notranslate"><span class="pre">&lt;VARIABILE&gt;</span></code> si aggiorna, acquisendo il valore del secondo termine di <code class="docutils literal notranslate"><span class="pre">&lt;ITERABILE&gt;</span></code>, e il corpo del ciclo viene ripetuto col nuovo valore. Questa operazione viene ripetuta finché <code class="docutils literal notranslate"><span class="pre">&lt;VARIABILE&gt;</span></code> non assume l’ultimo valore presente in <code class="docutils literal notranslate"><span class="pre">&lt;ITERABILE&gt;</span></code>. A quel punto, il ciclo termina e l’esecuzione del codice continua tranquillamente.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Inizializzo un iterabile</span>
+<span class="n">iterable</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2
+1
+4
+3
+</pre></div>
+</div>
+</div>
+</div>
+<p>L’utilizzo più comune del ciclo <code class="docutils literal notranslate"><span class="pre">for</span></code> vuole che la variabile del ciclo assuma valori crescenti, partendo da 0 e arrivando ad un certo valore prefissato. Per ottenere questo risultato, è possibile utilizzare la funzione Python <code class="docutils literal notranslate"><span class="pre">range(START,</span> <span class="pre">STOP,</span> <span class="pre">STEP)</span></code> che ritorna un generatore contenente valori numerici da <code class="docutils literal notranslate"><span class="pre">START</span></code> (incluso) a <code class="docutils literal notranslate"><span class="pre">STOP</span></code> (escluso) con passo uguale a <code class="docutils literal notranslate"><span class="pre">STEP</span></code>. Ad esempio:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Stampa i numeri da 0 a 4</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span> <span class="c1"># quando un solo valore è specificato -&gt; START = 0, STEP = 1.</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0
+1
+2
+3
+4
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Il numero di iterazioni del ciclo NON viene pre-calcolato. Quindi, allungare o accorciare l’iterabile durante le iterazioni modifica il numero di iterazioni del ciclo.</p>
+<p>Ad esempio, il seguente codice (se eseguito) genera un ciclo infinito.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd"># Definisco un iterabile</span>
+<span class="sd">iterable = [1, 2, 3, 4, 5]</span>
+<span class="sd">for i in iterable:</span>
+<span class="sd">    print(i)</span>
+<span class="sd">    iterable.insert(i+1, i-1)</span>
+<span class="sd">    iterable.append(i)</span>
+<span class="sd">print(iterable)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;\n# Definisco un iterabile\niterable = [1, 2, 3, 4, 5]\nfor i in iterable:\n    print(i)\n    iterable.insert(i+1, i-1)\n    iterable.append(i)\nprint(iterable)\n&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="ciclo-while">
+<h2>Ciclo <code class="docutils literal notranslate"><span class="pre">while</span></code><a class="headerlink" href="#ciclo-while" title="Link to this heading">#</a></h2>
+<p>La sintassi del ciclo <code class="docutils literal notranslate"><span class="pre">while</span></code> è la seguente:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">while</span> <span class="o">&lt;</span><span class="n">CONDIZIONE</span><span class="o">&gt;</span><span class="p">:</span>
+    <span class="o">&lt;</span><span class="n">RIPETIZIONE</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>e il suo funzionamento è estremamente intuitivo: finché la condizione (che <em>DEVE</em> essere una variabile booleana) continua a valere <code class="docutils literal notranslate"><span class="pre">True</span></code>, il ciclo continua ad eseguirsi.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Inizializzo la condizione</span>
+<span class="n">continua</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="c1"># Inizializzo una variabile intera (per esempio)</span>
+<span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="c1"># Ciclo while</span>
+<span class="k">while</span> <span class="n">continua</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">5</span><span class="p">:</span>
+        <span class="n">continua</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+    <span class="c1"># Aggiornamento della variabile</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0
+1
+2
+3
+4
+5
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Uno degli aspetti più delicati del ciclo while è la possibilità di cadere in un ciclo infinito (che avviene quando la variabile <code class="docutils literal notranslate"><span class="pre">&lt;CONDIZIONE&gt;</span></code> rimane sempre <code class="docutils literal notranslate"><span class="pre">True</span></code>). Per evitare che questo accada, è buona norma definire una condizione di arresto per numero massimo di cicli.</p>
+<p>Questo può essere ottenuto anche tramite il comando Python <code class="docutils literal notranslate"><span class="pre">break</span></code> che, quando invocato, termina immediatamente il ciclo in corso (vale sia per cicli <code class="docutils literal notranslate"><span class="pre">for</span></code> che <code class="docutils literal notranslate"><span class="pre">while</span></code>).</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Inizializzo la condizione</span>
+<span class="n">continua</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">maxiter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span> <span class="c1"># Numero massimo di iterazioni del ciclo</span>
+
+<span class="c1"># Inizializzo una variabile intera (per esempio)</span>
+<span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="c1"># Ciclo while</span>
+<span class="k">while</span> <span class="n">continua</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span> <span class="c1"># NON si verificherà mai</span>
+        <span class="n">continua</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+    <span class="c1"># Aggiornamento della variabile</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+
+    <span class="c1"># Stoppo il codice se supera le iterazioni massime</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">maxiter</span><span class="p">:</span>
+        <span class="k">break</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -434,11 +600,11 @@ document.write(`
       </div>
     </a>
     <a class="right-next"
-       href="../ottimizzazione/intro.html"
+       href="funzioni.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Ottimizzazione</p>
+        <p class="prev-next-title">Funzioni e librerie</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -448,6 +614,22 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ciclo-for">Ciclo <code class="docutils literal notranslate"><span class="pre">for</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ciclo-while">Ciclo <code class="docutils literal notranslate"><span class="pre">while</span></code></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

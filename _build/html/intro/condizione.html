@@ -148,14 +148,8 @@
   
   
   
-    
-    
-      
-    
-    
-    <img src="../_static/logo.png" class="logo__image only-light" alt="Calcolo Numerico - Home"/>
-    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Calcolo Numerico - Home"/>`);</script>
   
+    <p class="title logo__title">Calcolo Numerico</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -185,6 +179,10 @@
 <li class="toctree-l1"><a class="reference internal" href="array.html">Array: Liste e Tuple</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">La condizione <code class="docutils literal notranslate"><span class="pre">if</span></code> e la logica booleana</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cicli.html">I cicli <code class="docutils literal notranslate"><span class="pre">for</span></code> e <code class="docutils literal notranslate"><span class="pre">while</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="funzioni.html">Funzioni e librerie</a></li>
+<li class="toctree-l1"><a class="reference internal" href="librerie.html">Incrementare le funzionalità di base tramite le librerie</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy.html">Python per l’algebra lineare: <code class="docutils literal notranslate"><span class="pre">numpy</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="matplotlib.html">Visualizzazione con <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code></a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Ottimizzazione</span></p>
 <ul class="nav bd-sidenav">
@@ -365,7 +363,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -381,6 +381,15 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#operatori-logici">Operatori Logici</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#note-conclusive">Note conclusive</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -393,16 +402,137 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="la-condizione-if-e-la-logica-booleana">
 <h1>La condizione <code class="docutils literal notranslate"><span class="pre">if</span></code> e la logica booleana<a class="headerlink" href="#la-condizione-if-e-la-logica-booleana" title="Link to this heading">#</a></h1>
 <p>Una delle funzioni più utili, e necessaria per la scrittura di qualunque programma non banale in Python, è la funzione <code class="docutils literal notranslate"><span class="pre">if</span></code>. La sua struttura di base è la seguente:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">CONDIZIONE</span><span class="p">:</span>
-    <span class="n">CORPO</span>
-<span class="k">elif</span> <span class="n">CONDIZIONE_ALTERNATIVA1</span><span class="p">:</span>
-    <span class="n">CORPO</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="o">&lt;</span><span class="n">CONDIZIONE</span><span class="o">&gt;</span><span class="p">:</span>
+    <span class="o">&lt;</span><span class="n">CORPO_IF</span><span class="o">&gt;</span>
+<span class="k">elif</span> <span class="o">&lt;</span><span class="n">CONDIZIONE_ALTERNATIVA1</span><span class="o">&gt;</span><span class="p">:</span>
+    <span class="o">&lt;</span><span class="n">CORPO_ALTERNATIVO1</span><span class="o">&gt;</span>
 <span class="k">elif</span> <span class="n">CONDIZIONE_ALTERNATIVA2</span><span class="p">:</span>
-    <span class="n">CORPO</span>
+    <span class="o">&lt;</span><span class="n">CORPO_ALTERNATIVO2</span><span class="o">&gt;</span>
 <span class="k">else</span><span class="p">:</span>
-    <span class="n">CORPO</span>
+    <span class="o">&lt;</span><span class="n">CORPO_ALTERNATIVO</span><span class="o">&gt;</span>
 </pre></div>
 </div>
+<p>Come è facile intuire, tale codice controllerà se la <code class="docutils literal notranslate"><span class="pre">&lt;CONDIZIONE&gt;</span></code> è verificata. In caso affermativo, eseguirà il contenuto di <code class="docutils literal notranslate"><span class="pre">&lt;CORPO_IF&gt;</span></code>. Se viceversa è verificata <code class="docutils literal notranslate"><span class="pre">&lt;CONDIZIONE_ALTERNATIVA1&gt;</span></code>, verrà eseguito il contenuto di <code class="docutils literal notranslate"><span class="pre">&lt;CORPO_ALTERNATIVO1&gt;</span></code>, e così via. Se nessuna condizione contenuta nella catena di <code class="docutils literal notranslate"><span class="pre">elif</span></code> viene verificato, viene semplicemente eseguito il contenuto di <code class="docutils literal notranslate"><span class="pre">&lt;CORPO_ALTERNATIVO&gt;</span></code>.</p>
+<p>Più nello specifico, Python richiede che <code class="docutils literal notranslate"><span class="pre">&lt;CONDIZIONE&gt;</span></code> rappresenti una variabile booleana, e il contenuto di <code class="docutils literal notranslate"><span class="pre">&lt;CORPO_IF&gt;</span></code> viene eseguito se e solo se tale variabile rappresenta il valore <code class="docutils literal notranslate"><span class="pre">True</span></code>. Ad esempio:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Definire una variabile booleana di check</span>
+<span class="n">condizione_vera</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="k">if</span> <span class="n">condizione_vera</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condizione if verificata&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condizione else verificata&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Condizione if verificata
+</pre></div>
+</div>
+</div>
+</div>
+<p>Chiaramente, tale operazione diventa interessante quando viene usata per confrontare delle variabili. A tal proposito, diventa necessario applicare gli operatori logici di confronto, già introdotti nel capitolo dedicato alle variabili booleane.</p>
+<p>Di seguito, scriviamo un programma che informa l’utente se un numero <code class="docutils literal notranslate"><span class="pre">n</span></code> preso in input è pari o dispari.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Definiamo il numero n</span>
+<span class="n">n</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">20</span>
+
+<span class="k">if</span> <span class="n">n</span><span class="o">%</span><span class="k">2</span> == 0: # I numeri pari hanno resto 0 nella divisione per 2
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Il numero è pari.&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span> <span class="c1"># Non ci sono altre possibilità oltre che pari e dispari</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Il numero è dispari.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Il numero è pari.
+</pre></div>
+</div>
+</div>
+</div>
+<section id="operatori-logici">
+<h2>Operatori Logici<a class="headerlink" href="#operatori-logici" title="Link to this heading">#</a></h2>
+<p>Quando il numero di condizioni da verificare è maggiore di 1, è necessario utilizzare operatori logici (<code class="docutils literal notranslate"><span class="pre">and</span></code>, <code class="docutils literal notranslate"><span class="pre">or</span></code>, <code class="docutils literal notranslate"><span class="pre">not</span></code>, etc.), per connettere tali condizioni. In Python, queste possono essere dichiarate in due modi:</p>
+<ol class="arabic simple">
+<li><p>Dichiarando esplicitamente l’operatore che si deve utilizzare (i.e. con i comandi <code class="docutils literal notranslate"><span class="pre">and</span></code>, <code class="docutils literal notranslate"><span class="pre">or</span></code> e <code class="docutils literal notranslate"><span class="pre">not</span></code>).</p></li>
+<li><p>Utilizzando i sostituti simbolici:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&amp;</span></code> &lt;-&gt; <code class="docutils literal notranslate"><span class="pre">and</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">|</span></code> &lt;-&gt; <code class="docutils literal notranslate"><span class="pre">or</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">!</span></code> &lt;-&gt; <code class="docutils literal notranslate"><span class="pre">not</span></code></p></li>
+</ul>
+</li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Dichiariamo tre variabili numeriche</span>
+<span class="n">a</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">b</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">c</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="c1"># Controlliamo che la prima sia maggiore della seconda</span>
+<span class="n">condizione_1</span> <span class="o">=</span> <span class="n">a</span> <span class="o">&gt;</span> <span class="n">b</span>
+
+<span class="c1"># Controlliamo che la prima sia minore della terza alla seconda</span>
+<span class="n">condizione_2</span> <span class="o">=</span> <span class="n">a</span> <span class="o">&lt;</span> <span class="n">c</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="c1"># Se la prima è verificata, mentre la seconda no, restituire &quot;Ok!&quot;</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">condizione_1</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="n">condizione_2</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Ok!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>O, equivalentemente:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Dichiariamo tre variabili numeriche</span>
+<span class="n">a</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">b</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">c</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="c1"># Controlliamo che la prima sia maggiore della seconda</span>
+<span class="n">condizione_1</span> <span class="o">=</span> <span class="n">a</span> <span class="o">&gt;</span> <span class="n">b</span>
+
+<span class="c1"># Controlliamo che la prima sia minore della terza alla seconda</span>
+<span class="n">condizione_2</span> <span class="o">=</span> <span class="n">a</span> <span class="o">&lt;</span> <span class="n">c</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="c1"># Se la prima è verificata, mentre la seconda no, restituire &quot;Ok!&quot;</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">condizione_1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="ow">not</span> <span class="n">condizione_2</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Ok!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="note-conclusive">
+<h2>Note conclusive<a class="headerlink" href="#note-conclusive" title="Link to this heading">#</a></h2>
+<p>Quando il numero di condizioni da controllare diventa grande, è meglio separare la fase in cui la condizione viene verificata dalla condizione stessa, per migliorare la leggibilità del codice.</p>
+<p>Ad esempio, vediamo come scrivere un programma che presi 3 numeri <code class="docutils literal notranslate"><span class="pre">a</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code> e <code class="docutils literal notranslate"><span class="pre">c</span></code>, restituisce <code class="docutils literal notranslate"><span class="pre">True</span></code> se <code class="docutils literal notranslate"><span class="pre">a</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code> e <code class="docutils literal notranslate"><span class="pre">c</span></code> rappresentano le possibili lunghezze dei lati di un triangolo, ricordando che ciò accade se e solo se la somma di ogni coppia di lati è maggiore del terzo lato.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Scegliamo 3 numeri</span>
+<span class="n">a</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.4</span>
+<span class="n">b</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.3</span>
+<span class="n">c</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.5</span>
+
+<span class="n">condizione</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">&gt;</span> <span class="n">c</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">c</span> <span class="o">&gt;</span> <span class="n">b</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">b</span> <span class="o">+</span> <span class="n">c</span>  <span class="o">&gt;</span> <span class="n">a</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">condizione</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -459,6 +589,22 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#operatori-logici">Operatori Logici</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#note-conclusive">Note conclusive</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

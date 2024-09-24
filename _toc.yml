@@ -8,8 +8,16 @@ parts:
     chapters:
       - file: intro/variabili
       - file: intro/array
+      - file: intro/iterabili_stringhe_dizionari
       - file: intro/condizione
       - file: intro/cicli
+      - file: intro/funzioni
+      - file: intro/librerie
+      - file: intro/path_file
+      - file: intro/errori
+      - file: intro/numpy
+      - file: intro/matplotlib
+      - file: intro/esercitazione
   - caption: Ottimizzazione
     chapters:
       - file: ottimizzazione/intro
