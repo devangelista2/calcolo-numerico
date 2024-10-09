@@ -60,7 +60,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'intro/array';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="La condizione if e la logica booleana" href="condizione.html" />
+    <link rel="next" title="Iterabili: stringhe e dizionari" href="iterabili_stringhe_dizionari.html" />
     <link rel="prev" title="Variabili e tipi di dato" href="variabili.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -177,12 +177,16 @@
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="variabili.html">Variabili e tipi di dato</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Array: Liste e Tuple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iterabili_stringhe_dizionari.html">Iterabili: stringhe e dizionari</a></li>
 <li class="toctree-l1"><a class="reference internal" href="condizione.html">La condizione <code class="docutils literal notranslate"><span class="pre">if</span></code> e la logica booleana</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cicli.html">I cicli <code class="docutils literal notranslate"><span class="pre">for</span></code> e <code class="docutils literal notranslate"><span class="pre">while</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="funzioni.html">Funzioni e librerie</a></li>
+<li class="toctree-l1"><a class="reference internal" href="funzioni.html">Funzioni</a></li>
 <li class="toctree-l1"><a class="reference internal" href="librerie.html">Incrementare le funzionalità di base tramite le librerie</a></li>
+<li class="toctree-l1"><a class="reference internal" href="path_file.html">Gestione del <code class="docutils literal notranslate"><span class="pre">path</span></code> e files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="errori.html">Gestione degli errori su Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="numpy.html">Python per l’algebra lineare: <code class="docutils literal notranslate"><span class="pre">numpy</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="matplotlib.html">Visualizzazione con <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="esercitazione.html">Esercitazione: algebra lineare con Python</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Ottimizzazione</span></p>
 <ul class="nav bd-sidenav">
@@ -407,7 +411,7 @@ document.write(`
 <p>Discussi approfonditamente i tipi di dato principale, possiamo passare a descrivere come si dichiarano e manipolano gli <code class="docutils literal notranslate"><span class="pre">array</span></code>, ovvero delle variabili che contengono al loro interno più variabili, che possono essere anche di tipo differente.</p>
 <p>In Python esistono due tipologie principali di array: le <code class="docutils literal notranslate"><span class="pre">liste</span></code> e le <code class="docutils literal notranslate"><span class="pre">tuple</span></code>. La differenza principale tra liste e tuple è che le prime sono mutabili (ovvero è sempre possibile accedere gli elementi al loro interno e modificarli), mentre le seconde sono immutabili (una volta che un elemento è stato dichiarato, non è più possibile modificarlo). Vedremo meglio questa differenza proseguendo con la discussione.</p>
 <p>A differenza di altri linguaggi di programmazione, dove è necessario inizializzare gli array definendone in anticipo la lunghezza, su Python gli array sono dinamici, ovvero possono essere allungati/accorciati al bisogno.</p>
-<p>Per definire una lista, si inseriscono semplicemente una serie di valori, racchiusi all’interno di due parentesi graffe <code class="docutils literal notranslate"><span class="pre">[]</span></code>.</p>
+<p>Per definire una lista, si inseriscono semplicemente una serie di valori, racchiusi all’interno di due parentesi quadre <code class="docutils literal notranslate"><span class="pre">[]</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="c1"># Definiamo una lista di numeri</span>
@@ -900,11 +904,11 @@ Rosso
       </div>
     </a>
     <a class="right-next"
-       href="condizione.html"
+       href="iterabili_stringhe_dizionari.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">La condizione <code class="docutils literal notranslate"><span class="pre">if</span></code> e la logica booleana</p>
+        <p class="prev-next-title">Iterabili: stringhe e dizionari</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
