@@ -411,9 +411,10 @@ document.write(`
 <p>La differenza principale tra i classici array e gli operatori di algebra lineare sono le operazioni tra essi. Ad esempio, la somma di due vettori di lunghezza uguale da come risultato un vettore della stessa lunghezza, con i valori ottenuti sommando elemento per elemento, mentre la somma di due array su Python li concatena, come abbiamo visto.</p>
 <p>Similmente, esistono due prodotti possibili tra vettori e tra matrici e vettori: il prodotto “classico”, che corrisponde alla moltiplicazione elemento per elemento, e il <strong>prodotto riga-per-colonna</strong>. Si ricorda che in formule, questi si esprimono così:</p>
 <p>siano <span class="math notranslate nohighlight">\(v = (v_1, \dots, v_n)\)</span>, <span class="math notranslate nohighlight">\(w = (w_1, \dots, w_n)\)</span>, <span class="math notranslate nohighlight">\(A = (a_{i, j})_{i, j=1, \dots, m, n}\)</span> due vettori ed una matrice. Allora:</p>
-<p>\begin{align*}
-(v + w)_i = (v_i + w_i) \quad (v * w)<em>i = (v_i * w_i) \quad (Av)<em>i = \sum</em>{j=1}^n a</em>{i, j} v_j.
-\end{align*}</p>
+<div class="math notranslate nohighlight">
+\[
+(v + w)_i = (v_i + w_i) \quad (v * w)_i = (v_i * w_i) \quad (Av)_i = \sum_{j=1}^n a_{i, j} v_j.
+\]</div>
 <p>In questa esercitazione, si richiede di scrivere un piccolo pacchetto Python che implementa le principali funzioni di algebra lineare, senza utilizzare nessun pacchetto esterno se non le funzioni base di Python (quindi, senza utilizzare <code class="docutils literal notranslate"><span class="pre">numpy</span></code>).</p>
 <p>In particolare, i vettori saranno rappresentati dalle liste, mentre le matrici saranno delle liste di liste, dove ciascuna lista interna rappresenta una riga (o una colonna) della matrice.</p>
 <p>Le operazioni da implementare dovranno seguire le consuete regole di operazione tra vettori di algebra lineare, ad esempio una funzione <code class="docutils literal notranslate"><span class="pre">somma(v,</span> <span class="pre">w)</span></code> deve sommare i vettori <code class="docutils literal notranslate"><span class="pre">v</span></code> e <code class="docutils literal notranslate"><span class="pre">w</span></code>, elemento per elemento. Stessa cosa per la funzione <code class="docutils literal notranslate"><span class="pre">prodotto_riga_per_colonna(A,</span> <span class="pre">v)</span></code>, che deve implementare il classico prodotto riga-per-colonna tra matrice e vettore (o, alternativamente, tra due vettori).</p>
@@ -459,7 +460,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Tempo impiegato: 0.0006990432739257812s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Tempo impiegato: 0.0013501644134521484s
 </pre></div>
 </div>
 </div>

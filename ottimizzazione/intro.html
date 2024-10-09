@@ -57,11 +57,13 @@
     <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'ottimizzazione/intro';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Approssimazione" href="../approssimazione/intro.html" />
-    <link rel="prev" title="Visualizzazione con matplotlib" href="../intro/matplotlib.html" />
+    <link rel="prev" title="Esercitazione: algebra lineare con Python" href="../intro/esercitazione.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -182,8 +184,11 @@
 <li class="toctree-l1"><a class="reference internal" href="../intro/cicli.html">I cicli <code class="docutils literal notranslate"><span class="pre">for</span></code> e <code class="docutils literal notranslate"><span class="pre">while</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../intro/funzioni.html">Funzioni</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../intro/librerie.html">Incrementare le funzionalità di base tramite le librerie</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/path_file.html">Gestione del <code class="docutils literal notranslate"><span class="pre">path</span></code> e files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/errori.html">Gestione degli errori su Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../intro/numpy.html">Python per l’algebra lineare: <code class="docutils literal notranslate"><span class="pre">numpy</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../intro/matplotlib.html">Visualizzazione con <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/esercitazione.html">Esercitazione: algebra lineare con Python</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Ottimizzazione</span></p>
 <ul class="current nav bd-sidenav">
@@ -364,7 +369,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -380,6 +387,22 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classificazione-dei-problemi-di-ottimizzazione">Classificazione dei problemi di ottimizzazione</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#un-po-di-codice">Un po’ di codice</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classificazione-dei-punti-di-minimo-e-massimo">Classificazione dei punti di minimo (e massimo)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#estremi-relativi-e-punti-stazionari">Estremi relativi e punti stazionari</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#condizioni-del-primo-ordine">Condizioni del primo ordine</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#condizioni-del-secondo-ordine">Condizioni del secondo ordine</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#funzioni-convesse">Funzioni convesse</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -389,9 +412,198 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="ottimizzazione">
+  <section class="tex2jax_ignore mathjax_ignore" id="ottimizzazione">
 <h1>Ottimizzazione<a class="headerlink" href="#ottimizzazione" title="Link to this heading">#</a></h1>
-<p><strong>Work in progress…</strong></p>
+<p>Tra le applicazioni più importanti dell’Algebra Lineare c’è senza dubbio l’Ottimizzazione. Infatti, praticamente tutti i problemi <em>reali</em> risolvibili computazionalmente possono essere in qualche modo riformulati come problemi di ottimizzazione, partendo dalla Ricerca Operativa (minimizzazione del percorso sottoposto a vincoli, distribuzione di carico, …), per arrivare all’ingegneria (ottimizzazione di forma, distribuzione di forze nelle strutture, …), fino al più moderno addestramento di modelli di Intelligenza Artificiali e l’ottimizzazione di parametri in modelli fisici ed economici.</p>
+<p>Tutti questi problemi possono essere riscritti come:</p>
+<div class="math notranslate nohighlight">
+\[
+\min_{x \in \Omega} f(x),
+\]</div>
+<p>dove la funzione <span class="math notranslate nohighlight">\(f: \Omega \to \mathbb{R}\)</span>, detta <strong>funzione obiettivo</strong>, descrive la quantità che si vuole ottimizzare, in funzione di alcuni valori, detti <strong>variabili</strong> o <strong>parametri</strong>, indicati semplicemente con il simbolo di <span class="math notranslate nohighlight">\(x\)</span>. L’insieme <span class="math notranslate nohighlight">\(\Omega\)</span>, spesso detto <strong>insieme dei valori accettabili</strong> o <strong>insieme dei vincoli</strong>, descrive sotto quali ipotesi la soluzione <span class="math notranslate nohighlight">\(x\)</span> del problema deve sottostare per essere dichiarata <em>accettabile</em>.</p>
+<p>Consideriamo, per esempio, un classico problema di Ricerca Operativa in cui si vuole minimizzare la lunghezza del percorso che passa per un determinato insieme di punti (particolarmente interessante per le sue applicazioni nelle reti di distribuzione per la consegna a domicilio, ad esempio, oltre che per le sue interessanti proprietà matematiche), problema spesso noto in letteratura come <em>problema del Commesso Viaggiatore</em>.</p>
+<p>In questo caso, possiamo immaginare la variabile <span class="math notranslate nohighlight">\(x \in \Omega \subset \mathbb{R}^n\)</span> come l’elenco (ordinato) dei nodi che si devono visitare, la funzione obiettivo <span class="math notranslate nohighlight">\(f(x)\)</span> come la lunghezza totale del percorso descritta da <span class="math notranslate nohighlight">\(x\)</span>, ovvero</p>
+<div class="math notranslate nohighlight">
+\[
+    f(x) = \sum_{i=1}^{n-1} d(x_i, x_{i+1}),
+\]</div>
+<p>mentre <span class="math notranslate nohighlight">\(\Omega\)</span> rappresenta l’elenco dei vincoli a cui siamo sottoposti, quindi il fatto che tutti i nodi devono essere visitati tutti e solo una volta, oltre che magari alcuni vincoli fisici come la possibilità o meno di raggiungere un certo nodo <span class="math notranslate nohighlight">\(x_i\)</span> partendo dal noto <span class="math notranslate nohighlight">\(x_j\)</span> (situazione tipica quando i <em>nodi</em> rappresentano delle abitazioni che sono da raggiungere, ad esempio, da un dato mezzo di trasporto).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Quanto appena descritto rappresenta un procedimento chiamato <strong>modellizzazione matematica</strong>, in cui un processo viene descritto matematicamente assegnando delle variabili e delle funzioni ai vari elementi del processo. Questo tipo di approccio è tipico di praticamente qualunque applicazione, ed è necessario prenderci la mano per capire bene il resto del corso.</p>
+</div>
+<section id="classificazione-dei-problemi-di-ottimizzazione">
+<h2>Classificazione dei problemi di ottimizzazione<a class="headerlink" href="#classificazione-dei-problemi-di-ottimizzazione" title="Link to this heading">#</a></h2>
+<p>In base alla forma dell’insieme <span class="math notranslate nohighlight">\(\Omega\)</span> dei vincoli, oltre che alle proprietà matematiche della funzione obiettivo <span class="math notranslate nohighlight">\(f(x)\)</span>, i problemi di ottimizzazione si classificano in varie categorie.</p>
+<p>Partendo dalla scelta di <span class="math notranslate nohighlight">\(\Omega\)</span>, riconosciamo due classi principali:</p>
+<ul class="simple">
+<li><p>Se <span class="math notranslate nohighlight">\(\Omega = \mathbb{R}^n\)</span>, allora diciamo che il problema è <strong>svincolato</strong> (<em>unconstrained</em>, in Inglese)</p></li>
+<li><p>Se <span class="math notranslate nohighlight">\(\Omega \subset \mathbb{R}^n\)</span>, allora diciamo che il problema è <strong>vincolato</strong> (<em>constrained</em>, in Inglese)</p></li>
+</ul>
+<p>Nella classe dei problemi vincolati, un caso particolare è dettato dalla situazione in cui <span class="math notranslate nohighlight">\(\Omega \subseteq \mathbb{Z}^n\)</span>. I problemi di questo tipo sono detti <strong>discreti</strong>. Tutti gli altri vengono in genere detti <strong>continui</strong>, di riflesso.</p>
+<p>Per quanto riguarda le proprietà della funzione obiettivo <span class="math notranslate nohighlight">\(f(x)\)</span>, invece, abbiamo:</p>
+<ul class="simple">
+<li><p>Se <span class="math notranslate nohighlight">\(f(x)\)</span> è una funzione almeno derivabile (<span class="math notranslate nohighlight">\(f \in C^1(\Omega)\)</span>), il problema è detto <strong>smooth</strong>,</p></li>
+<li><p>Se <span class="math notranslate nohighlight">\(f \notin C^1(\Omega)\)</span>, ovvero <span class="math notranslate nohighlight">\(f(x)\)</span> non è derivabile in almeno un punto di <span class="math notranslate nohighlight">\(\Omega\)</span>, allora il problema si dice <strong>non-smooth</strong>.</p></li>
+</ul>
+<p>Ulteriori classificazioni si hanno considerando altre proprietà della funzione obiettivo. Ad esempio:</p>
+<ul class="simple">
+<li><p>Se <span class="math notranslate nohighlight">\(f(x) = x^T w\)</span> è una funzione lineare in <span class="math notranslate nohighlight">\(x\)</span>, allora il problema è detto <strong>lineare</strong>,</p></li>
+<li><p>Se <span class="math notranslate nohighlight">\(f(x) = x^T A x + x^T b\)</span> è una funzione quadratica in <span class="math notranslate nohighlight">\(x\)</span>, allora il problema è detto <strong>quadratico</strong>.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Le funzioni quadratiche sono particolarmente importanti nell’ambito dell’Algebra Lineare, poiché ad esempio i problemi ai minimi quadrati (già accennati a lezione), ricadono in questa tipologia.</p>
+</div>
+<p><ins>La situazione che consideriamo in questo corso, da ora in avanti, è quella di problemi di ottimizzazione <strong>smooth</strong> e <strong>svincolata</strong>.</ins></p>
+</section>
+<section id="un-po-di-codice">
+<h2>Un po’ di codice<a class="headerlink" href="#un-po-di-codice" title="Link to this heading">#</a></h2>
+<p>Vediamo ora un po’ di codice. Come abbiamo detto, in questo corso andremo sempre a considerare ottimizzazione svincolata, per cui <span class="math notranslate nohighlight">\(\Omega = \mathbb{R}^n\)</span>, che quindi non andrà definito nell’implementazione.</p>
+<p>Per quanto riguarda la funzione <span class="math notranslate nohighlight">\(f(x)\)</span>, questa viene spesso dichiarata come una normale funzione Python, che prende in input un vettore <span class="math notranslate nohighlight">\(x\)</span> che assumiamo <strong>sempre</strong> essere un <code class="docutils literal notranslate"><span class="pre">ndarray</span></code> di <code class="docutils literal notranslate"><span class="pre">numpy</span></code>. La funzione <span class="math notranslate nohighlight">\(f(x)\)</span> agirà quindi su questo array <span class="math notranslate nohighlight">\(x\)</span> per produrre come risultato <strong>un numero reale</strong>.</p>
+<p>Per semplicità, consideriamo la funzione, con <span class="math notranslate nohighlight">\(x \in \mathbb{R}\)</span> (i.e. <span class="math notranslate nohighlight">\(n=1\)</span>):</p>
+<div class="math notranslate nohighlight">
+\[
+f(x) = (x-1)^2 + e^x.
+\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Importiamo le librerie utili</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Definiamo la funzione f(x) = (x-1)^2 + e^x</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">y</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Essendo una funzione da <span class="math notranslate nohighlight">\(\mathbb{R}\)</span> a <span class="math notranslate nohighlight">\(\mathbb{R}\)</span>, possiamo visualizzarla semplicemente sul piano cartesiano.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Definiamo un&#39;intervallo di riferimento</span>
+<span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">100</span> <span class="c1"># Numero di punti</span>
+
+<span class="c1"># Definiamo una discretizzazione dell&#39;asse x</span>
+<span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+
+<span class="c1"># Calcoliamo il rispettivo valore di y</span>
+<span class="n">yy</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span>
+
+<span class="c1"># Plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$x$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$y$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;Plot della funzione $f(x) = (x-1)^2 + e^x$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/68aae75d6a10b73f8f4e22561394db50133f10a3881b046dc687e232d3467e5c.png" src="../_images/68aae75d6a10b73f8f4e22561394db50133f10a3881b046dc687e232d3467e5c.png" />
+</div>
+</div>
+<p>Bisogna qui osservare alcuni punti importanti:</p>
+<ul class="simple">
+<li><p>L’intervallo <span class="math notranslate nohighlight">\([a, b]\)</span> scelto deve essere selezionato dallo studente ed è non vincolante. Chiaramente, la funzione è definita su tutto <span class="math notranslate nohighlight">\(\mathbb{R}\)</span> ma il plot può mostrare solo una parte predefinita di asse.</p></li>
+<li><p>La discretizzazione dell’asse <span class="math notranslate nohighlight">\(x\)</span> e i rispettivi valori dell’asse <span class="math notranslate nohighlight">\(y\)</span> sono salvati in variabili <code class="docutils literal notranslate"><span class="pre">xx</span></code> e <code class="docutils literal notranslate"><span class="pre">yy</span></code> (notazione che useremo per tutto il resto del corso). Questo perché esse rappresentato delle vabili <em>fittizie</em>, costruite al <strong>solo</strong> scopo di rappresentare il grafico (che, come abbiamo detto nel rispettivo punto del corso) richiede di definire una discretizzazione degli assi.</p></li>
+</ul>
+<p>Come detto, il nostro fine ultimo è quello di risolvere:</p>
+<div class="math notranslate nohighlight">
+\[
+min_{x \in \mathbb{R}^n} f(x).
+\]</div>
+<p>La funzione appena descritta ha come <strong>unico</strong> punto di minimo il valore <span class="math notranslate nohighlight">\(x^* \approx 0.31492\)</span>. Andiamo a rappresentare tale punto sul grafico.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Definisco il punto di minimo</span>
+<span class="n">x_min</span> <span class="o">=</span> <span class="mf">0.31492</span>
+<span class="n">y_min</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x_min</span><span class="p">)</span>
+
+<span class="c1"># Plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_min</span><span class="p">,</span> <span class="n">y_min</span><span class="p">,</span> <span class="s1">&#39;ro&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$x$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$y$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;Plot della funzione $f(x) = (x-1)^2 + e^x$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/cb7167dbbe0cbf66bbe7dd171be50036f5ed2298a75b009822b4d6145f748992.png" src="../_images/cb7167dbbe0cbf66bbe7dd171be50036f5ed2298a75b009822b4d6145f748992.png" />
+</div>
+</div>
+</section>
+<section id="classificazione-dei-punti-di-minimo-e-massimo">
+<h2>Classificazione dei punti di minimo (e massimo)<a class="headerlink" href="#classificazione-dei-punti-di-minimo-e-massimo" title="Link to this heading">#</a></h2>
+<p>Chiaramente, non tutte le funzioni sono <em>belle</em> come quella appena descritta: per via della sua forma a “U”, essa mostra infatti un unico punto di minimo e nessun punto di massimo.</p>
+<p>La maggior parte delle funzioni reali avrà forma più simile a quella rappresentata di seguito:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">x</span><span class="o">**</span><span class="mi">4</span> <span class="o">-</span> <span class="n">x</span><span class="o">**</span><span class="mi">3</span> <span class="o">-</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span>
+    <span class="k">return</span> <span class="n">y</span>
+
+<span class="c1"># Plot</span>
+<span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">100</span>
+
+<span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+<span class="n">yy</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$x$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$y$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;Plot della funzione $f(x) = x^4 - x^3 - 3 x^2$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/99a742d9c381b9a1835450f01f4dbe480d7b506f693c3420790296faab207e87.png" src="../_images/99a742d9c381b9a1835450f01f4dbe480d7b506f693c3420790296faab207e87.png" />
+</div>
+</div>
+<p>Che presenta vari punti di minimo e un punto di massimo. Chiaramente, quando sviluppiamo un algoritmo di ottimizzazione, puntiamo a trovare il <em>miglior</em> minimo possibile (in questo caso, quello vicino ad <span class="math notranslate nohighlight">\(x = 1.5\)</span>), ma in alcune situazioni possiamo tranquillamente accontentarci del minimo che si trova attorno ad <span class="math notranslate nohighlight">\(x = - 1\)</span>. Diamo un po’ di definizioni con lo scopo di caratterizzare questi punti:</p>
+<p>Sia <span class="math notranslate nohighlight">\(f: \mathbb{R}^n \to \mathbb{R}\)</span> una funzione. Allora:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(x^* \in \mathbb{R}^n\)</span> si dice <strong>punto di minimo globale</strong> se <span class="math notranslate nohighlight">\(f(x^*) \leq f(x)\)</span>, <span class="math notranslate nohighlight">\(\forall x \in \mathbb{R}^n\)</span>;</p></li>
+<li><p><span class="math notranslate nohighlight">\(x^* \in \mathbb{R}^n\)</span> si dice <strong>punto di massimo globale</strong> se <span class="math notranslate nohighlight">\(f(x^*) \geq f(x)\)</span>, <span class="math notranslate nohighlight">\(\forall x \in \mathbb{R}^n\)</span>;</p></li>
+<li><p><span class="math notranslate nohighlight">\(x^* \in \mathbb{R}^n\)</span> si dice <strong>punto di minimo locale</strong> se <span class="math notranslate nohighlight">\(\exists \epsilon &gt; 0\)</span> tale che <span class="math notranslate nohighlight">\(f(x^*) \leq f(x)\)</span>, <span class="math notranslate nohighlight">\(\forall x \in (x^* - \epsilon, x^* + \epsilon)\)</span>;</p></li>
+<li><p><span class="math notranslate nohighlight">\(x^* \in \mathbb{R}^n\)</span> si dice <strong>punto di massimo locale</strong> se <span class="math notranslate nohighlight">\(\exists \epsilon &gt; 0\)</span> tale che <span class="math notranslate nohighlight">\(f(x^*) \geq f(x)\)</span>, <span class="math notranslate nohighlight">\(\forall x \in (x^* - \epsilon, x^* + \epsilon)\)</span>;</p></li>
+</ul>
+<p>In particolare, per quanto riguarda la funzione sopra, nell’intervallo <span class="math notranslate nohighlight">\([-2, 2]\)</span> riconosciamo:</p>
+<ul class="simple">
+<li><p>Un punto di minimo globale <span class="math notranslate nohighlight">\(x \approx 1.5\)</span>,</p></li>
+<li></li>
+<li><p>Due punti di massimo locale: <span class="math notranslate nohighlight">\(x=0\)</span> e <span class="math notranslate nohighlight">\(x=2\)</span>,</p></li>
+<li></li>
+</ul>
+</section>
+<section id="estremi-relativi-e-punti-stazionari">
+<h2>Estremi relativi e punti stazionari<a class="headerlink" href="#estremi-relativi-e-punti-stazionari" title="Link to this heading">#</a></h2>
+<section id="condizioni-del-primo-ordine">
+<h3>Condizioni del primo ordine<a class="headerlink" href="#condizioni-del-primo-ordine" title="Link to this heading">#</a></h3>
+</section>
+<section id="condizioni-del-secondo-ordine">
+<h3>Condizioni del secondo ordine<a class="headerlink" href="#condizioni-del-secondo-ordine" title="Link to this heading">#</a></h3>
+</section>
+</section>
+<section id="funzioni-convesse">
+<h2>Funzioni convesse<a class="headerlink" href="#funzioni-convesse" title="Link to this heading">#</a></h2>
+<p><strong>Teorema:</strong> Sia <span class="math notranslate nohighlight">\(f \in C^1(\mathbb{R}^n)\)</span>, se <span class="math notranslate nohighlight">\(x^* \in \mathbb{R}^n\)</span> è punto di minimo di <span class="math notranslate nohighlight">\(f(x)\)</span>, allora <span class="math notranslate nohighlight">\(\nabla f(x) = 0\)</span> (ovvero, <span class="math notranslate nohighlight">\(x^*\)</span> è un punto stazionario di <span class="math notranslate nohighlight">\(f\)</span>).</p>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text"><em>Dimostrazione</em></span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+</div>
+</details></section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -425,12 +637,12 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../intro/matplotlib.html"
+       href="../intro/esercitazione.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Visualizzazione con <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code></p>
+        <p class="prev-next-title">Esercitazione: algebra lineare con Python</p>
       </div>
     </a>
     <a class="right-next"
@@ -448,6 +660,29 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classificazione-dei-problemi-di-ottimizzazione">Classificazione dei problemi di ottimizzazione</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#un-po-di-codice">Un po’ di codice</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classificazione-dei-punti-di-minimo-e-massimo">Classificazione dei punti di minimo (e massimo)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#estremi-relativi-e-punti-stazionari">Estremi relativi e punti stazionari</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#condizioni-del-primo-ordine">Condizioni del primo ordine</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#condizioni-del-secondo-ordine">Condizioni del secondo ordine</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#funzioni-convesse">Funzioni convesse</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
