@@ -18,9 +18,13 @@ parts:
       - file: intro/numpy
       - file: intro/matplotlib
       - file: intro/esercitazione
+  - caption: Approssimazione di dati
+    chapters:
+      - file: approssimazione/intro_dati
+      - file: approssimazione/modelli_approssimazione
+      - file: approssimazione/overfit_underfit_regolarizzazione
   - caption: Ottimizzazione
     chapters:
       - file: ottimizzazione/intro
-  - caption: Approssimazione di dati
-    chapters:
-      - file: approssimazione/intro
+      - file: ottimizzazione/GD
+      - file: ottimizzazione/CGLS
