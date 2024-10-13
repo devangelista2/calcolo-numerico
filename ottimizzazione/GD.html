@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Ottimizzazione &#8212; Calcolo Numerico</title>
+    <title>Metodo di Discesa del Gradiente &#8212; Calcolo Numerico</title>
   
   
   
@@ -60,6 +60,8 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'ottimizzazione/GD';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Metodo dei Gradienti Coniugati" href="CGLS.html" />
+    <link rel="prev" title="Problemi di Ottimizzazione" href="intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -122,8 +124,6 @@
       
       
       
-        
-      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -148,8 +148,14 @@
   
   
   
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Calcolo Numerico - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Calcolo Numerico - Home"/>`);</script>
   
-    <p class="title logo__title">Calcolo Numerico</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -188,13 +194,21 @@
 <li class="toctree-l1"><a class="reference internal" href="../intro/matplotlib.html">Visualizzazione con <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../intro/esercitazione.html">Esercitazione: algebra lineare con Python</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Ottimizzazione</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="intro.html">Ottimizzazione</a></li>
-</ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Approssimazione di dati</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../approssimazione/intro.html">Approssimazione</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../approssimazione/intro_dati.html">Caricamento dei Dati e Visualizzazione</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../approssimazione/modelli_approssimazione.html">Modelli di Approssimazione e Minimi Quadrati</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../approssimazione/overfit_underfit_regolarizzazione.html">Underfit, Overfit e Regolarizzazione</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Ottimizzazione</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Problemi di Ottimizzazione</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Metodo di Discesa del Gradiente</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CGLS.html">Metodo dei Gradienti Coniugati</a></li>
 </ul>
 
     </div>
@@ -378,7 +392,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Ottimizzazione</h1>
+    <h1>Metodo di Discesa del Gradiente</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -392,8 +406,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="ottimizzazione">
-<h1>Ottimizzazione<a class="headerlink" href="#ottimizzazione" title="Link to this heading">#</a></h1>
+  <section id="metodo-di-discesa-del-gradiente">
+<h1>Metodo di Discesa del Gradiente<a class="headerlink" href="#metodo-di-discesa-del-gradiente" title="Link to this heading">#</a></h1>
 <p><strong>Work in progress…</strong></p>
 </section>
 
@@ -427,6 +441,24 @@ document.write(`
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Problemi di Ottimizzazione</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="CGLS.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Metodo dei Gradienti Coniugati</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
