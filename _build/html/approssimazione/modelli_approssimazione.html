@@ -204,6 +204,7 @@
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Modelli di Approssimazione e Minimi Quadrati</a></li>
 
 
+
 <li class="toctree-l1"><a class="reference internal" href="overfit_underfit_regolarizzazione.html">Underfit, Overfit e Regolarizzazione</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Ottimizzazione</span></p>
@@ -409,6 +410,11 @@ document.write(`
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Modelli di Approssimazione e Minimi Quadrati</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#il-problema-test">Il problema test</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#approssimazione-ai-minimi-quadrati">Approssimazione ai minimi quadrati</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#risoluzione-mediante-equazioni-normali">Risoluzione mediante Equazioni Normali</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#risoluzione-tramite-cholesky">Risoluzione tramite Cholesky</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#risoluzione-tramite-svd">Risoluzione tramite SVD</a></li>
+</ul>
+</li>
 </ul>
 
             </nav>
@@ -521,7 +527,7 @@ f(x) = a_0 + a_1 x + a_2 x^2 + \dots + a_d x^d = \sum_{k=0}^d a_k x^k.
 <p>A questo punto, per ogni <span class="math notranslate nohighlight">\(i = 1, \dots n\)</span>, costruiamo i valori di output:</p>
 <div class="math notranslate nohighlight">
 \[
-y_i = f(x_i, \alpha) + e_i = \sum_{k=0}^n a_k x_i^k,
+y_i = f(x_i, \alpha) + e_i = \sum_{k=0}^n a_k x_i^k + e_i,
 \]</div>
 <p>dove <span class="math notranslate nohighlight">\(e_i\)</span> è del rumore gaussiano estratto con la funzione <code class="docutils literal notranslate"><span class="pre">np.random.normal(loc=0,</span> <span class="pre">scale=sigma,</span> <span class="pre">size=(1,</span> <span class="pre">))</span></code>, con deviazione standard <code class="docutils literal notranslate"><span class="pre">sigma</span> <span class="pre">=</span> <span class="pre">0.1</span></code>.</p>
 <div class="cell docutils container">
@@ -584,7 +590,7 @@ E(\alpha, \alpha_{true}) = \frac{|| \alpha - \alpha_{true} ||}{|| \alpha_{true} 
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/21339f8a970932a81991c10dbc101587f5a4c016e271250fcc0f8ee4ae45deba.png" src="../_images/21339f8a970932a81991c10dbc101587f5a4c016e271250fcc0f8ee4ae45deba.png" />
+<img alt="../_images/64e0c6429595fdb9ea96cac191354760e6e6f3b5769ecfbb36ee417c39ccd94e.png" src="../_images/64e0c6429595fdb9ea96cac191354760e6e6f3b5769ecfbb36ee417c39ccd94e.png" />
 </div>
 </div>
 </section>
@@ -615,14 +621,254 @@ f_\theta(x, \alpha) = \alpha^T x^{(d)}.
 <p>Notare che, definendo:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-X = \begin{bmatrix} {x_1^{(d)}}^T \\ {x_2^{(d)}}^T \\ \vdots \\ {x_n^{(d)}}^T  \end{bmatrix} \in \mathbb{R}^{n \times d},
+X = \begin{bmatrix} {x_1^{(d)}}^T \\ {x_2^{(d)}}^T \\ \vdots \\ {x_n^{(d)}}^T  \end{bmatrix} = \begin{bmatrix} x_1^0 &amp; x_1^1 &amp; \dots &amp; x_1^d \\ x_2^0 &amp; x_2^1 &amp; \dots &amp; x_2^d \\ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ x_n^0 &amp; x_n^1 &amp; \dots &amp; x_n^d  \end{bmatrix} \in \mathbb{R}^{n \times d},
 \end{split}\]</div>
-<p>la matrice che ha per righe i dati, la formula sopra è equivalente a:</p>
+<p>la matrice che ha per righe i dati, spesso chiamata <strong>matrice di Vandermonde</strong> di grado <span class="math notranslate nohighlight">\(d\)</span> associata ad <span class="math notranslate nohighlight">\(\{ x_1, x_2, \dots, x_n \}\)</span>, la formula sopra è equivalente a:</p>
 <div class="math notranslate nohighlight">
 \[
 \min_{\alpha} || X\alpha - y ||_2^2,
 \]</div>
-<p>dove riconosciamo un problema ai minimi quadrati.</p>
+<p>dove abbiamo indicato con <span class="math notranslate nohighlight">\(y = [y_1, \dots, y_n]\)</span> il vettore che ha per elementi i dati.</p>
+<p>Si osservi che il problema appena ottenuto non è altro che un <em>semplice</em> problema ai minimi quadrati, già affrontato a lezione, in cui la matrice è rappresentata dalla matrice di Vandermonde di grado <span class="math notranslate nohighlight">\(d\)</span> associata ai dati <span class="math notranslate nohighlight">\(\{ x_1, \dots, x_n \}\)</span>, mentre il termine noto è rappresentato dai dati (<strong>rumorosi</strong>) <span class="math notranslate nohighlight">\(\{ y_1, \dots, y_n \}\)</span>.</p>
+<p>Andiamo a costruire queste quantità in Python.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Il vettore <code class="docutils literal notranslate"><span class="pre">y</span></code> che abbiamo già costruito durante la costruzione del problema test, rappresenta lo stesso vettore <span class="math notranslate nohighlight">\(y\)</span> della formulazione matematica ai minimi quadrati.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">vandermonde</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Preso in input un numpy array &quot;x&quot; di lunghezza (n, ) contentente i dati, e un valore intero &quot;d&quot; rappresentante il grado del polinomio, </span>
+<span class="sd">    costruisce e ritorna la matrice di vandermonde X di grado d, associata a x.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    x (ndarray): Il vettore dei dati di input.</span>
+<span class="sd">    d (int): Il grado massimo del polinomio.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    X (ndarray): La matrice di Vandermonde di grado &quot;d&quot;, associata ad x.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    
+    <span class="c1"># Inizializzo la matrice di Vandermonde con shape (n, d+1)</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="n">d</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+    
+    <span class="c1"># Costruisco la matrice di Vandermonde</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">d</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">X</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span> <span class="o">**</span> <span class="n">i</span>
+    <span class="k">return</span> <span class="n">X</span>
+
+<span class="c1"># Definiamo la matrice di Vandermonde tramite la funzione appena definita con grado d = 5</span>
+<span class="n">d</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">vandermonde</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Ora, dato un vettore <span class="math notranslate nohighlight">\(\alpha\)</span> di lunghezza <span class="math notranslate nohighlight">\(d+1\)</span>, possiamo calcolare il valore del <strong>residuo</strong>, definito come:</p>
+<div class="math notranslate nohighlight">
+\[
+r(\alpha) := || X\alpha - y ||_2^2,
+\]</div>
+<p>che misura la discrepanza tra la previsione del modello di approssimazione (cioè <span class="math notranslate nohighlight">\(X\alpha\)</span>), e i dati misurati (<span class="math notranslate nohighlight">\(y\)</span>). Risolvere il problema ai minimi quadrati corrisponde a minimizzare questa quantità.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">residuo</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">alpha</span><span class="p">):</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">X</span> <span class="o">@</span> <span class="n">alpha</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="k">return</span> <span class="n">r</span>
+
+<span class="c1"># Testiamo la funzione con un alpha generato casualmente</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">d</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Residuo: </span><span class="si">{</span><span class="n">residuo</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">alpha</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Residuo: 121.81213605692827.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="risoluzione-mediante-equazioni-normali">
+<h1>Risoluzione mediante Equazioni Normali<a class="headerlink" href="#risoluzione-mediante-equazioni-normali" title="Link to this heading">#</a></h1>
+<p>Dobbiamo quindi trovare il valore di <span class="math notranslate nohighlight">\(\alpha\)</span> che risolva:</p>
+<div class="math notranslate nohighlight">
+\[
+\min_{\alpha} || X\alpha - y ||_2^2.
+\]</div>
+<p>Avete già visto a lezione che questo può essere fatto risolvendo le <strong>equazioni normali</strong> associate a tale problema, ovvero:</p>
+<div class="math notranslate nohighlight">
+\[
+X^T X \alpha = X^T y.
+\]</div>
+<p>Questo può essere fatto tramite:</p>
+<ul class="simple">
+<li><p>Decomposizione di Cholesky;</p></li>
+<li><p>Decomposizione ai Valori Singolari (SVD);</p></li>
+</ul>
+<p>Vediamo i due metodi nel dettaglio.</p>
+<section id="risoluzione-tramite-cholesky">
+<h2>Risoluzione tramite Cholesky<a class="headerlink" href="#risoluzione-tramite-cholesky" title="Link to this heading">#</a></h2>
+<p>Avete già osservato come la matrice del sistema delle equazioni normali associato al problema dei minimi quadrati sia Simmetrica e Definita Positiva (SDP), condizione necessaria e sufficiente per l’applicabilità del metodo di Cholesky, se e solo se la matrice <span class="math notranslate nohighlight">\(X\)</span> ha rango massimo.</p>
+<p>Siccome <span class="math notranslate nohighlight">\(X\)</span> ha dimensione <span class="math notranslate nohighlight">\((n, d+1)\)</span>, e siccome (auspicabilmente), <span class="math notranslate nohighlight">\(n \gg d+1\)</span>, allora il rango di <span class="math notranslate nohighlight">\(X\)</span> è massimo se e solo se è uguale a <span class="math notranslate nohighlight">\(d+1\)</span>. Verifichiamo che questo succede.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Calcoliamo il rango della matrice di Vandermonde X</span>
+<span class="n">rk_X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">matrix_rank</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Il rango di X è massimo? </span><span class="si">{</span><span class="n">rk_X</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="p">(</span><span class="n">d</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Il rango di X è massimo? True.
+</pre></div>
+</div>
+</div>
+</div>
+<p>Possiamo quindi applicare la decomposizione di Cholesky, che trova una matrice triangolare inferore <span class="math notranslate nohighlight">\(L\)</span> tale che:</p>
+<div class="math notranslate nohighlight">
+\[
+X^T X = L L^T.
+\]</div>
+<p>Il sistema dell equazioni normali può quindi essere risolto tramite il metodo della sostituzione all’Avanti e all’Indietro, ovvero risolvendo i due sistemi (triangolari):</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{cases}
+    L z = X^T y \\
+    L^T \alpha = z.
+\end{cases}
+\end{split}\]</div>
+<p>In Python:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Troviamo la matrice L tale che X^T X = L L^T</span>
+<span class="n">L</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">cholesky</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">X</span><span class="p">)</span>
+
+<span class="c1"># Verifichiamo che X^T X = L L^T</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;|| X^T X - L L^T || = </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="w"> </span><span class="o">@</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">L</span><span class="w"> </span><span class="o">@</span><span class="w"> </span><span class="n">L</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>|| X^T X - L L^T || = 1.9860273225978185e-15.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">###### Risolviamo il primo sistema:</span>
+<span class="c1"># Calcoliamo il termine noto X^T y</span>
+<span class="n">Xty</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">y</span>
+
+<span class="c1"># Troviamo z</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">Xty</span><span class="p">)</span>
+
+<span class="c1">###### Risolviamo il secondo sistema:</span>
+<span class="c1"># Troviamo alpha</span>
+<span class="n">alpha_chol</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">L</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Una volta trovata la nostra soluzione <code class="docutils literal notranslate"><span class="pre">alpha_sol</span></code>, visualizziamo su grafico come viene la curva calcolata tramite questo algoritmo di approssimazione rispetto ai dati che abbiamo a disposizione e rispetto alla curva vera.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Rappresentiamo la curva *approssimata* in [0, 1]</span>
+<span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">yy_true</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">alpha_true</span><span class="p">)</span>
+<span class="n">yy_chol</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">alpha_chol</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy_chol</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy_true</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;ro&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s2">&quot;Cholesky&quot;</span><span class="p">,</span> <span class="s2">&quot;True&quot;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/feabca9a4059078a6d0cf92afbd3ef52216ec127e09981a38bb5ab9fde50fab7.png" src="../_images/feabca9a4059078a6d0cf92afbd3ef52216ec127e09981a38bb5ab9fde50fab7.png" />
+</div>
+</div>
+<p>E’ abbastanza chiaro che la curva ricostruita non riesce ad approssimare correttamente i dati. Prima di discutere le ragioni e le possibili soluzioni di questo comportamento, vediamo come risolvere in maniera alternativa il problema ai minimi quadrati tramite decomposizione a valori singolari.</p>
+</section>
+<section id="risoluzione-tramite-svd">
+<h2>Risoluzione tramite SVD<a class="headerlink" href="#risoluzione-tramite-svd" title="Link to this heading">#</a></h2>
+<p>Consideriamo la decomposizione a Valori Singolari (SVD) della matrice <span class="math notranslate nohighlight">\(X\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+X = U \Sigma V^T,
+\]</div>
+<p>dove <span class="math notranslate nohighlight">\(U \in \mathbb{R}^{n \times n}\)</span> e <span class="math notranslate nohighlight">\(V \in \mathbb{R}^{(d+1) \times (d+1)}\)</span> sono matrici ortogonali, mentre <span class="math notranslate nohighlight">\(\Sigma \in \mathbb{R}^{n \times (d+1)}\)</span> è una matrice diagonale i cui elementi sulla diagonale sono i valori singolari di <span class="math notranslate nohighlight">\(X\)</span>, in ordine decrescente.</p>
+<p>In Python, è possibile calcolare la decomposizione SVD di <span class="math notranslate nohighlight">\(X\)</span> tramite il comando <code class="docutils literal notranslate"><span class="pre">np.linalg.svd(X)</span></code>. Questa funzione ritorna tre <code class="docutils literal notranslate"><span class="pre">ndarray</span></code>: <code class="docutils literal notranslate"><span class="pre">U</span></code>, <code class="docutils literal notranslate"><span class="pre">s</span></code> e <code class="docutils literal notranslate"><span class="pre">VT</span></code>, dove <code class="docutils literal notranslate"><span class="pre">U</span></code> e <code class="docutils literal notranslate"><span class="pre">VT</span></code> rappresentano le matrici <span class="math notranslate nohighlight">\(U\)</span> e <span class="math notranslate nohighlight">\(V^T\)</span>, rispettivamente, mentre <code class="docutils literal notranslate"><span class="pre">s</span></code> è un vettore che rappresenta la diagonale di <span class="math notranslate nohighlight">\(\Sigma\)</span>, ovvero i valori singolari della matrice <span class="math notranslate nohighlight">\(X\)</span>, in ordine decrescente.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Calcoliamo la SVD di X</span>
+<span class="n">U</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">VT</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+<span class="c1"># Costruiamo la matrice Sigma esplicitamente (per controllare che la SVD sia stata </span>
+<span class="c1"># svolta correttamente)</span>
+<span class="n">Sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="n">d</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">d</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">Sigma</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+<span class="c1"># Calcoliamo || X - U * Sigma * VT ||</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;|| X - U Sigma V^T || = </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">X</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">U</span><span class="w"> </span><span class="o">@</span><span class="w"> </span><span class="n">Sigma</span><span class="w"> </span><span class="o">@</span><span class="w"> </span><span class="n">VT</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>|| X - U Sigma V^T || = 2.4905065272728362e-15
+</pre></div>
+</div>
+</div>
+</div>
+<p>Ricordando che le matrici <span class="math notranslate nohighlight">\(U\)</span> e <span class="math notranslate nohighlight">\(V\)</span> sono ortognali, le equazioni normali diventano:</p>
+<div class="math notranslate nohighlight">
+\[
+X^T X \alpha = X^T y \iff V \Sigma^2 V^T = V \Sigma U^T y \iff \Sigma^2 V^T = \Sigma U^T y
+\]</div>
+<p>La cui soluzione esplicita è:</p>
+<div class="math notranslate nohighlight">
+\[
+    \alpha = \sum_{i=1}^{d+1} \frac{u_i^T y}{\sigma_i} v_i. 
+\]</div>
+<p>Questa operazione può semplicemente essere implementata in Python come:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Inizializzazione di alpha</span>
+<span class="n">alpha_svd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">d</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="p">))</span>
+
+<span class="c1"># Aggiornamento</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">d</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">alpha_svd</span> <span class="o">=</span> <span class="n">alpha_svd</span> <span class="o">+</span> <span class="p">(</span><span class="n">U</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">y</span><span class="p">)</span> <span class="o">/</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">VT</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span>
+
+<span class="c1"># Rappresentiamo tutte le soluzioni su grafico</span>
+<span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">yy_true</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">alpha_true</span><span class="p">)</span>
+<span class="n">yy_chol</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">alpha_chol</span><span class="p">)</span>
+<span class="n">yy_svd</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">alpha_svd</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy_svd</span><span class="p">,</span> <span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy_chol</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy_true</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;ro&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s2">&quot;SVD&quot;</span><span class="p">,</span> <span class="s2">&quot;Cholesky&quot;</span><span class="p">,</span> <span class="s2">&quot;True&quot;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/78cc0c2e8c3a2fd0f7bff5a424a883d14cd783544880f6e54e792633bfc1bfcd.png" src="../_images/78cc0c2e8c3a2fd0f7bff5a424a883d14cd783544880f6e54e792633bfc1bfcd.png" />
+</div>
+</div>
+<p>Le soluzioni <span class="math notranslate nohighlight">\(\alpha_{chol}\)</span> e <span class="math notranslate nohighlight">\(\alpha_{SVD}\)</span> sono, come ci si aspetta, identiche, poiché soluzioni dello stesso problema dei minimi quadrati, che ha soluzione unica.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -692,6 +938,11 @@ X = \begin{bmatrix} {x_1^{(d)}}^T \\ {x_2^{(d)}}^T \\ \vdots \\ {x_n^{(d)}}^T  \
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Modelli di Approssimazione e Minimi Quadrati</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#il-problema-test">Il problema test</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#approssimazione-ai-minimi-quadrati">Approssimazione ai minimi quadrati</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#risoluzione-mediante-equazioni-normali">Risoluzione mediante Equazioni Normali</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#risoluzione-tramite-cholesky">Risoluzione tramite Cholesky</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#risoluzione-tramite-svd">Risoluzione tramite SVD</a></li>
+</ul>
+</li>
 </ul>
 
   </nav></div>
