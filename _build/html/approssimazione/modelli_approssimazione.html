@@ -206,6 +206,9 @@
 
 
 <li class="toctree-l1"><a class="reference internal" href="overfit_underfit_regolarizzazione.html">Underfit, Overfit e Regolarizzazione</a></li>
+
+
+
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Ottimizzazione</span></p>
 <ul class="nav bd-sidenav">
@@ -485,7 +488,7 @@ f(x) = a_0 + a_1 x + a_2 x^2 + \dots + a_d x^d = \sum_{k=0}^d a_k x^k.
 
     <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">d</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
-        <span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">x</span> <span class="o">**</span> <span class="n">i</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">alpha</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">x</span> <span class="o">**</span> <span class="n">i</span>
     <span class="k">return</span> <span class="n">y</span>
 </pre></div>
 </div>
@@ -507,7 +510,7 @@ f(x) = a_0 + a_1 x + a_2 x^2 + \dots + a_d x^d = \sum_{k=0}^d a_k x^k.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(x = 3, y = 40)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(x = 3, y = 40.0)
 </pre></div>
 </div>
 </div>
@@ -575,7 +578,7 @@ E(\alpha, \alpha_{true}) = \frac{|| \alpha - \alpha_{true} ||}{|| \alpha_{true} 
 
     <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="c1"># Questa è l&#39;unica riga che dobbiamo cambiare rispetto a prima!</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">d</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
-        <span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">x</span> <span class="o">**</span> <span class="n">i</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">alpha</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">x</span> <span class="o">**</span> <span class="n">i</span>
     <span class="k">return</span> <span class="n">y</span>
 
 <span class="c1"># Andiamo a rappresentare la curva *vera* in [0, 1]</span>
@@ -590,7 +593,7 @@ E(\alpha, \alpha_{true}) = \frac{|| \alpha - \alpha_{true} ||}{|| \alpha_{true} 
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/64e0c6429595fdb9ea96cac191354760e6e6f3b5769ecfbb36ee417c39ccd94e.png" src="../_images/64e0c6429595fdb9ea96cac191354760e6e6f3b5769ecfbb36ee417c39ccd94e.png" />
+<img alt="../_images/0124c32170c12e82c8f13a7e5c6156c11bdef4b582d3d15f7e07470b79720c92.png" src="../_images/0124c32170c12e82c8f13a7e5c6156c11bdef4b582d3d15f7e07470b79720c92.png" />
 </div>
 </div>
 </section>
@@ -685,7 +688,7 @@ r(\alpha) := || X\alpha - y ||_2^2,
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Residuo: 121.81213605692827.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Residuo: 36.46438622278704.
 </pre></div>
 </div>
 </div>
@@ -791,7 +794,7 @@ X^T X = L L^T.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/feabca9a4059078a6d0cf92afbd3ef52216ec127e09981a38bb5ab9fde50fab7.png" src="../_images/feabca9a4059078a6d0cf92afbd3ef52216ec127e09981a38bb5ab9fde50fab7.png" />
+<img alt="../_images/9518ab835f85393b882bdb8272aa879f1a83e3e4f3ea3f908d10ef307758f28a.png" src="../_images/9518ab835f85393b882bdb8272aa879f1a83e3e4f3ea3f908d10ef307758f28a.png" />
 </div>
 </div>
 <p>E’ abbastanza chiaro che la curva ricostruita non riesce ad approssimare correttamente i dati. Prima di discutere le ragioni e le possibili soluzioni di questo comportamento, vediamo come risolvere in maniera alternativa il problema ai minimi quadrati tramite decomposizione a valori singolari.</p>
@@ -864,7 +867,7 @@ X^T X \alpha = X^T y \iff V \Sigma^2 V^T = V \Sigma U^T y \iff \Sigma^2 V^T = \S
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/78cc0c2e8c3a2fd0f7bff5a424a883d14cd783544880f6e54e792633bfc1bfcd.png" src="../_images/78cc0c2e8c3a2fd0f7bff5a424a883d14cd783544880f6e54e792633bfc1bfcd.png" />
+<img alt="../_images/f4a400f08721c0c0a25b22e2fdceaef4417c07c089d1ddbbb5e321c5eb2a5a51.png" src="../_images/f4a400f08721c0c0a25b22e2fdceaef4417c07c089d1ddbbb5e321c5eb2a5a51.png" />
 </div>
 </div>
 <p>Le soluzioni <span class="math notranslate nohighlight">\(\alpha_{chol}\)</span> e <span class="math notranslate nohighlight">\(\alpha_{SVD}\)</span> sono, come ci si aspetta, identiche, poiché soluzioni dello stesso problema dei minimi quadrati, che ha soluzione unica.</p>

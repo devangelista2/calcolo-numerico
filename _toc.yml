@@ -17,7 +17,6 @@ parts:
       - file: intro/errori
       - file: intro/numpy
       - file: intro/matplotlib
-      - file: intro/esercitazione
   - caption: Approssimazione di dati
     chapters:
       - file: approssimazione/intro_dati
@@ -28,3 +27,7 @@ parts:
       - file: ottimizzazione/intro
       - file: ottimizzazione/GD
       - file: ottimizzazione/CGLS
+  - caption: Esercitazioni
+    chapters:
+      - file: esercitazioni/esercitazione_1
+      - file: esercitazioni/esercitazione_2
