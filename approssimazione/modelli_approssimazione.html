@@ -194,7 +194,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../intro/errori.html">Gestione degli errori su Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../intro/numpy.html">Python per l’algebra lineare: <code class="docutils literal notranslate"><span class="pre">numpy</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../intro/matplotlib.html">Visualizzazione con <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../intro/esercitazione.html">Esercitazione: algebra lineare con Python</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Approssimazione di dati</span></p>
 <ul class="current nav bd-sidenav">
@@ -215,6 +214,11 @@
 <li class="toctree-l1"><a class="reference internal" href="../ottimizzazione/intro.html">Problemi di Ottimizzazione</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ottimizzazione/GD.html">Metodo di Discesa del Gradiente</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ottimizzazione/CGLS.html">Metodo dei Gradienti Coniugati</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Esercitazioni</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../esercitazioni/esercitazione_1.html">Esercitazione: algebra lineare con Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../esercitazioni/esercitazione_2.html">Esercitazione: Approssimazione di dati con Minimi Quadrati Regolarizzati</a></li>
 </ul>
 
     </div>
@@ -871,6 +875,16 @@ X^T X \alpha = X^T y \iff V \Sigma^2 V^T = V \Sigma U^T y \iff \Sigma^2 V^T = \S
 </div>
 </div>
 <p>Le soluzioni <span class="math notranslate nohighlight">\(\alpha_{chol}\)</span> e <span class="math notranslate nohighlight">\(\alpha_{SVD}\)</span> sono, come ci si aspetta, identiche, poiché soluzioni dello stesso problema dei minimi quadrati, che ha soluzione unica.</p>
+<blockquote>
+<div><p><strong>Esercizio:</strong> Prova a ri-eseguire lo script precedente modificando:</p>
+<ul class="simple">
+<li><p>il numero <span class="math notranslate nohighlight">\(n\)</span> dei dati,</p></li>
+<li><p>il grado del polinomio che genera il problema test,</p></li>
+<li><p>la quantità di rumore aggiunto sui dati,</p></li>
+<li><p>il grado del polinomio del modello approssimante.</p></li>
+</ul>
+<p>Cosa osservi, riguardo al comportamento del polinomio approssimante risultante?</p>
+</div></blockquote>
 </section>
 </section>
 
