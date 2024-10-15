@@ -194,7 +194,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../intro/errori.html">Gestione degli errori su Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../intro/numpy.html">Python per l’algebra lineare: <code class="docutils literal notranslate"><span class="pre">numpy</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../intro/matplotlib.html">Visualizzazione con <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../intro/esercitazione.html">Esercitazione: algebra lineare con Python</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Approssimazione di dati</span></p>
 <ul class="nav bd-sidenav">
@@ -204,13 +203,23 @@
 <li class="toctree-l1"><a class="reference internal" href="../approssimazione/modelli_approssimazione.html">Modelli di Approssimazione e Minimi Quadrati</a></li>
 
 
+
 <li class="toctree-l1"><a class="reference internal" href="../approssimazione/overfit_underfit_regolarizzazione.html">Underfit, Overfit e Regolarizzazione</a></li>
+
+
+
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Ottimizzazione</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Problemi di Ottimizzazione</a></li>
 <li class="toctree-l1"><a class="reference internal" href="GD.html">Metodo di Discesa del Gradiente</a></li>
+
 <li class="toctree-l1"><a class="reference internal" href="CGLS.html">Metodo dei Gradienti Coniugati</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Esercitazioni</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../esercitazioni/esercitazione_1.html">Esercitazione: algebra lineare con Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../esercitazioni/esercitazione_2.html">Esercitazione: Approssimazione di dati con Minimi Quadrati Regolarizzati</a></li>
 </ul>
 
     </div>
@@ -409,12 +418,16 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classificazione-dei-problemi-di-ottimizzazione">Classificazione dei problemi di ottimizzazione</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#un-po-di-codice">Un po’ di codice</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classificazione-dei-punti-di-minimo-e-massimo">Classificazione dei punti di minimo (e massimo)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#funzioni-convesse">Funzioni convesse</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#caratterizzazione-delle-funzioni-convesse">Caratterizzazione delle funzioni convesse</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calcolo-della-convessita-e-coercivita">Calcolo della convessità e coercività</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#estremi-relativi-e-punti-stazionari">Estremi relativi e punti stazionari</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#condizioni-del-primo-ordine">Condizioni del primo ordine</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#condizione-del-primo-ordine">Condizione del primo ordine</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#condizioni-del-secondo-ordine">Condizioni del secondo ordine</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#funzioni-convesse">Funzioni convesse</a></li>
 </ul>
             </nav>
         </div>
@@ -530,7 +543,7 @@ f(x) = (x-1)^2 + e^x.
 <p>Come detto, il nostro fine ultimo è quello di risolvere:</p>
 <div class="math notranslate nohighlight">
 \[
-min_{x \in \mathbb{R}^n} f(x).
+\min_{x \in \mathbb{R}^n} f(x).
 \]</div>
 <p>La funzione appena descritta ha come <strong>unico</strong> punto di minimo il valore <span class="math notranslate nohighlight">\(x^* \approx 0.31492\)</span>. Andiamo a rappresentare tale punto sul grafico.</p>
 <div class="cell docutils container">
@@ -596,28 +609,120 @@ min_{x \in \mathbb{R}^n} f(x).
 <p>In particolare, per quanto riguarda la funzione sopra, nell’intervallo <span class="math notranslate nohighlight">\([-2, 2]\)</span> riconosciamo:</p>
 <ul class="simple">
 <li><p>Un punto di minimo globale <span class="math notranslate nohighlight">\(x \approx 1.5\)</span>,</p></li>
-<li></li>
-<li><p>Due punti di massimo locale: <span class="math notranslate nohighlight">\(x=0\)</span> e <span class="math notranslate nohighlight">\(x=2\)</span>,</p></li>
-<li></li>
+<li><p>Un punto di massimo globale in <span class="math notranslate nohighlight">\(x = -2\)</span>,</p></li>
+<li><p>Un punto di minimo locale in <span class="math notranslate nohighlight">\(x = 1\)</span>,</p></li>
+<li><p>Due punti di massimo locale: <span class="math notranslate nohighlight">\(x=0\)</span> e <span class="math notranslate nohighlight">\(x=2\)</span>.</p></li>
 </ul>
-</section>
-<section id="estremi-relativi-e-punti-stazionari">
-<h2>Estremi relativi e punti stazionari<a class="headerlink" href="#estremi-relativi-e-punti-stazionari" title="Link to this heading">#</a></h2>
-<section id="condizioni-del-primo-ordine">
-<h3>Condizioni del primo ordine<a class="headerlink" href="#condizioni-del-primo-ordine" title="Link to this heading">#</a></h3>
-</section>
-<section id="condizioni-del-secondo-ordine">
-<h3>Condizioni del secondo ordine<a class="headerlink" href="#condizioni-del-secondo-ordine" title="Link to this heading">#</a></h3>
-</section>
+<p>Sfortunatamente, è possibile dimostrare un risultato <em>scoraggiante</em> dal punto di vista teorico: il problema di riconoscere, data una funzione qualunque, il suo punto di minimo <strong>globale</strong>, è un problema NP-Hard e quindi, difatto, impossibile da risolvere in generale.</p>
 </section>
 <section id="funzioni-convesse">
 <h2>Funzioni convesse<a class="headerlink" href="#funzioni-convesse" title="Link to this heading">#</a></h2>
-<p><strong>Teorema:</strong> Sia <span class="math notranslate nohighlight">\(f \in C^1(\mathbb{R}^n)\)</span>, se <span class="math notranslate nohighlight">\(x^* \in \mathbb{R}^n\)</span> è punto di minimo di <span class="math notranslate nohighlight">\(f(x)\)</span>, allora <span class="math notranslate nohighlight">\(\nabla f(x) = 0\)</span> (ovvero, <span class="math notranslate nohighlight">\(x^*\)</span> è un punto stazionario di <span class="math notranslate nohighlight">\(f\)</span>).</p>
-<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
-<summary class="sd-summary-title sd-card-header">
-<span class="sd-summary-text"><em>Dimostrazione</em></span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p>Una soluzione a questo scoraggiante problema, si ottiene vincolando la tipologia di funzioni che si vogliono considerare. Infatti, se ci limitassimo a considerare le funzioni del primo tipo rappresentato sopra (ovvero, del tipo di <span class="math notranslate nohighlight">\(f(x) = (x-1)^2 + e^x\)</span>), allora il problema si semplificherebbe molto: essa infatti rappresenta un unico <strong>punto estremante</strong>, che corrisponde con il suo punto di minimo assoluto.</p>
+<p>Le funzioni di questo tipo si chiamano <strong>funzioni convesse</strong>, e su di esse si fonda tutta la prima, consistente teoria dell’ottimizzazione.</p>
+<p>Vediamo un po’ di definizioni:</p>
+<blockquote>
+<div><p>Una funzione <span class="math notranslate nohighlight">\(f: \mathbb{R}^n \to \mathbb{R}\)</span> si dice <strong>convessa</strong> se per ogni <span class="math notranslate nohighlight">\(\lambda \in [0, 1]\)</span> e per ogni <span class="math notranslate nohighlight">\(x, y \in \mathbb{R}^n\)</span>, vale che <span class="math notranslate nohighlight">\(f(\lambda x + (1-\lambda)y ) \leq \lambda f(x) + (1 - \lambda) f(y)\)</span>.</p>
+</div></blockquote>
+<p>Questa definizione, sebbene un po’ criptica in apparenza, è semplice se osservata nelle sue componenti. Presi due punti <span class="math notranslate nohighlight">\(x\)</span> e <span class="math notranslate nohighlight">\(y\)</span>, l’espressione <span class="math notranslate nohighlight">\(\lambda x + (1 - \lambda)y\)</span> rappresenta, al variare di <span class="math notranslate nohighlight">\(\lambda \in [0, 1]\)</span>, il segmento di retta che congiunge <span class="math notranslate nohighlight">\(x\)</span> con <span class="math notranslate nohighlight">\(y\)</span>. Allo stesso modo, <span class="math notranslate nohighlight">\(\lambda f(x) + (1 - \lambda) f(y)\)</span> rappresenta il segmento che congiunge <span class="math notranslate nohighlight">\(f(x)\)</span> con <span class="math notranslate nohighlight">\(f(y)\)</span>. Una funzione è quindi convessa se, presi due punti distinti <span class="math notranslate nohighlight">\(x\)</span> e <span class="math notranslate nohighlight">\(y\)</span>, allora il segmento che congiunge <span class="math notranslate nohighlight">\(f(x)\)</span> con <span class="math notranslate nohighlight">\(f(y)\)</span> sta sempre <em>sopra</em> alla curva di grafico definita tra <span class="math notranslate nohighlight">\(x\)</span> e <span class="math notranslate nohighlight">\(y\)</span>.</p>
+<p>Come mostrato nell’immagine sottostante, questo succede <strong>se e solo se</strong> il grafico della funzione ha una forma <strong>a U</strong>, simile a quella della funzione <span class="math notranslate nohighlight">\(f(x) = (x-1)^2 + e^x\)</span>, mostrata sopra, che è infatti una funzione convessa.</p>
+<p><img alt="" src="../_images/convessa.png" /></p>
+<p>La funzione <span class="math notranslate nohighlight">\(f(x) = x^4 - x^3 - 3x^2\)</span> non è, invece, convessa, poiché se si pone <span class="math notranslate nohighlight">\(x = -0.5\)</span> e <span class="math notranslate nohighlight">\(y = 0.5\)</span>, allora il segmento che congiunge <span class="math notranslate nohighlight">\(f(x)\)</span> con <span class="math notranslate nohighlight">\(f(y)\)</span> starà sotto al grafico della funzione tra quei due punti.</p>
+<section id="caratterizzazione-delle-funzioni-convesse">
+<h3>Caratterizzazione delle funzioni convesse<a class="headerlink" href="#caratterizzazione-delle-funzioni-convesse" title="Link to this heading">#</a></h3>
+<p>Quando la funzione <span class="math notranslate nohighlight">\(f(x)\)</span> è <em>sufficientemente liscia</em>, è possibile distinguere funzioni convesse da funzioni non convesse semplicemente calcolandone l’Hessiana (ovvero, la generalizzazione in dimensione <span class="math notranslate nohighlight">\(n\)</span> del concetto di derivata seconda).</p>
+<p>Infatti, vale:</p>
+<p><strong>Teorema:</strong> Una funzione <span class="math notranslate nohighlight">\(f \in C^2(\mathbb{R}^n)\)</span> è convessa se e solo se per ogni <span class="math notranslate nohighlight">\(x_0 \in \mathbb{R}^n\)</span>, la sua matrice Hessiana:</p>
+<div class="math notranslate nohighlight">
+\[
+H_f(x_0) = \left( \nabla^2 f(x_0) \right)_{i, j}
+\]</div>
+<p>è semi-definita positiva, e cioè se per ogni <span class="math notranslate nohighlight">\(x \in \mathbb{R}^n\)</span>, vale che:</p>
+<div class="math notranslate nohighlight">
+\[
+x^T H_f(x_0) x \geq 0.
+\]</div>
+<p>L’importanza delle funzioni convesse nell’ottimizzazione, risiede nella seguente proprietà:</p>
+<p><strong>Teorema:</strong> Sia <span class="math notranslate nohighlight">\(f: \mathbb{R}^n \to \mathbb{R}\)</span> una funzione convessa. Se <span class="math notranslate nohighlight">\(x^*\)</span> è un punto di minimo locale per <span class="math notranslate nohighlight">\(f\)</span>, allora <span class="math notranslate nohighlight">\(x^*\)</span> è un punto di minimo globale per <span class="math notranslate nohighlight">\(f\)</span>.</p>
+<p>Il quale, unitamente al fatto che funzioni convesse definite su <span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span> che non siano costanti non hanno alcun punto di massimo, ci assicura che <strong>qualunque</strong> estremante di una funzione convessa è, necessariamente, un punto di minimo globale.</p>
+<p>Un’ipotesi spesso adottata in ottimizzazione è che la funzione obiettivo, oltre ad essere convessa sia anche <strong>coerciva</strong>, ovvero che:</p>
+<div class="math notranslate nohighlight">
+\[
+\lim_{|| x || \to \infty} f(x) = + \infty.
+\]</div>
+<p>Questa ipotesi ci assicura che <span class="math notranslate nohighlight">\(f(x)\)</span> abbia almeno un punto di minimo che, per via della convessità, è necessariamente un punto di minimo (globale).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Da ora in avanti, assumeremo sempre che la funzione obiettivo <span class="math notranslate nohighlight">\(f(x)\)</span> sia <strong>convessa</strong> e <strong>coerciva</strong>, se non diversamente specificato.</p>
 </div>
-</details></section>
+</section>
+<section id="calcolo-della-convessita-e-coercivita">
+<h3>Calcolo della convessità e coercività<a class="headerlink" href="#calcolo-della-convessita-e-coercivita" title="Link to this heading">#</a></h3>
+<p>In questa sezione, andremo a verificare che la funzione <span class="math notranslate nohighlight">\(f(x) = (x-1)^2 + e^x\)</span> definita sopra è, effettivamente, coerciva e convessa, e soddisfa quindi le nostre ipotesi di partenza.</p>
+<p>Da notare che <span class="math notranslate nohighlight">\(f \in C^2(\mathbb{R})\)</span> poiché <span class="math notranslate nohighlight">\(f(x)\)</span> è la somma di un polinomio e di un’esponenziale. Allora:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+f'(x) = 2(x-1) + e^x, \\
+f''(x) = 2 + e^x,
+\end{split}\]</div>
+<p>e quindi vale <span class="math notranslate nohighlight">\(f''(x) \geq 0\)</span> per ogni <span class="math notranslate nohighlight">\(x \in \mathbb{R}\)</span>. Di conseguenza, <span class="math notranslate nohighlight">\(f(x)\)</span> è una funzione convessa.</p>
+<p>Per quanto riguarda la coercività, si vede subito che:</p>
+<div class="math notranslate nohighlight">
+\[
+\lim_{x \to + \infty} f(x) = \lim_{x \to - \infty} f(x) = + \infty,
+\]</div>
+<p>e questo dimostra il risultato sperato.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Questo tipo di calcoli sono tipici quando si lavora nel campo dell’ottimizzazione, è quindi importante prenderci la mano.</p>
+</div>
+</section>
+</section>
+<section id="estremi-relativi-e-punti-stazionari">
+<h2>Estremi relativi e punti stazionari<a class="headerlink" href="#estremi-relativi-e-punti-stazionari" title="Link to this heading">#</a></h2>
+<p>Essendoci assicurati che la funzione obiettivo <span class="math notranslate nohighlight">\(f(x)\)</span> abbia almeno un punto di minimo, e che tale punto sia un minimo globale tramite le ipotesi di convessità e coercitivà, andiamo ora a elencare i risultati teorici che ci permetteranno di sviluppare algoritmi per risolvere problemi di ottimizzazione svincolata.</p>
+<p>In particolare, tali condizioni si dividono in:</p>
+<ul class="simple">
+<li><p>Condizione necessaria del primo ordine,</p></li>
+<li><p>Condizione necessaria del secondo ordine,</p></li>
+<li><p>Condizione sufficiente del secondo ordine,</p></li>
+</ul>
+<p>dove l’<em>ordine</em> si riferisce al grado di derivazione della funzione obiettivo alle quali si riferiscono (primo ordine <span class="math notranslate nohighlight">\(\iff\)</span> gradiente; secondo ordine <span class="math notranslate nohighlight">\(\iff\)</span> hessiana).</p>
+<section id="condizione-del-primo-ordine">
+<h3>Condizione del primo ordine<a class="headerlink" href="#condizione-del-primo-ordine" title="Link to this heading">#</a></h3>
+<p>La condizione necessaria del primo ordine, come detto, si riferisce alle proprietà del gradiente della funzione obiettivo in prossimità di punto di minimo.</p>
+<p>In particolare, ci sarà utile la seguente definizione:</p>
+<blockquote>
+<div><p>Un punto <span class="math notranslate nohighlight">\(x^* \in \mathbb{R}^n\)</span> si dice <strong>punto stazionario</strong> di una funzione <span class="math notranslate nohighlight">\(f: \mathbb{R}^n \to \mathbb{R}\)</span>, <span class="math notranslate nohighlight">\(f \in C^1(\mathbb{R}^n)\)</span>, se <span class="math notranslate nohighlight">\(\nabla f(x^*) = 0\)</span>.</p>
+</div></blockquote>
+<p>Procediamo quindi ad enunciare il risultato di riferimento:</p>
+<p><strong>Teorema:</strong> Sia <span class="math notranslate nohighlight">\(f \in C^1(\mathbb{R}^n)\)</span>, se <span class="math notranslate nohighlight">\(x^* \in \mathbb{R}^n\)</span> è punto di minimo di <span class="math notranslate nohighlight">\(f(x)\)</span>, allora <span class="math notranslate nohighlight">\(\nabla f(x^*) = 0\)</span> (ovvero, <span class="math notranslate nohighlight">\(x^*\)</span> è un punto stazionario di <span class="math notranslate nohighlight">\(f\)</span>).</p>
+<p>Da notare che questo risultato non ci assicura un metodo in grado di determinare in maniera automatica se un punto <span class="math notranslate nohighlight">\(x^*\)</span> è un punto di minimo, ma ci da solamente una proprietà comune a tutti i possibili minimi di <span class="math notranslate nohighlight">\(f(x)\)</span>, che però può essere soddisfatta anche da punti che non sono minimi (infatti, sia i punti di massimo che i punti di flesso sono punti stazionari).</p>
+<p>Questo però ci suggerisce già una strada da seguire per determinare i minimi di <span class="math notranslate nohighlight">\(f(x)\)</span> in maniera automatica: se si determinano <strong>tutte</strong> le soluzioni di <span class="math notranslate nohighlight">\(\nabla f(x) = 0\)</span> (ovvero, tutti i punti stazionari di <span class="math notranslate nohighlight">\(f(x)\)</span>), allora tra questi è sicuramente presente il punto di minimo.</p>
+<p>In particolare, se <span class="math notranslate nohighlight">\(f(x)\)</span> è sia convessa e coerciva, <strong>ogni</strong> soluzione di <span class="math notranslate nohighlight">\(\nabla f(x) = 0\)</span> è necessariamente un punto di minimo globale, per quanto detto in precedenza.</p>
+<p>Da notare come, per funzioni <span class="math notranslate nohighlight">\(f(x)\)</span> generiche, <span class="math notranslate nohighlight">\(\nabla f(x) = 0\)</span> rappresenta un’equazione non lineare, che può quindi essere risolta automaticamente sfuttando gli algoritmi studiati nella prima parte del corso.</p>
+</section>
+<section id="condizioni-del-secondo-ordine">
+<h3>Condizioni del secondo ordine<a class="headerlink" href="#condizioni-del-secondo-ordine" title="Link to this heading">#</a></h3>
+<p>Se introduciamo delle condizioni sull’Hessiana, è possibile considerare un risultato più generale di quello appena discusso sulle condizioni del primo ordine, che sono anche condizioni sufficienti oltre che necessarie.</p>
+<p>In particolare, vale:</p>
+<p><strong>Teorema (condizioni necessarie del secondo ordine):</strong> Sia <span class="math notranslate nohighlight">\(f: \mathbb{R}^n \to \mathbb{R}\)</span>, <span class="math notranslate nohighlight">\(f \in C^2(\mathbb{R}^n)\)</span>. Se <span class="math notranslate nohighlight">\(x^*\)</span> è un punto di minimo per <span class="math notranslate nohighlight">\(f(x)\)</span>, allora <span class="math notranslate nohighlight">\(\nabla f(x^*) = 0\)</span> e <span class="math notranslate nohighlight">\(H_f(x^*)\)</span> è semi-definita positiva, ovvero <span class="math notranslate nohighlight">\(x^T H_f(x^*) x \geq 0\)</span> per ogni <span class="math notranslate nohighlight">\(x \in \mathbb{R}^n\)</span>.</p>
+<p>E, viceversa:</p>
+<p><strong>Teorema (condizioni sufficienti del secondo ordine):</strong> Sia <span class="math notranslate nohighlight">\(f: \mathbb{R}^n \to \mathbb{R}\)</span>, <span class="math notranslate nohighlight">\(f \in C^2(\mathbb{R}^n)\)</span>. Se esiste <span class="math notranslate nohighlight">\(x^* \in \mathbb{R}^n\)</span> tale che <span class="math notranslate nohighlight">\(\nabla f(x^*) = 0\)</span> e <span class="math notranslate nohighlight">\(H_f(x^*)\)</span> è definita positiva, ovvero <span class="math notranslate nohighlight">\(x^T H_f(x^*) x &gt; 0\)</span> per ogni <span class="math notranslate nohighlight">\(x \in \mathbb{R}^n\)</span>, allora <span class="math notranslate nohighlight">\(x^*\)</span> è un punto di minimo per <span class="math notranslate nohighlight">\(f(x)\)</span>.</p>
+<p>Il quale ci suggerisce un metodo generale per identificare i punti di minimo per una generica funzione <span class="math notranslate nohighlight">\(f(x)\)</span>:</p>
+<ol class="arabic simple">
+<li><p>Risolvere <span class="math notranslate nohighlight">\(\nabla f(x) = 0\)</span> tramite un algoritmo per l’identificazione di zeri di funzioni;</p></li>
+<li><p>Per ogni soluzione <span class="math notranslate nohighlight">\(x^*\)</span> del punto 1., verificare se <span class="math notranslate nohighlight">\(H_f(x^*)\)</span> è definita positiva. Se questo succede, allora <span class="math notranslate nohighlight">\(x^*\)</span> è necessariamente un punto di minimo.</p></li>
+</ol>
+<p>Notare che, se <span class="math notranslate nohighlight">\(f(x)\)</span> è convessa, allora <span class="math notranslate nohighlight">\(H_f(x^*)\)</span> è sempre semi-definita positiva, quindi ogni soluzione <span class="math notranslate nohighlight">\(x^*\)</span> del punto 1. è un punto di minimo, tranne per quei punti per cui <span class="math notranslate nohighlight">\(H_f(x^*)\)</span> è singolare.</p>
+<blockquote>
+<div><p><strong>Esercizio:</strong> Provare ad implementare questo metodo per identificare i punti di <strong>minimo</strong> della funzione convessa <span class="math notranslate nohighlight">\(f(x) = (x-1)^2 + e^x\)</span> e della funzione <span class="math notranslate nohighlight">\(f(x) = x^4 - x^3 - 3x^2\)</span> non convessa. Risolvere l’equazione non lineare tramite metodo di bisezione e con metodo di punto fisso con <span class="math notranslate nohighlight">\(\phi(x) = 1\)</span>.</p>
+</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Quando si richiede di calcolare il gradiente o l’Hessiana di una funzione in Python, il calcolo <strong>deve</strong> essere svolto <em>a mano</em> e implementato tramite una funzione del tipo <code class="docutils literal notranslate"><span class="pre">grad_f(x)</span></code> ed <code class="docutils literal notranslate"><span class="pre">hess(x)</span></code>.</p>
+</div>
+</section>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -687,12 +792,16 @@ min_{x \in \mathbb{R}^n} f(x).
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classificazione-dei-problemi-di-ottimizzazione">Classificazione dei problemi di ottimizzazione</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#un-po-di-codice">Un po’ di codice</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classificazione-dei-punti-di-minimo-e-massimo">Classificazione dei punti di minimo (e massimo)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#funzioni-convesse">Funzioni convesse</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#caratterizzazione-delle-funzioni-convesse">Caratterizzazione delle funzioni convesse</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calcolo-della-convessita-e-coercivita">Calcolo della convessità e coercività</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#estremi-relativi-e-punti-stazionari">Estremi relativi e punti stazionari</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#condizioni-del-primo-ordine">Condizioni del primo ordine</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#condizione-del-primo-ordine">Condizione del primo ordine</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#condizioni-del-secondo-ordine">Condizioni del secondo ordine</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#funzioni-convesse">Funzioni convesse</a></li>
 </ul>
   </nav></div>
 

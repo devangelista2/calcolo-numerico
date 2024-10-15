@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Modelli di Approssimazione e Minimi Quadrati &#8212; Calcolo Numerico</title>
+    <title>&lt;no title&gt; &#8212; Calcolo Numerico</title>
   
   
   
@@ -57,13 +57,9 @@
     <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'approssimazione/modelli_approssimazione';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Lezioni/lezione4';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Underfit, Overfit e Regolarizzazione" href="overfit_underfit_regolarizzazione.html" />
-    <link rel="prev" title="Caricamento dei Dati e Visualizzazione" href="intro_dati.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -125,6 +121,8 @@
     <div class="bd-container__inner bd-page-width">
       
       
+      
+        
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -196,15 +194,15 @@
 <li class="toctree-l1"><a class="reference internal" href="../intro/matplotlib.html">Visualizzazione con <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code></a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Approssimazione di dati</span></p>
-<ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="intro_dati.html">Caricamento dei Dati e Visualizzazione</a></li>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../approssimazione/intro_dati.html">Caricamento dei Dati e Visualizzazione</a></li>
 
 
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Modelli di Approssimazione e Minimi Quadrati</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../approssimazione/modelli_approssimazione.html">Modelli di Approssimazione e Minimi Quadrati</a></li>
 
 
 
-<li class="toctree-l1"><a class="reference internal" href="overfit_underfit_regolarizzazione.html">Underfit, Overfit e Regolarizzazione</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../approssimazione/overfit_underfit_regolarizzazione.html">Underfit, Overfit e Regolarizzazione</a></li>
 
 
 
@@ -291,7 +289,7 @@
       
       
       
-      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fapprossimazione/modelli_approssimazione.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FLezioni/lezione4.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -321,7 +319,7 @@
       
       
       
-      <li><a href="../_sources/approssimazione/modelli_approssimazione.ipynb" target="_blank"
+      <li><a href="../_sources/Lezioni/lezione4.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -405,7 +403,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Modelli di Approssimazione e Minimi Quadrati</h1>
+    <h1><no title></h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -414,15 +412,7 @@ document.write(`
                 <h2> Contents </h2>
             </div>
             <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Modelli di Approssimazione e Minimi Quadrati</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#il-problema-test">Il problema test</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#approssimazione-ai-minimi-quadrati">Approssimazione ai minimi quadrati</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#risoluzione-mediante-equazioni-normali">Risoluzione mediante Equazioni Normali</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#risoluzione-tramite-cholesky">Risoluzione tramite Cholesky</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#risoluzione-tramite-svd">Risoluzione tramite SVD</a></li>
-</ul>
-</li>
+                <ul class="simple visible nav section-nav flex-column">
 </ul>
 
             </nav>
@@ -435,59 +425,192 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="modelli-di-approssimazione-e-minimi-quadrati">
-<h1>Modelli di Approssimazione e Minimi Quadrati<a class="headerlink" href="#modelli-di-approssimazione-e-minimi-quadrati" title="Link to this heading">#</a></h1>
-<p>Come visto nel capitolo precedente, per sviluppare un Metodo di Approssimazione abbiamo bisogno prima di tutto di un set di dati. In tal senso, riconosciamo due tipologie principali di variabili:</p>
-<ul class="simple">
-<li><p>Le variabili <strong>indipendenti</strong>, o variabili di <strong>input</strong>, che rappresentano un valore noto, come il giorno nell’esempio precedente. Queste sono spesso indicate con il simbolo <span class="math notranslate nohighlight">\(x\)</span>.</p></li>
-<li><p>Le variabili <strong>dipendenti</strong>, o variabili di <strong>output</strong>, che rappresentano il valore che vogliamo prevedere. Queste sono spesso indicate con il simbolo <span class="math notranslate nohighlight">\(y\)</span>.</p></li>
-</ul>
-<blockquote>
-<div><p>Un <strong>set di dati</strong> è quindi una collezione di coppie di valori <span class="math notranslate nohighlight">\(\{ (x_1, y_1), (x_2, y_2), \dots, (x_n, y_n) \}\)</span>, tra loro associati.</p>
-</div></blockquote>
-<p>Come già accennato, gli algoritmi di approssimazione si basano su due assunzioni principali:</p>
-<ol class="arabic simple">
-<li><p>I dati seguono l’andamento di una <strong>curva</strong> relativamente complessa, ma con un pattern chiaramente riconoscibile.</p></li>
-<li><p>I dati <strong>NON</strong> sono disposti in maniera precisa lungo la curva, ma mostrano un comportamento casuale: sono affetti da <em>rumore</em>.</p></li>
-</ol>
-<p>Matematicamente, possiamo rappresentare la prima assunzione dicendo:</p>
-<blockquote>
-<div><p>Esiste una funzione <span class="math notranslate nohighlight">\(f(x)\)</span> tale per cui <span class="math notranslate nohighlight">\(y \approx f(x)\)</span>, dove l’errore tra la previsione <span class="math notranslate nohighlight">\(f(x)\)</span> e i veri dati <span class="math notranslate nohighlight">\(y\)</span> misurati è dovuta al solo rumore.</p>
-</div></blockquote>
-<p>La seconda ipotesi, invece, si riformula come:</p>
-<blockquote>
-<div><p>Esiste una variabile casuale <span class="math notranslate nohighlight">\(e\)</span> tale che <span class="math notranslate nohighlight">\(y = f(x) + e\)</span> per ogni <span class="math notranslate nohighlight">\(x\)</span>.</p>
-</div></blockquote>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Nel seguito, assumeremo sempre che la variabile casuale <span class="math notranslate nohighlight">\(e\)</span> abbia distribuzione normale. In particolare, se <span class="math notranslate nohighlight">\(y\)</span> rappresenta un vettore di dimensione <code class="docutils literal notranslate"><span class="pre">(n,)</span></code>, allora assumeremo che <span class="math notranslate nohighlight">\(e\)</span> sia generata da una funzione del tipo: <code class="docutils literal notranslate"><span class="pre">np.random.randn(n)</span></code>.</p>
+  <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Creiamo due vettori di esempio</span>
+<span class="n">a</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">b</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">50</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="c1"># Visualizzazione</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Grafico di $\sin(x)$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
 </div>
-<p>Date le due assunzioni precedenti, un <em>metodo di approssimazione</em> è un qualunque algoritmo che, fissato un modello <span class="math notranslate nohighlight">\(f_\theta(x)\)</span> dipendente da un’insieme di parametri <span class="math notranslate nohighlight">\(\theta\)</span>, calcola il valore dei parametri <span class="math notranslate nohighlight">\(\theta\)</span> tali che <span class="math notranslate nohighlight">\(f_\theta(x)\)</span> sia il più possibile vicina a <span class="math notranslate nohighlight">\(f(x)\)</span>.</p>
-</section>
-<section id="il-problema-test">
-<h1>Il problema test<a class="headerlink" href="#il-problema-test" title="Link to this heading">#</a></h1>
-<p>Lavorare con i dati reali come quelli descritti nella precedente sezione comporta una serie di problemi e difficoltà che, in un primo momento, è bene cercare di eliminare.</p>
-<p>Per questo motivo, come si è soliti fare, andiamo a costruire un problema test, dove la soluzione <strong>esatta</strong> è nota per definizione, e dove abbiamo un controllo più preciso sui dati.</p>
-<p>Per quanto detto precedentemente, la creazione di un problema test richiede di soddisfare le due assunzioni che abbiamo dichiarato, e quindi bisogna:</p>
-<ol class="arabic simple">
-<li><p>Specificare una funzione <span class="math notranslate nohighlight">\(f(x)\)</span>.</p></li>
-<li><p>Generare del rumore Gaussiano <span class="math notranslate nohighlight">\(e\)</span>.</p></li>
-</ol>
-<p>Per questo corso, siamo interessati a modelli di approssimazione <strong>polinomiali</strong>, in cui cioè la funzione <span class="math notranslate nohighlight">\(f(x)\)</span> si assume essere un polinomio nella variabile <span class="math notranslate nohighlight">\(x\)</span> di grado <span class="math notranslate nohighlight">\(d\)</span>, ovvero:</p>
-<div class="math notranslate nohighlight">
-\[
-f(x) = a_0 + a_1 x + a_2 x^2 + \dots + a_d x^d = \sum_{k=0}^d a_k x^k.
-\]</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Dalla scrittura sopra si osserva una proprietà importante dei polinomi: una funzione polinomiale di grado <span class="math notranslate nohighlight">\(d\)</span> dipende in maniera <strong>unica</strong> dai coefficienti <span class="math notranslate nohighlight">\(a_0, a_1, \dots, a_d\)</span> che moltiplicano le potenze di <span class="math notranslate nohighlight">\(x\)</span>.</p>
 </div>
-<p>Nel seguito raccogliamo per semplicità i coefficienti <span class="math notranslate nohighlight">\(a_0, a_1, \dots, a_d\)</span> in un unico vettore <span class="math notranslate nohighlight">\(\alpha\)</span>, di shape <code class="docutils literal notranslate"><span class="pre">(d+1,</span> <span class="pre">)</span></code>.</p>
+<div class="cell_output docutils container">
+<img alt="../_images/f288d713ca1597c6b6350e0ce58faa42d7ac4c835102c7a4adac71220cac5c45.png" src="../_images/f288d713ca1597c6b6350e0ce58faa42d7ac4c835102c7a4adac71220cac5c45.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Creiamo tre vettori esempio</span>
+<span class="n">a</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">b</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">50</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+<span class="n">y1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">y2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+
+<span class="c1"># Visualizzazione</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="s2">&quot;k--&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y2</span><span class="p">,</span> <span class="s2">&quot;bd-&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Un grafico di funzioni trigonometriche.&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s1">&#39;f(x) = sin(x)&#39;</span><span class="p">,</span> <span class="s1">&#39;f(x) = cos(x)&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/42295e96e999b88c41b081f5e29cff527e0ddae7afeab29f897fd43209bf2cdb.png" src="../_images/42295e96e999b88c41b081f5e29cff527e0ddae7afeab29f897fd43209bf2cdb.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Creiamo dei dati</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">200</span>
+
+<span class="n">x1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="p">))</span>
+<span class="n">y1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="p">))</span>
+
+<span class="n">x2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="p">))</span>
+<span class="n">y2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Distribuzione normale&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Distribuzione normale di dati verticali&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/53c0a8edf44b7ee175290e202555dc985f604958ac4cbec7d44365e7a066255a.png" src="../_images/53c0a8edf44b7ee175290e202555dc985f604958ac4cbec7d44365e7a066255a.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="c1"># Set data path</span>
+<span class="n">data_path</span> <span class="o">=</span> <span class="s2">&quot;./data/day_wise.csv&quot;</span>
+
+<span class="c1"># Load data</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">data_path</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">info</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 188 entries, 0 to 187
+Data columns (total 12 columns):
+ #   Column                  Non-Null Count  Dtype  
+---  ------                  --------------  -----  
+ 0   Date                    188 non-null    object 
+ 1   Confirmed               188 non-null    int64  
+ 2   Deaths                  188 non-null    int64  
+ 3   Recovered               188 non-null    int64  
+ 4   Active                  188 non-null    int64  
+ 5   New cases               188 non-null    int64  
+ 6   New deaths              188 non-null    int64  
+ 7   New recovered           188 non-null    int64  
+ 8   Deaths / 100 Cases      188 non-null    float64
+ 9   Recovered / 100 Cases   188 non-null    float64
+ 10  Deaths / 100 Recovered  188 non-null    float64
+ 11  No. of countries        188 non-null    int64  
+dtypes: float64(3), int64(8), object(1)
+memory usage: 17.8+ KB
+None
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Estriamo data (x) e nuovi casi (y)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">])</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;New cases&quot;</span><span class="p">]</span>
+
+<span class="c1"># Convertiamo la data (x) in un intero incrementale</span>
+<span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">x</span><span class="o">.</span><span class="n">min</span><span class="p">())</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">days</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># Convertiamo x e y in numpy array</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shape of x: </span><span class="si">{</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">, Shape of y: </span><span class="si">{</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shape of x: (188,), Shape of y: (188,).
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Visualizzazione</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Giorno&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Numero nuovi contagi&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Numero di contagi nel tempo&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/994bae31f8c8d82bd3b4dcd922bd9134eb597c96f2bc5495707bc3b2ca7044b8.png" src="../_images/994bae31f8c8d82bd3b4dcd922bd9134eb597c96f2bc5495707bc3b2ca7044b8.png" />
+</div>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="c1"># Definiamo la funzione f(x, alpha) che prende in input il vettore alpha dei coefficienti e un valore x, e ritorna il valore del rispettivo polinomio</span>
+
+<span class="c1"># alpha = (a0, a1, a2, ..., ad)</span>
 <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">alpha</span><span class="p">):</span>
     <span class="n">d</span> <span class="o">=</span> <span class="n">alpha</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span> <span class="c1"># abbiamo detto che la shape di alpha è (d+1, )</span>
 
@@ -499,7 +622,6 @@ f(x) = a_0 + a_1 x + a_2 x^2 + \dots + a_d x^d = \sum_{k=0}^d a_k x^k.
 </div>
 </div>
 </div>
-<p>Definiamo ora un vettore <span class="math notranslate nohighlight">\(\alpha_{true}\)</span> di esempio, che rappresenta il <strong>vettore dei parametri reali</strong>, su cui costruiremo il nostro problema di test.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Definiamo alpha_true = (1, 1, ..., 1) </span>
@@ -520,28 +642,18 @@ f(x) = a_0 + a_1 x + a_2 x^2 + \dots + a_d x^d = \sum_{k=0}^d a_k x^k.
 </div>
 </div>
 </div>
-<p>A questo punto, costruiamo un set <span class="math notranslate nohighlight">\(x_1, \dots, x_n\)</span> di dati di <em>input</em> <strong>sintetici</strong>. Per farlo, prendiamo <span class="math notranslate nohighlight">\(n\)</span> valori equidistribuiti nell’intervallo <span class="math notranslate nohighlight">\([0, 1]\)</span>.</p>
+<p>alpha_true = (1, 1, 1, 1)
+-&gt; f(x) = 1 + x + x^2 + x^3</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Numero di dati</span>
-<span class="n">n</span> <span class="o">=</span> <span class="mi">15</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">150</span>
 
 <span class="c1"># Definiamo gli x_i</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>A questo punto, per ogni <span class="math notranslate nohighlight">\(i = 1, \dots n\)</span>, costruiamo i valori di output:</p>
-<div class="math notranslate nohighlight">
-\[
-y_i = f(x_i, \alpha) + e_i = \sum_{k=0}^n a_k x_i^k + e_i,
-\]</div>
-<p>dove <span class="math notranslate nohighlight">\(e_i\)</span> è del rumore gaussiano estratto con la funzione <code class="docutils literal notranslate"><span class="pre">np.random.normal(loc=0,</span> <span class="pre">scale=sigma,</span> <span class="pre">size=(1,</span> <span class="pre">))</span></code>, con deviazione standard <code class="docutils literal notranslate"><span class="pre">sigma</span> <span class="pre">=</span> <span class="pre">0.1</span></code>.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Definiamo la deviazione standard del rumore</span>
-<span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.1</span>
+
+<span class="c1"># Definiamo la deviazione standard del rumore</span>
+<span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.2</span>
 
 <span class="c1"># Generiamo il rumore</span>
 <span class="n">e</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">sigma</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="p">))</span>
@@ -555,23 +667,6 @@ y_i = f(x_i, \alpha) + e_i = \sum_{k=0}^n a_k x_i^k + e_i,
 </div>
 </div>
 </div>
-<p>Così che abbiamo a disposizione i nostri dati <span class="math notranslate nohighlight">\(\{ (x_1, y_1), \dots, (x_n, y_n) \}\)</span> dei quali sappiamo, <strong>per costruzione</strong>, che <span class="math notranslate nohighlight">\(\alpha_{true} = (1, 1, \dots, 1)\)</span> è la soluzione esatta.</p>
-<p>La definizione del modello per l’approssimazione di tale funzione (ovvero, quella che avevamo chiamato precedentemente <span class="math notranslate nohighlight">\(f_\theta(x)\)</span>), è in questo caso particolarmente semplice: basta considerare una funzione polinomiale</p>
-<div class="math notranslate nohighlight">
-\[
-f(x, \alpha) = \sum_{k=0}^d a_k x^k,
-\]</div>
-<p>e si cerca il valore di <span class="math notranslate nohighlight">\(\alpha\)</span> tale per cui <span class="math notranslate nohighlight">\(f(x, \alpha) \approx f(x, \alpha_{true})\)</span>.</p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Si potrebbe pensare che risolvere questo task sia <strong>banale</strong>, ma così non è. Infatti, si osservi che i valori esatti di <span class="math notranslate nohighlight">\(f(x, \alpha_{true})\)</span> non sono noti, poiché noi stiamo assumendo di avere soltando accesso ad una versione <em>rumorosa</em> di <span class="math notranslate nohighlight">\(f(x, \alpha_{true})\)</span>, rappresentata dagli <span class="math notranslate nohighlight">\(y_i\)</span>. Di conseguenza, recuperare il valore corretto di <span class="math notranslate nohighlight">\(\alpha\)</span> è un compito tutt’altro che semplice!</p>
-</div>
-<p>Come di consueto per la creazione di problemi test, assumiamo ora di <strong>NON</strong> conoscere la soluzione esatta <span class="math notranslate nohighlight">\(\alpha_{true}\)</span>, e andiamo a costruire un’algoritmo che va a stimare dei parametri <span class="math notranslate nohighlight">\(\alpha\)</span>. Possiamo quindi valutare la qualità della ricostruzione andando a confrontare i parametri <span class="math notranslate nohighlight">\(\alpha\)</span> calcolati con la soluzione esatta <span class="math notranslate nohighlight">\(\alpha_{true}\)</span>. La qualità dell’algoritmo di ricostruzione verrà infatti valutata dall’errore relativo:</p>
-<div class="math notranslate nohighlight">
-\[
-E(\alpha, \alpha_{true}) = \frac{|| \alpha - \alpha_{true} ||}{|| \alpha_{true} ||}.
-\]</div>
-<p>Per farci un’idea del problema che stiamo per andare a risolvere, andiamo a rappresentare su un grafico i dati che abbiamo generato, e la curva “vera”. Per semplicità, andiamo a ri-definire la funzione <code class="docutils literal notranslate"><span class="pre">f(x,</span> <span class="pre">alpha)</span></code> in maniera tale che prenda come input un numpy array <code class="docutils literal notranslate"><span class="pre">x</span></code> e ne ritorni il valore del polinomio descritto precedentemente, elemento per elemento.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -598,50 +693,8 @@ E(\alpha, \alpha_{true}) = \frac{|| \alpha - \alpha_{true} ||}{|| \alpha_{true} 
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/0124c32170c12e82c8f13a7e5c6156c11bdef4b582d3d15f7e07470b79720c92.png" src="../_images/0124c32170c12e82c8f13a7e5c6156c11bdef4b582d3d15f7e07470b79720c92.png" />
+<img alt="../_images/11e922b827f391dc9fea29f0b6620fd7e0a49e0340ea14c268af3fc4072404da.png" src="../_images/11e922b827f391dc9fea29f0b6620fd7e0a49e0340ea14c268af3fc4072404da.png" />
 </div>
-</div>
-</section>
-<section id="approssimazione-ai-minimi-quadrati">
-<h1>Approssimazione ai minimi quadrati<a class="headerlink" href="#approssimazione-ai-minimi-quadrati" title="Link to this heading">#</a></h1>
-<p>Come abbiamo detto, come modello per l’approssimazione andiamo a scegliere:</p>
-<div class="math notranslate nohighlight">
-\[
-f_\theta(x, \alpha) = \sum_{k=0}^d a_k x^k,
-\]</div>
-<p>dove <span class="math notranslate nohighlight">\(d\)</span> (il grado del polinomio), viene scelto dall’utente e <strong>NON</strong> deve necessariamente essere uguale a quello utilizzato durante la creazione del problema test (che assumiamo di non conoscere).</p>
-<p>Prima di tutto notiamo che la definizione di <span class="math notranslate nohighlight">\(f_\theta(x, \alpha)\)</span> può essere modificata osservando che, se definiamo:</p>
-<div class="math notranslate nohighlight">
-\[
-x^{(d)} := [ x^0 x^1 \dots x^d ] \in \mathbb{R}^{d+1}
-\]</div>
-<p>come il vettore di lunghezza <span class="math notranslate nohighlight">\(d+1\)</span> il cui <span class="math notranslate nohighlight">\(k\)</span>-esimo elemento è <span class="math notranslate nohighlight">\(x^k\)</span>, allora:</p>
-<div class="math notranslate nohighlight">
-\[
-f_\theta(x, \alpha) = \alpha^T x^{(d)}.
-\]</div>
-<p>Come detto precedentemente, il nostro scopo è identificare quei parametri tali per cui <span class="math notranslate nohighlight">\(f_\theta(x, \alpha)\)</span> approssimi <span class="math notranslate nohighlight">\(y\)</span> (a meno di rumore) sui dati. Il modo più naturale per ottenere questo risultato è quello di minimizzare l’errore medio di predizione del modello <span class="math notranslate nohighlight">\(f_\theta(x, \alpha)\)</span> (errore misurato, per motivi statistici, come distanza quadratica):</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\min_{\alpha} \sum_{i=1}^n (f_\theta(x_i, \alpha) - y_i)^2 = \\
-\min_{\alpha} \sum_{i=1}^n (\alpha^T x_i^{(d)} - y_i)^2.
-\end{split}\]</div>
-<p>Notare che, definendo:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-X = \begin{bmatrix} {x_1^{(d)}}^T \\ {x_2^{(d)}}^T \\ \vdots \\ {x_n^{(d)}}^T  \end{bmatrix} = \begin{bmatrix} x_1^0 &amp; x_1^1 &amp; \dots &amp; x_1^d \\ x_2^0 &amp; x_2^1 &amp; \dots &amp; x_2^d \\ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ x_n^0 &amp; x_n^1 &amp; \dots &amp; x_n^d  \end{bmatrix} \in \mathbb{R}^{n \times d},
-\end{split}\]</div>
-<p>la matrice che ha per righe i dati, spesso chiamata <strong>matrice di Vandermonde</strong> di grado <span class="math notranslate nohighlight">\(d\)</span> associata ad <span class="math notranslate nohighlight">\(\{ x_1, x_2, \dots, x_n \}\)</span>, la formula sopra è equivalente a:</p>
-<div class="math notranslate nohighlight">
-\[
-\min_{\alpha} || X\alpha - y ||_2^2,
-\]</div>
-<p>dove abbiamo indicato con <span class="math notranslate nohighlight">\(y = [y_1, \dots, y_n]\)</span> il vettore che ha per elementi i dati.</p>
-<p>Si osservi che il problema appena ottenuto non è altro che un <em>semplice</em> problema ai minimi quadrati, già affrontato a lezione, in cui la matrice è rappresentata dalla matrice di Vandermonde di grado <span class="math notranslate nohighlight">\(d\)</span> associata ai dati <span class="math notranslate nohighlight">\(\{ x_1, \dots, x_n \}\)</span>, mentre il termine noto è rappresentato dai dati (<strong>rumorosi</strong>) <span class="math notranslate nohighlight">\(\{ y_1, \dots, y_n \}\)</span>.</p>
-<p>Andiamo a costruire queste quantità in Python.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Il vettore <code class="docutils literal notranslate"><span class="pre">y</span></code> che abbiamo già costruito durante la costruzione del problema test, rappresenta lo stesso vettore <span class="math notranslate nohighlight">\(y\)</span> della formulazione matematica ai minimi quadrati.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -670,60 +723,9 @@ X = \begin{bmatrix} {x_1^{(d)}}^T \\ {x_2^{(d)}}^T \\ \vdots \\ {x_n^{(d)}}^T  \
 <span class="c1"># Definiamo la matrice di Vandermonde tramite la funzione appena definita con grado d = 5</span>
 <span class="n">d</span> <span class="o">=</span> <span class="mi">5</span>
 <span class="n">X</span> <span class="o">=</span> <span class="n">vandermonde</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>Ora, dato un vettore <span class="math notranslate nohighlight">\(\alpha\)</span> di lunghezza <span class="math notranslate nohighlight">\(d+1\)</span>, possiamo calcolare il valore del <strong>residuo</strong>, definito come:</p>
-<div class="math notranslate nohighlight">
-\[
-r(\alpha) := || X\alpha - y ||_2^2,
-\]</div>
-<p>che misura la discrepanza tra la previsione del modello di approssimazione (cioè <span class="math notranslate nohighlight">\(X\alpha\)</span>), e i dati misurati (<span class="math notranslate nohighlight">\(y\)</span>). Risolvere il problema ai minimi quadrati corrisponde a minimizzare questa quantità.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">residuo</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">alpha</span><span class="p">):</span>
-    <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">X</span> <span class="o">@</span> <span class="n">alpha</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
-    <span class="k">return</span> <span class="n">r</span>
 
-<span class="c1"># Testiamo la funzione con un alpha generato casualmente</span>
-<span class="n">alpha</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">d</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Residuo: </span><span class="si">{</span><span class="n">residuo</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">alpha</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Residuo: 36.46438622278704.
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="risoluzione-mediante-equazioni-normali">
-<h1>Risoluzione mediante Equazioni Normali<a class="headerlink" href="#risoluzione-mediante-equazioni-normali" title="Link to this heading">#</a></h1>
-<p>Dobbiamo quindi trovare il valore di <span class="math notranslate nohighlight">\(\alpha\)</span> che risolva:</p>
-<div class="math notranslate nohighlight">
-\[
-\min_{\alpha} || X\alpha - y ||_2^2.
-\]</div>
-<p>Avete già visto a lezione che questo può essere fatto risolvendo le <strong>equazioni normali</strong> associate a tale problema, ovvero:</p>
-<div class="math notranslate nohighlight">
-\[
-X^T X \alpha = X^T y.
-\]</div>
-<p>Questo può essere fatto tramite:</p>
-<ul class="simple">
-<li><p>Decomposizione di Cholesky;</p></li>
-<li><p>Decomposizione ai Valori Singolari (SVD);</p></li>
-</ul>
-<p>Vediamo i due metodi nel dettaglio.</p>
-<section id="risoluzione-tramite-cholesky">
-<h2>Risoluzione tramite Cholesky<a class="headerlink" href="#risoluzione-tramite-cholesky" title="Link to this heading">#</a></h2>
-<p>Avete già osservato come la matrice del sistema delle equazioni normali associato al problema dei minimi quadrati sia Simmetrica e Definita Positiva (SDP), condizione necessaria e sufficiente per l’applicabilità del metodo di Cholesky, se e solo se la matrice <span class="math notranslate nohighlight">\(X\)</span> ha rango massimo.</p>
-<p>Siccome <span class="math notranslate nohighlight">\(X\)</span> ha dimensione <span class="math notranslate nohighlight">\((n, d+1)\)</span>, e siccome (auspicabilmente), <span class="math notranslate nohighlight">\(n \gg d+1\)</span>, allora il rango di <span class="math notranslate nohighlight">\(X\)</span> è massimo se e solo se è uguale a <span class="math notranslate nohighlight">\(d+1\)</span>. Verifichiamo che questo succede.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Calcoliamo il rango della matrice di Vandermonde X</span>
+<span class="c1"># Abbiamo X, y</span>
+<span class="c1"># Calcoliamo il rango della matrice di Vandermonde X</span>
 <span class="n">rk_X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">matrix_rank</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Il rango di X è massimo? </span><span class="si">{</span><span class="n">rk_X</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="p">(</span><span class="n">d</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
 </pre></div>
@@ -735,20 +737,6 @@ X^T X \alpha = X^T y.
 </div>
 </div>
 </div>
-<p>Possiamo quindi applicare la decomposizione di Cholesky, che trova una matrice triangolare inferore <span class="math notranslate nohighlight">\(L\)</span> tale che:</p>
-<div class="math notranslate nohighlight">
-\[
-X^T X = L L^T.
-\]</div>
-<p>Il sistema dell equazioni normali può quindi essere risolto tramite il metodo della sostituzione all’Avanti e all’Indietro, ovvero risolvendo i due sistemi (triangolari):</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\begin{cases}
-    L z = X^T y \\
-    L^T \alpha = z.
-\end{cases}
-\end{split}\]</div>
-<p>In Python:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Troviamo la matrice L tale che X^T X = L L^T</span>
@@ -760,7 +748,7 @@ X^T X = L L^T.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>|| X^T X - L L^T || = 1.9860273225978185e-15.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>|| X^T X - L L^T || = 2.086746797486457e-14.
 </pre></div>
 </div>
 </div>
@@ -777,11 +765,17 @@ X^T X = L L^T.
 <span class="c1">###### Risolviamo il secondo sistema:</span>
 <span class="c1"># Troviamo alpha</span>
 <span class="n">alpha_chol</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">L</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">alpha_chol</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[  1.12612431  -2.55292927  20.45062187 -39.1610284   35.45015499
+ -11.32279351]
 </pre></div>
 </div>
 </div>
 </div>
-<p>Una volta trovata la nostra soluzione <code class="docutils literal notranslate"><span class="pre">alpha_sol</span></code>, visualizziamo su grafico come viene la curva calcolata tramite questo algoritmo di approssimazione rispetto ai dati che abbiamo a disposizione e rispetto alla curva vera.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Rappresentiamo la curva *approssimata* in [0, 1]</span>
@@ -799,24 +793,14 @@ X^T X = L L^T.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/9518ab835f85393b882bdb8272aa879f1a83e3e4f3ea3f908d10ef307758f28a.png" src="../_images/9518ab835f85393b882bdb8272aa879f1a83e3e4f3ea3f908d10ef307758f28a.png" />
+<img alt="../_images/0f50252754aed1e1e20b7130f401d21b396254794311fb25b4e6df4686881626.png" src="../_images/0f50252754aed1e1e20b7130f401d21b396254794311fb25b4e6df4686881626.png" />
 </div>
 </div>
-<p>E’ abbastanza chiaro che la curva ricostruita non riesce ad approssimare correttamente i dati. Prima di discutere le ragioni e le possibili soluzioni di questo comportamento, vediamo come risolvere in maniera alternativa il problema ai minimi quadrati tramite decomposizione a valori singolari.</p>
-</section>
-<section id="risoluzione-tramite-svd">
-<h2>Risoluzione tramite SVD<a class="headerlink" href="#risoluzione-tramite-svd" title="Link to this heading">#</a></h2>
-<p>Consideriamo la decomposizione a Valori Singolari (SVD) della matrice <span class="math notranslate nohighlight">\(X\)</span>:</p>
-<div class="math notranslate nohighlight">
-\[
-X = U \Sigma V^T,
-\]</div>
-<p>dove <span class="math notranslate nohighlight">\(U \in \mathbb{R}^{n \times n}\)</span> e <span class="math notranslate nohighlight">\(V \in \mathbb{R}^{(d+1) \times (d+1)}\)</span> sono matrici ortogonali, mentre <span class="math notranslate nohighlight">\(\Sigma \in \mathbb{R}^{n \times (d+1)}\)</span> è una matrice diagonale i cui elementi sulla diagonale sono i valori singolari di <span class="math notranslate nohighlight">\(X\)</span>, in ordine decrescente.</p>
-<p>In Python, è possibile calcolare la decomposizione SVD di <span class="math notranslate nohighlight">\(X\)</span> tramite il comando <code class="docutils literal notranslate"><span class="pre">np.linalg.svd(X)</span></code>. Questa funzione ritorna tre <code class="docutils literal notranslate"><span class="pre">ndarray</span></code>: <code class="docutils literal notranslate"><span class="pre">U</span></code>, <code class="docutils literal notranslate"><span class="pre">s</span></code> e <code class="docutils literal notranslate"><span class="pre">VT</span></code>, dove <code class="docutils literal notranslate"><span class="pre">U</span></code> e <code class="docutils literal notranslate"><span class="pre">VT</span></code> rappresentano le matrici <span class="math notranslate nohighlight">\(U\)</span> e <span class="math notranslate nohighlight">\(V^T\)</span>, rispettivamente, mentre <code class="docutils literal notranslate"><span class="pre">s</span></code> è un vettore che rappresenta la diagonale di <span class="math notranslate nohighlight">\(\Sigma\)</span>, ovvero i valori singolari della matrice <span class="math notranslate nohighlight">\(X\)</span>, in ordine decrescente.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Calcoliamo la SVD di X</span>
 <span class="n">U</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">VT</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 
 <span class="c1"># Costruiamo la matrice Sigma esplicitamente (per controllare che la SVD sia stata </span>
 <span class="c1"># svolta correttamente)</span>
@@ -830,22 +814,12 @@ X = U \Sigma V^T,
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>|| X - U Sigma V^T || = 2.4905065272728362e-15
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(6,)
+|| X - U Sigma V^T || = 1.0308270553016151e-14
 </pre></div>
 </div>
 </div>
 </div>
-<p>Ricordando che le matrici <span class="math notranslate nohighlight">\(U\)</span> e <span class="math notranslate nohighlight">\(V\)</span> sono ortognali, le equazioni normali diventano:</p>
-<div class="math notranslate nohighlight">
-\[
-X^T X \alpha = X^T y \iff V \Sigma^2 V^T \alpha = V \Sigma U^T y \iff \Sigma^2 V^T \alpha = \Sigma U^T y
-\]</div>
-<p>La cui soluzione esplicita è:</p>
-<div class="math notranslate nohighlight">
-\[
-    \alpha = \sum_{i=1}^{d+1} \frac{u_i^T y}{\sigma_i} v_i. 
-\]</div>
-<p>Questa operazione può semplicemente essere implementata in Python come:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Inizializzazione di alpha</span>
@@ -872,22 +846,9 @@ X^T X \alpha = X^T y \iff V \Sigma^2 V^T \alpha = V \Sigma U^T y \iff \Sigma^2 V
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/f4a400f08721c0c0a25b22e2fdceaef4417c07c089d1ddbbb5e321c5eb2a5a51.png" src="../_images/f4a400f08721c0c0a25b22e2fdceaef4417c07c089d1ddbbb5e321c5eb2a5a51.png" />
+<img alt="../_images/546a9d1eba7833ec34d6da1bef9e2a074ea9b857b4090b9f78ac0338d3672cc4.png" src="../_images/546a9d1eba7833ec34d6da1bef9e2a074ea9b857b4090b9f78ac0338d3672cc4.png" />
 </div>
 </div>
-<p>Le soluzioni <span class="math notranslate nohighlight">\(\alpha_{chol}\)</span> e <span class="math notranslate nohighlight">\(\alpha_{SVD}\)</span> sono, come ci si aspetta, identiche, poiché soluzioni dello stesso problema dei minimi quadrati, che ha soluzione unica.</p>
-<blockquote>
-<div><p><strong>Esercizio:</strong> Prova a ri-eseguire lo script precedente modificando:</p>
-<ul class="simple">
-<li><p>il numero <span class="math notranslate nohighlight">\(n\)</span> dei dati,</p></li>
-<li><p>il grado del polinomio che genera il problema test,</p></li>
-<li><p>la quantità di rumore aggiunto sui dati,</p></li>
-<li><p>il grado del polinomio del modello approssimante.</p></li>
-</ul>
-<p>Cosa osservi, riguardo al comportamento del polinomio approssimante risultante?</p>
-</div></blockquote>
-</section>
-</section>
 
     <script type="text/x-thebe-config">
     {
@@ -902,7 +863,7 @@ X^T X \alpha = X^T y \iff V \Sigma^2 V^T \alpha = V \Sigma U^T y \iff \Sigma^2 V
         },
         kernelOptions: {
             name: "python3",
-            path: "./approssimazione"
+            path: "./Lezioni"
         },
         predefinedOutput: true
     }
@@ -919,24 +880,6 @@ X^T X \alpha = X^T y \iff V \Sigma^2 V^T \alpha = V \Sigma U^T y \iff \Sigma^2 V
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="intro_dati.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Caricamento dei Dati e Visualizzazione</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="overfit_underfit_regolarizzazione.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Underfit, Overfit e Regolarizzazione</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
 </div>
                 </footer>
               
@@ -952,15 +895,7 @@ X^T X \alpha = X^T y \iff V \Sigma^2 V^T \alpha = V \Sigma U^T y \iff \Sigma^2 V
     <i class="fa-solid fa-list"></i> Contents
   </div>
   <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Modelli di Approssimazione e Minimi Quadrati</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#il-problema-test">Il problema test</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#approssimazione-ai-minimi-quadrati">Approssimazione ai minimi quadrati</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#risoluzione-mediante-equazioni-normali">Risoluzione mediante Equazioni Normali</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#risoluzione-tramite-cholesky">Risoluzione tramite Cholesky</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#risoluzione-tramite-svd">Risoluzione tramite SVD</a></li>
-</ul>
-</li>
+    <ul class="simple visible nav section-nav flex-column">
 </ul>
 
   </nav></div>

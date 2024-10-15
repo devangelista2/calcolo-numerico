@@ -57,6 +57,8 @@
     <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'ottimizzazione/GD';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -192,7 +194,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../intro/errori.html">Gestione degli errori su Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../intro/numpy.html">Python per l’algebra lineare: <code class="docutils literal notranslate"><span class="pre">numpy</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../intro/matplotlib.html">Visualizzazione con <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../intro/esercitazione.html">Esercitazione: algebra lineare con Python</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Approssimazione di dati</span></p>
 <ul class="nav bd-sidenav">
@@ -202,13 +203,23 @@
 <li class="toctree-l1"><a class="reference internal" href="../approssimazione/modelli_approssimazione.html">Modelli di Approssimazione e Minimi Quadrati</a></li>
 
 
+
 <li class="toctree-l1"><a class="reference internal" href="../approssimazione/overfit_underfit_regolarizzazione.html">Underfit, Overfit e Regolarizzazione</a></li>
+
+
+
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Ottimizzazione</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Problemi di Ottimizzazione</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Metodo di Discesa del Gradiente</a></li>
+
 <li class="toctree-l1"><a class="reference internal" href="CGLS.html">Metodo dei Gradienti Coniugati</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Esercitazioni</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../esercitazioni/esercitazione_1.html">Esercitazione: algebra lineare con Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../esercitazioni/esercitazione_2.html">Esercitazione: Approssimazione di dati con Minimi Quadrati Regolarizzati</a></li>
 </ul>
 
     </div>
@@ -381,7 +392,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -397,6 +410,16 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Metodo di Discesa del Gradiente</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#metodo-di-discesa-del-gradiente-gd">Metodo di discesa del gradiente (GD)</a></li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -408,7 +431,58 @@ document.write(`
                   
   <section id="metodo-di-discesa-del-gradiente">
 <h1>Metodo di Discesa del Gradiente<a class="headerlink" href="#metodo-di-discesa-del-gradiente" title="Link to this heading">#</a></h1>
-<p><strong>Work in progress…</strong></p>
+<p>Il metodo discusso alla fine dell’introduzione quando svolto con metodo di punto fisso e <span class="math notranslate nohighlight">\(\phi(x) = 1\)</span>, rappresenta un’esempio di una più generica categoria di metodi noti come <strong>metodi di ricerca in linea</strong>.</p>
+<p>Questi algoritmi si basano sulle condizioni del primo ordine per calcolare soluzioni al problema di ottimizzazione svincolato</p>
+<div class="math notranslate nohighlight">
+\[
+\min_{x \in \mathbb{R}^n} f(x),
+\]</div>
+<p>dove la funzione obiettivo <span class="math notranslate nohighlight">\(f(x)\)</span> è derivabile almeno una volta.</p>
+<p>L’idea di questo metodo è quello di calcolare il punto di minimo <span class="math notranslate nohighlight">\(x^*\)</span> di <span class="math notranslate nohighlight">\(f(x)\)</span> attraverso un procedimento iterativo. In particolare, scelto un termine <span class="math notranslate nohighlight">\(x_0 \in \mathbb{R}^n\)</span>, si considera l’iterazione:</p>
+<div class="math notranslate nohighlight">
+\[
+x_{k+1} = x_k + \alpha_k p_k,
+\]</div>
+<p>dove <span class="math notranslate nohighlight">\(\alpha_k &gt; 0\)</span> è detto <strong>step-size</strong> o <strong>learning rate</strong>, mentre <span class="math notranslate nohighlight">\(p_k \in \mathbb{R}^n\)</span> è un vettore detto <strong>direzione di discesa</strong>, e viene scelto in modo tale da assicurare che <span class="math notranslate nohighlight">\(f(x_{k+1}) \leq f(x_k)\)</span>, ovvero che l’algoritmo si sta muovendo verso la direzione del minimo <strong>per ogni</strong> iterato <span class="math notranslate nohighlight">\(k \in \mathbb{N}\)</span>.</p>
+<p>In pratica, i metodi di linea definiscono una successione di punti <span class="math notranslate nohighlight">\(\{ x_k \}_{k \in \mathbb{N}}\)</span> tali che, per ogni <span class="math notranslate nohighlight">\(k \in \mathbb{N}\)</span>, <span class="math notranslate nohighlight">\(x_{k+1}\)</span> <strong>riduce</strong> il valore della funzione <span class="math notranslate nohighlight">\(f(x)\)</span>, affinché se si definisce:</p>
+<div class="math notranslate nohighlight">
+\[
+x^* = \lim_{k \to \infty} x_k,
+\]</div>
+<p>allora <span class="math notranslate nohighlight">\(\nabla f(x^*) = 0\)</span>, ovvero il punto limite è un punto stazionario. Inoltre, se la direzione di discesa <span class="math notranslate nohighlight">\(p_k\)</span> e il passo <span class="math notranslate nohighlight">\(\alpha_k\)</span> sono scelti correttamente, allora <span class="math notranslate nohighlight">\(x^*\)</span> sarà necessariamente o un punto di minimo o un punto di sella.</p>
+</section>
+<section id="metodo-di-discesa-del-gradiente-gd">
+<h1>Metodo di discesa del gradiente (GD)<a class="headerlink" href="#metodo-di-discesa-del-gradiente-gd" title="Link to this heading">#</a></h1>
+<p>Diamo una definizione:</p>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(p_k\)</span> è una <strong>direzione di discesa</strong> se esiste <span class="math notranslate nohighlight">\(\alpha_k &gt; 0\)</span> tale che <span class="math notranslate nohighlight">\(f(x_k + \alpha_k p_k) \leq f(x_k)\)</span>.</p>
+</div></blockquote>
+<p>Quindi, una direzione di discesa è una direzione lungo la quale è sempre possibile procedere ad una diminuzione della funzione obiettivo, con uno step size adeguato.</p>
+<p>Chiaramente, questa definizione è poco operativa, e non è chiaro come sia possibile trovare una direzione di discesa per <span class="math notranslate nohighlight">\(f(x)\)</span>. Un risultato più operativo è il seguente:</p>
+<p><strong>Teorema:</strong> Un vettore <span class="math notranslate nohighlight">\(p_k \in \mathbb{R}^n\)</span> è una direzione di discesca per <span class="math notranslate nohighlight">\(f(x)\)</span> in <span class="math notranslate nohighlight">\(x_k\)</span> se:</p>
+<div class="math notranslate nohighlight">
+\[
+p_k^T \nabla f(x_k) \leq 0.
+\]</div>
+<p>La disequazione sopra ha una soluzione semplice. Infatti, se scegliamo <span class="math notranslate nohighlight">\(p_k = - \nabla f(x_k)\)</span>, allora:</p>
+<div class="math notranslate nohighlight">
+\[
+p_k^T \nabla f(x_k) = - (\nabla f(x_k))^T \nabla f(x_k) = - || \nabla f(x_k) ||_2^2 \leq 0.
+\]</div>
+<p>Quindi, scegliendo come direzione di discesa la direzione dell’antigradiente, si ottiene un metodo di ricerca di linea per l’ottimizzazione della funzione <span class="math notranslate nohighlight">\(f(x)\)</span> (il più semplice possibile), definito da:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{cases}
+x_0 \in \mathbb{R}^n, \\
+x_{k+1} = x_k - \alpha_k \nabla f(x_k).
+\end{cases}
+\end{split}\]</div>
+<p>Questo metodo prende il nome di <strong>metodo di ripida discesa</strong> o, più genericamente, <strong>metodo di discesa del gradiente</strong>.</p>
+<p>Un’osservazione chiave sul metodo di più ripida discesa. Si osservi che la direzione di discesa dell’antigradiente ha una semplice interpretazione grafica: ricordiamo che in generale, il gradiente <span class="math notranslate nohighlight">\(\nabla f(x)\)</span> di una qualunque funzione <span class="math notranslate nohighlight">\(f(x)\)</span>, rappresenta il vettore che, applicato ad <span class="math notranslate nohighlight">\(x\)</span>, punta nella direzione di massima crescita <span class="math notranslate nohighlight">\(f(x)\)</span>. Di conseguenza, ha totalmente senso che il vettore a lui opposto punti verso una direzione verso cui <span class="math notranslate nohighlight">\(f(x)\)</span> decresce. Per questo motivo il metodo è spesso chiamato, come detto, metodo di ripida discesa.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Il fatto che la scelta <span class="math notranslate nohighlight">\(p_k = - \nabla f(x_k)\)</span> sia una direzione di discesa <strong>NON</strong> implica che il termine <span class="math notranslate nohighlight">\(x_k - \alpha_k \nabla f(x_k)\)</span> sia necessariamente un</p>
+</div>
 </section>
 
     <script type="text/x-thebe-config">
@@ -465,6 +539,23 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Metodo di Discesa del Gradiente</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#metodo-di-discesa-del-gradiente-gd">Metodo di discesa del gradiente (GD)</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
               
             
           </div>
