@@ -194,7 +194,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../intro/errori.html">Gestione degli errori su Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../intro/numpy.html">Python per l’algebra lineare: <code class="docutils literal notranslate"><span class="pre">numpy</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../intro/matplotlib.html">Visualizzazione con <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../intro/esercitazione.html">Esercitazione: algebra lineare con Python</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Approssimazione di dati</span></p>
 <ul class="current nav bd-sidenav">
@@ -215,6 +214,11 @@
 <li class="toctree-l1"><a class="reference internal" href="../ottimizzazione/intro.html">Problemi di Ottimizzazione</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ottimizzazione/GD.html">Metodo di Discesa del Gradiente</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ottimizzazione/CGLS.html">Metodo dei Gradienti Coniugati</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Esercitazioni</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../esercitazioni/esercitazione_1.html">Esercitazione: algebra lineare con Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../esercitazioni/esercitazione_2.html">Esercitazione: Approssimazione di dati con Minimi Quadrati Regolarizzati</a></li>
 </ul>
 
     </div>
@@ -667,6 +671,9 @@ X^T X \alpha - X^T y + \lambda \alpha = 0,
 <p>E’ dunque abbastanza palese come, per valori relativamente piccoli di <span class="math notranslate nohighlight">\(\lambda\)</span>, la soluzione ottenuta è molto migliore di quella che avevamo visto nel caso precedente in cui non era presente il termine di regolarizzazione, e come questo metodo permette di ottenere un buon modello approssimante anche senza stimare in maniera precisa il grado <em>corretto</em> del polinomio.</p>
 <p>Chiaramente, nel caso in cui <span class="math notranslate nohighlight">\(\lambda\)</span> sia scelto troppo grande, il termine di Regolarizzazione inizia a dominare in maniera esagerata la soluzione, generando una curva che manifesta dei parametri <strong>troppo piccoli</strong>, e che quindi non è in grado di fittare correttamente i dati considerati, portando a <strong>underfit</strong>.</p>
 <p>Nonostante ciò, scegliere un parametro <span class="math notranslate nohighlight">\(\lambda\)</span> adeguato è in pratica <strong>estremamente</strong> più semplice di trovare il grado corretto, sia perché sono presenti in letteratura vari metodi per selezionarlo automaticamente, sia perché come si vede dall’esempio sopra il range di valori di <span class="math notranslate nohighlight">\(\lambda\)</span> per cui la ricostruzione è buona è particolarmente grande.</p>
+<blockquote>
+<div><p><strong>Esercizio:</strong> Prova a ri-eseguire lo script precedente aumentando/riducendo il numero <span class="math notranslate nohighlight">\(n\)</span> dei dati e il grado del polinomio del modello approssimante. Per ognuno di questi, prova diversi valori del parametro <span class="math notranslate nohighlight">\(\lambda\)</span>. Come cambia il valore <em>ottimale</em> di <span class="math notranslate nohighlight">\(\lambda\)</span>?</p>
+</div></blockquote>
 </section>
 <section id="il-metodo-lasso">
 <h1>Il metodo LASSO<a class="headerlink" href="#il-metodo-lasso" title="Link to this heading">#</a></h1>
