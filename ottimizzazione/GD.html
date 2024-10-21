@@ -214,6 +214,8 @@
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Problemi di Ottimizzazione</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Metodo di Discesa del Gradiente</a></li>
 
+
+
 <li class="toctree-l1"><a class="reference internal" href="CGLS.html">Metodo dei Gradienti Coniugati</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Esercitazioni</span></p>
@@ -416,7 +418,15 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Metodo di Discesa del Gradiente</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#metodo-di-discesa-del-gradiente-gd">Metodo di discesa del gradiente (GD)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#metodo-di-discesa-del-gradiente-gd">Metodo di discesa del gradiente (GD)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metodo-di-discesa-del-gradiente-in-python">Metodo di Discesa del Gradiente in Python</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#criteri-di-arresto">Criteri di Arresto</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#scelta-del-passo">Scelta del passo</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#algoritmo-di-backtracing">Algoritmo di backtracing</a></li>
+</ul>
+</li>
 </ul>
 
             </nav>
@@ -478,11 +488,513 @@ x_{k+1} = x_k - \alpha_k \nabla f(x_k).
 \end{cases}
 \end{split}\]</div>
 <p>Questo metodo prende il nome di <strong>metodo di ripida discesa</strong> o, più genericamente, <strong>metodo di discesa del gradiente</strong>.</p>
-<p>Un’osservazione chiave sul metodo di più ripida discesa. Si osservi che la direzione di discesa dell’antigradiente ha una semplice interpretazione grafica: ricordiamo che in generale, il gradiente <span class="math notranslate nohighlight">\(\nabla f(x)\)</span> di una qualunque funzione <span class="math notranslate nohighlight">\(f(x)\)</span>, rappresenta il vettore che, applicato ad <span class="math notranslate nohighlight">\(x\)</span>, punta nella direzione di massima crescita <span class="math notranslate nohighlight">\(f(x)\)</span>. Di conseguenza, ha totalmente senso che il vettore a lui opposto punti verso una direzione verso cui <span class="math notranslate nohighlight">\(f(x)\)</span> decresce. Per questo motivo il metodo è spesso chiamato, come detto, metodo di ripida discesa.</p>
+<p>Un’osservazione chiave sul metodo di più ripida discesa. Si osservi che la direzione di discesa dell’antigradiente ha una semplice interpretazione grafica: ricordiamo che in generale, il gradiente <span class="math notranslate nohighlight">\(\nabla f(x)\)</span> di una qualunque funzione <span class="math notranslate nohighlight">\(f(x)\)</span>, rappresenta il vettore che, applicato ad <span class="math notranslate nohighlight">\(x\)</span>, punta nella direzione di massima crescita <span class="math notranslate nohighlight">\(f(x)\)</span>. Di conseguenza, ha intuitivamente senso che il vettore a lui opposto punti verso una direzione verso cui <span class="math notranslate nohighlight">\(f(x)\)</span> decresce. Per questo motivo il metodo è spesso chiamato, come detto, metodo di ripida discesa.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>Il fatto che la scelta <span class="math notranslate nohighlight">\(p_k = - \nabla f(x_k)\)</span> sia una direzione di discesa <strong>NON</strong> implica che il termine <span class="math notranslate nohighlight">\(x_k - \alpha_k \nabla f(x_k)\)</span> sia necessariamente un</p>
+<p>Il fatto che la scelta <span class="math notranslate nohighlight">\(p_k = - \nabla f(x_k)\)</span> sia una direzione di discesa <strong>NON</strong> implica necessariamente che il valore funzione <span class="math notranslate nohighlight">\(f(x)\)</span> calcolata in <span class="math notranslate nohighlight">\(x_k - \alpha_k \nabla f(x_k)\)</span> sia più piccolo del valore di <span class="math notranslate nohighlight">\(f(x_k)\)</span> (ovvero, non implica che <span class="math notranslate nohighlight">\(f(x_{k+1}) \leq f(x_k)\)</span>) per ogni scelta di <span class="math notranslate nohighlight">\(\alpha_k &gt; 0\)</span>. Andiamo nel seguito ad osservare, sperimentalmente, come la scelta della direzione del passo <span class="math notranslate nohighlight">\(\alpha_k\)</span> influenza il metodo.</p>
 </div>
+<section id="metodo-di-discesa-del-gradiente-in-python">
+<h2>Metodo di Discesa del Gradiente in Python<a class="headerlink" href="#metodo-di-discesa-del-gradiente-in-python" title="Link to this heading">#</a></h2>
+<p>Consideriamo per esempio la funzione già introdotta <span class="math notranslate nohighlight">\(f(x) = (x-1)^2 + e^x\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Oltre alla funzione <span class="math notranslate nohighlight">\(f(x)\)</span>, necessitiamo per l’implementazione del metodo di discesa del gradiente anche della sua derivata <span class="math notranslate nohighlight">\(f'(x)\)</span>. Attraverso dei semplici calcoli, si nota che:</p>
+<div class="math notranslate nohighlight">
+\[
+f'(x) = 2(x-1) + e^x.
+\]</div>
+<p>Andiamo ad implementare questa funzione in Python.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Come già detto, <strong>NON</strong> si utilizzano software di differenziazione automatica per svolgere questi esercizi (che sono poco efficienti). Si calcola invece la derivata di <span class="math notranslate nohighlight">\(f(x)\)</span> <em>a mano</em>, e la si implementa come una funzione Python.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">df</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Passiamo quindi ad implementare la funzione di Discesa del Gradiente, nella sua forma <em>base</em>. Andremo poi ad aggiungerci funzionalità in seguito.</p>
+<p>In particolare, considereremo un algoritmo che prende in input:</p>
+<ul class="simple">
+<li><p>una funzione <code class="docutils literal notranslate"><span class="pre">f</span></code>;</p></li>
+<li><p>la sua derivata <code class="docutils literal notranslate"><span class="pre">df</span></code>;</p></li>
+<li><p>un valore iniziale <code class="docutils literal notranslate"><span class="pre">x0</span></code>;</p></li>
+<li><p>un valore di learning rate <code class="docutils literal notranslate"><span class="pre">alpha</span></code> (che lo consideriamo costante);</p></li>
+<li><p>un numero <code class="docutils literal notranslate"><span class="pre">maxit</span></code> di iterazioni;</p></li>
+</ul>
+<blockquote>
+<div><p>Il metodo della discesa del gradiente con la scelta fatta di selezionare un valore fisso e costante del learning rate <span class="math notranslate nohighlight">\(\alpha\)</span>, uguale per tutte le iterazioni del metodo, prende il nome di <strong>metodo di discesa del gradiente a passo fisso</strong>.</p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">GD</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">maxit</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Implementa il metodo di discesa del gradiente con passo fisso applicato ad una funzione f(x) della quale si conosce la derivata df(x). </span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    f (function): la funzione obiettivo che si vuole minimizzare</span>
+<span class="sd">    df (function): la derivata (o gradiente) della funzione obiettivo</span>
+<span class="sd">    x0 (ndarray): valore iniziale dell&#39;algoritmo</span>
+<span class="sd">    alpha (float): il passo fisso che descrive gli step dell&#39;algoritmo</span>
+<span class="sd">    maxit (int): numero di iterazioni</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Inizializzazione</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="c1"># Ciclo iterativo (uso un ciclo while)</span>
+    <span class="k">while</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">maxit</span><span class="p">:</span>
+        <span class="c1"># Aggiornamento x_{k+1} = x_k - alpha_k df(x_k)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x0</span> <span class="o">-</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">df</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span>
+
+        <span class="c1"># Preparazione per step successivo</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">x0</span> <span class="o">=</span> <span class="n">x</span>
+
+    <span class="k">return</span> <span class="n">x</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Verifichiamone il funzionamento sulla funzione implementata sopra, che come già osservato soluzione esatta <span class="math notranslate nohighlight">\(x^* \approx 0.31492\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Fissiamo i parametri dell&#39;algoritmo (iperparametri)</span>
+<span class="n">x0</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="mf">1e-2</span>
+<span class="n">maxit</span> <span class="o">=</span> <span class="mi">100</span>
+
+<span class="c1"># Calcoliamo la soluzione</span>
+<span class="n">x_sol</span> <span class="o">=</span> <span class="n">GD</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">maxit</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Soluzione calcolata: </span><span class="si">{</span><span class="n">x_sol</span><span class="si">:</span><span class="s2">0.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># A scopo di analisi di prestazioni, misuriamo l&#39;errore rispetto al minimo (noto)</span>
+<span class="n">x_true</span> <span class="o">=</span> <span class="mf">0.31492</span>
+<span class="n">rel_err</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x_sol</span> <span class="o">-</span> <span class="n">x_true</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x_true</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Errore Relativo della soluzione calcolata: </span><span class="si">{</span><span class="n">rel_err</span><span class="si">:</span><span class="s2">0.5f</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Soluzione calcolata: 0.3040
+Errore Relativo della soluzione calcolata: 0.03453.
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><p><strong>Esercizio:</strong> Valutare l’impatto del punto iniziale <code class="docutils literal notranslate"><span class="pre">x0</span></code>, dello step-size <code class="docutils literal notranslate"><span class="pre">alpha</span></code> e del numero di iterazioni <code class="docutils literal notranslate"><span class="pre">maxit</span></code> sulla soluzione.</p>
+</div></blockquote>
+<p>Come avrete senz’altro notato, il numero di iterazioni influenza tantissimo l’errore ottenuto dall’algoritmo. Andiamo quindi a modificare l’algoritmo sopra per includere una misura dell’errore relativo tra la soluzione computata <span class="math notranslate nohighlight">\(x_k\)</span> al passo <span class="math notranslate nohighlight">\(k\)</span>-esimo e la soluzione esatta <span class="math notranslate nohighlight">\(x_{true}\)</span> ad ogni step, oltre che il valore della funzione obiettivo <span class="math notranslate nohighlight">\(f(x_k)\)</span> e la norma del gradiente <span class="math notranslate nohighlight">\(|| \nabla f(x_k) ||_2^2\)</span>, in modo da poterlo visualizzare.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">GD</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">x_true</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">maxit</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Implementa il metodo di discesa del gradiente con passo fisso applicato ad una funzione f(x) della quale si conosce la derivata df(x). </span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    f (function): la funzione obiettivo che si vuole minimizzare</span>
+<span class="sd">    df (function): la derivata (o gradiente) della funzione obiettivo</span>
+<span class="sd">    x0 (ndarray): valore iniziale dell&#39;algoritmo</span>
+<span class="sd">    x_true (ndarray): la soluzione esatta dell&#39;algoritmo (nota SOLO in fase di test)</span>
+<span class="sd">    alpha (float): il passo fisso che descrive gli step dell&#39;algoritmo</span>
+<span class="sd">    maxit (int): numero di iterazioni</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Inizializzazione</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">rel_err</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">maxit</span><span class="p">,</span> <span class="p">))</span>
+    <span class="n">obj_val</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">maxit</span><span class="p">,</span> <span class="p">))</span>
+    <span class="n">grad_norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">maxit</span><span class="p">,</span> <span class="p">))</span>
+
+    <span class="c1"># Ciclo iterativo (uso un ciclo while)</span>
+    <span class="k">while</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">maxit</span><span class="p">:</span>
+        <span class="c1"># Aggiornamento x_{k+1} = x_k - alpha_k df(x_k)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x0</span> <span class="o">-</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">df</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span>
+
+        <span class="c1"># Calcolo dell&#39;errore e salvataggio</span>
+        <span class="n">rel_err</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">x_true</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x_true</span><span class="p">)</span>
+        <span class="n">obj_val</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">grad_norm</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">df</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+
+        <span class="c1"># Preparazione per step successivo</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">x0</span> <span class="o">=</span> <span class="n">x</span>
+
+    <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">rel_err</span><span class="p">,</span> <span class="n">obj_val</span><span class="p">,</span> <span class="n">grad_norm</span>
+
+<span class="c1"># Fissiamo i parametri dell&#39;algoritmo (iperparametri)</span>
+<span class="n">x0</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">x_true</span> <span class="o">=</span> <span class="mf">0.31492</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="mf">1e-2</span>
+<span class="n">maxit</span> <span class="o">=</span> <span class="mi">300</span>
+
+<span class="c1"># Calcoliamo la soluzione</span>
+<span class="n">x_sol</span><span class="p">,</span> <span class="n">rel_err</span><span class="p">,</span> <span class="n">obj_val</span><span class="p">,</span> <span class="n">grad_norm</span> <span class="o">=</span> <span class="n">GD</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">x_true</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">maxit</span><span class="p">)</span>
+
+<span class="c1"># Visualizziamo le metriche</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">maxit</span><span class="p">),</span> <span class="n">rel_err</span><span class="p">,</span> <span class="s2">&quot;r-&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;k&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Rel. Err.&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Rel. Err.&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">maxit</span><span class="p">),</span> <span class="n">obj_val</span><span class="p">,</span> <span class="s2">&quot;r-&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;k&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;f(x)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Funzione obiettivo&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">maxit</span><span class="p">),</span> <span class="n">grad_norm</span><span class="p">,</span> <span class="s2">&quot;r-&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;k&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;|| df(x) ||_2&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Norma gradiente&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/550ae4c710d826767189b2cbea668985e60e84b3a02430d914463b0812718aed.png" src="../_images/550ae4c710d826767189b2cbea668985e60e84b3a02430d914463b0812718aed.png" />
+<img alt="../_images/706e7794ea8eca60b05dd6322b1d5caee69342bca9189c0e6a491de9c099676f.png" src="../_images/706e7794ea8eca60b05dd6322b1d5caee69342bca9189c0e6a491de9c099676f.png" />
+<img alt="../_images/7969465246ddf9d32772420081ad58242ec544565ae161dd344a8a8d81a069ae.png" src="../_images/7969465246ddf9d32772420081ad58242ec544565ae161dd344a8a8d81a069ae.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="criteri-di-arresto">
+<h1>Criteri di Arresto<a class="headerlink" href="#criteri-di-arresto" title="Link to this heading">#</a></h1>
+<p>Dal grafico dell’errore appena misurato, si osserva come l’errore nella soluzione l’errore decresce dapprima molto velocemente, per poi stabilizzarsi e smettere, praticamente, di scendere. Questo comportamento evidenzia la necessità di definire un metodo <strong>automatico</strong> per determinare quando l’algoritmo deve essere terminato, poiché in generale non è necessario raggiungere il numero di iterazioni <code class="docutils literal notranslate"><span class="pre">maxit</span></code> selezionato. La selezione di tecniche utilizzate per determinare in maniera automatica quando l’algoritmo deve essere interrotto prende il nome di <strong>criteri d’arresto</strong>. Tali criteri si basano sia su alcune proprietà matematiche del modello, che su alcune osservazioni sulle possibili casistiche che possono occorrere. Vediamo nel seguito quali sono i più utilizzati.</p>
+<p>Le condizioni necessarie e sufficienti di ottimalità suggeriscono che un semplice metodo per determinare se un tale valore <span class="math notranslate nohighlight">\(x_k\)</span> sia o meno in prossimità di un minimo è controllare il valore di <span class="math notranslate nohighlight">\(|| \nabla f(x_k) ||_2\)</span>. Infatti, se <span class="math notranslate nohighlight">\(x_k\)</span> fosse esattamente uguale ad un punto di minimo, allora sarebbe un punto stazionario (per via delle condizioni necessarie del primo ordine), e quindi varrebbe che <span class="math notranslate nohighlight">\(|| \nabla f(x_k) ||_2 = 0\)</span>. Di conseguenza, possiamo immaginarci che tanto più <span class="math notranslate nohighlight">\(|| \nabla f(x_k) ||\)</span> è piccola, tanto più <span class="math notranslate nohighlight">\(x_k\)</span> sarà vicino ad un punto di minimo. Questa osservazione ci porta al primo dei criteri di arresto: selezionata una tolleranza <code class="docutils literal notranslate"><span class="pre">tolf</span></code> (il cui valore dipende dall’applicazione, ma è solitamente selezionato valere attorno a <span class="math notranslate nohighlight">\(10^{-6}\)</span>), si interrompe l’algoritmo quando:</p>
+<div class="math notranslate nohighlight">
+\[
+|| \nabla f(x_k) ||_2 \leq tolf.
+\]</div>
+<p>Ma questa condizione non è sufficiente. Infatti, <strong>se la funzione <span class="math notranslate nohighlight">\(f(x)\)</span> è molto piatta</strong>, è possibile che <span class="math notranslate nohighlight">\(|| \nabla f(x_k) ||_2\)</span> sia piccola, ma <span class="math notranslate nohighlight">\(x_k\)</span> sia lontano dal punto di minimo. Per questo motivo, si è soliti inserire un’ulteriore condizione, definita scegliendo un parametro <code class="docutils literal notranslate"><span class="pre">tolx</span></code> (in genere attorno a <span class="math notranslate nohighlight">\(10^{-6}\)</span>), e fermando l’algoritmo quando:</p>
+<div class="math notranslate nohighlight">
+\[
+|| x_{k+1} - x_k ||_2 \leq tolx.
+\]</div>
+<p>Quando succede, fermiamo l’algoritmo iterativo e ritorniamo un messaggio di errore che dice che non si è raggiunto il punto di minimo perché la funzione obiettivo era troppo piatta.</p>
+<p>Vediamo come modificare la funzione <code class="docutils literal notranslate"><span class="pre">GD</span></code> sopra per integrare queste funzionalità.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">GD</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">x_true</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">maxit</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">tolf</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">tolx</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Implementa il metodo di discesa del gradiente con passo fisso applicato ad una funzione f(x) della quale si conosce la derivata df(x). </span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    f (function): la funzione obiettivo che si vuole minimizzare</span>
+<span class="sd">    df (function): la derivata (o gradiente) della funzione obiettivo</span>
+<span class="sd">    x0 (ndarray): valore iniziale dell&#39;algoritmo</span>
+<span class="sd">    x_true (ndarray): la soluzione esatta dell&#39;algoritmo (nota SOLO in fase di test)</span>
+<span class="sd">    alpha (float): il passo fisso che descrive gli step dell&#39;algoritmo</span>
+<span class="sd">    maxit (int): numero di iterazioni</span>
+<span class="sd">    tolf (float): tolleranza di || grad(f) ||_2</span>
+<span class="sd">    tolx (float): tolleranza di || x_{k+1} - x_k ||_2</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Inizializzazione</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">rel_err</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">maxit</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="p">))</span>
+    <span class="n">obj_val</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">maxit</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="p">))</span>
+    <span class="n">grad_norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">maxit</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="p">))</span>
+
+    <span class="c1"># Ciclo iterativo (uso un ciclo while)</span>
+    <span class="n">condizione</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">while</span> <span class="n">condizione</span><span class="p">:</span>
+        <span class="c1"># Aggiornamento x_{k+1} = x_k - alpha_k df(x_k)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x0</span> <span class="o">-</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">df</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span>
+
+        <span class="c1"># Calcolo dell&#39;errore e salvataggio</span>
+        <span class="n">rel_err</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">x_true</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x_true</span><span class="p">)</span>
+        <span class="n">obj_val</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">grad_norm</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">df</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+
+        <span class="c1"># Check condizioni di arresto</span>
+        <span class="n">condizione</span> <span class="o">=</span> <span class="p">(</span><span class="n">k</span> <span class="o">&lt;</span> <span class="n">maxit</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">df</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="o">&gt;</span> <span class="n">tolf</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">x0</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">tolx</span><span class="p">)</span>
+
+        <span class="c1"># Se l&#39;algoritmo termina per || x_{k+1} - x_k || &lt; tolx, stampare il warning</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">x0</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">tolx</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Algoritmo terminato per condizione su tolx.&quot;</span><span class="p">)</span>
+            
+        <span class="c1"># Preparazione per step successivo</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">x0</span> <span class="o">=</span> <span class="n">x</span>
+
+    <span class="c1"># Se l&#39;algoritmo si ferma prima di maxit, tagliare i valori inutilizzati delle metriche</span>
+    <span class="k">if</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">maxit</span><span class="p">:</span>
+        <span class="n">rel_err</span> <span class="o">=</span> <span class="n">rel_err</span><span class="p">[:</span><span class="n">k</span><span class="p">]</span>
+        <span class="n">obj_val</span> <span class="o">=</span> <span class="n">obj_val</span><span class="p">[:</span><span class="n">k</span><span class="p">]</span>
+        <span class="n">grad_norm</span> <span class="o">=</span> <span class="n">grad_norm</span><span class="p">[:</span><span class="n">k</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">rel_err</span><span class="p">,</span> <span class="n">obj_val</span><span class="p">,</span> <span class="n">grad_norm</span>
+
+<span class="c1"># Fissiamo i parametri dell&#39;algoritmo (iperparametri)</span>
+<span class="n">x0</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">x_true</span> <span class="o">=</span> <span class="mf">0.31492</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="mf">1e-2</span>
+<span class="n">maxit</span> <span class="o">=</span> <span class="mi">1000</span>
+
+<span class="c1"># Calcoliamo la soluzione</span>
+<span class="n">x_sol</span><span class="p">,</span> <span class="n">rel_err</span><span class="p">,</span> <span class="n">obj_val</span><span class="p">,</span> <span class="n">grad_norm</span> <span class="o">=</span> <span class="n">GD</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">x_true</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">maxit</span><span class="p">,</span> <span class="n">tolf</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">tolx</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Algoritmo terminato in </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">rel_err</span><span class="p">)</span><span class="si">}</span><span class="s2"> iterazioni.&quot;</span><span class="p">)</span>
+
+<span class="c1"># Visualizziamo le metriche</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rel_err</span><span class="p">)),</span> <span class="n">rel_err</span><span class="p">,</span> <span class="s2">&quot;r-&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;k&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Rel. Err.&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Rel. Err.&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">obj_val</span><span class="p">)),</span> <span class="n">obj_val</span><span class="p">,</span> <span class="s2">&quot;r-&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;k&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;f(x)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Funzione obiettivo&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">grad_norm</span><span class="p">)),</span> <span class="n">grad_norm</span><span class="p">,</span> <span class="s2">&quot;r-&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;k&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;|| df(x) ||_2&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Norma gradiente&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Algoritmo terminato in 407 iterazioni.
+</pre></div>
+</div>
+<img alt="../_images/42a920f0df9225359a242b0a0666b850272b5c09473806cfb228ede12f72467a.png" src="../_images/42a920f0df9225359a242b0a0666b850272b5c09473806cfb228ede12f72467a.png" />
+<img alt="../_images/48ec4ef20d533b9b8d3e8097287be4feb14362e5b022fd329ed1368d4962b6fb.png" src="../_images/48ec4ef20d533b9b8d3e8097287be4feb14362e5b022fd329ed1368d4962b6fb.png" />
+<img alt="../_images/df4f1f2ed5926c2ed9b5ed5d9bfc9a585a96d3d132c74b8de6020f440f0f5d92.png" src="../_images/df4f1f2ed5926c2ed9b5ed5d9bfc9a585a96d3d132c74b8de6020f440f0f5d92.png" />
+</div>
+</div>
+</section>
+<section id="scelta-del-passo">
+<h1>Scelta del passo<a class="headerlink" href="#scelta-del-passo" title="Link to this heading">#</a></h1>
+<p>Cosa succede se il valore del passo fisso <span class="math notranslate nohighlight">\(\alpha\)</span> viene scelto troppo grande? Proviamo a lanciare l’algoritmo sopra con <span class="math notranslate nohighlight">\(\alpha = 1\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Fissiamo i parametri dell&#39;algoritmo (iperparametri)</span>
+<span class="n">x0</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">x_true</span> <span class="o">=</span> <span class="mf">0.31492</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">maxit</span> <span class="o">=</span> <span class="mi">1000</span>
+
+<span class="c1"># Calcoliamo la soluzione</span>
+<span class="n">x_sol</span><span class="p">,</span> <span class="n">rel_err</span><span class="p">,</span> <span class="n">obj_val</span><span class="p">,</span> <span class="n">grad_norm</span> <span class="o">=</span> <span class="n">GD</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">x_true</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">maxit</span><span class="p">,</span> <span class="n">tolf</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">tolx</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Algoritmo terminato in </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">rel_err</span><span class="p">)</span><span class="si">}</span><span class="s2"> iterazioni.&quot;</span><span class="p">)</span>
+
+<span class="c1"># Visualizziamo le metriche</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rel_err</span><span class="p">)),</span> <span class="n">rel_err</span><span class="p">,</span> <span class="s2">&quot;r-&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;k&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Rel. Err.&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Rel. Err.&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">obj_val</span><span class="p">)),</span> <span class="n">obj_val</span><span class="p">,</span> <span class="s2">&quot;r-&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;k&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;f(x)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Funzione obiettivo&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">grad_norm</span><span class="p">)),</span> <span class="n">grad_norm</span><span class="p">,</span> <span class="s2">&quot;r-&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;k&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;|| df(x) ||_2&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Norma gradiente&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Algoritmo terminato in 9 iterazioni.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/5_/jhznq71n5mg661ykhh5bg7nc0000gn/T/ipykernel_77188/3632210909.py:5: RuntimeWarning: overflow encountered in exp
+  return (x-1) ** 2 + np.exp(x)
+/var/folders/5_/jhznq71n5mg661ykhh5bg7nc0000gn/T/ipykernel_77188/2071672784.py:2: RuntimeWarning: overflow encountered in exp
+  return 2*(x-1) + np.exp(x)
+/var/folders/5_/jhznq71n5mg661ykhh5bg7nc0000gn/T/ipykernel_77188/2347787700.py:25: RuntimeWarning: invalid value encountered in scalar subtract
+  x = x0 - alpha * df(x0)
+</pre></div>
+</div>
+<img alt="../_images/ec6cf1ea29a9232ee1a9574dd004ab306a6d5c0615c2010f54771cbc158dae6b.png" src="../_images/ec6cf1ea29a9232ee1a9574dd004ab306a6d5c0615c2010f54771cbc158dae6b.png" />
+<img alt="../_images/b76e23cf7f61826ed5ecbbc3a4fb16cdaa706cd332ac2b655b3c31b03fda3193.png" src="../_images/b76e23cf7f61826ed5ecbbc3a4fb16cdaa706cd332ac2b655b3c31b03fda3193.png" />
+<img alt="../_images/46394138e59aa73f36344254b08ba72e2e12dc1564f4910a5c5041cde72cd77f.png" src="../_images/46394138e59aa73f36344254b08ba72e2e12dc1564f4910a5c5041cde72cd77f.png" />
+</div>
+</div>
+<p>Come si vede, l’errore cresce rapidamente e per raggiungere, in appena 6 iterazioni, dei valori dell’ordine di <span class="math notranslate nohighlight">\(10^{17}\)</span>: l’algoritmo <strong>non converge</strong>. Questo comportamento origina dalla scelta troppo grande del learning rate.</p>
+<p>Infatti, possono verificarsi tre possibili condizioni dipendentemente dalla scelta di <span class="math notranslate nohighlight">\(\alpha\)</span>:</p>
+<p><img alt="" src="../_images/step_size.png" /></p>
+<p>Se il passo è troppo piccolo, gli iterati calcolati dall’algoritmo sono tutti troppo vicini, e non riescono mai a raggiungere il punto di minimo. Se il passo è troppo grande, gli iterati rimbalzano da una parte all’altra della funzione, possibilmente crescendo fino all’infinito (è il caso dell’esempio visto precedentemente).</p>
+<p>Uno step importante nello sviluppo dell’algoritmo di Discesa del Gradiente è quindi quello di scegliere accuratamente il valore del parametro <span class="math notranslate nohighlight">\(\alpha\)</span>. Dal punto di vista teorico, questo problema è risolto tramite il seguente risultato:</p>
+<p><strong>Teorema:</strong> Il metodo di Discesa del Gradiente con direzione <span class="math notranslate nohighlight">\(p_k = - \nabla f(x_k)\)</span> converge ad un punto stazionario di <span class="math notranslate nohighlight">\(f(x)\)</span> se per ogni <span class="math notranslate nohighlight">\(k \in \mathbb{N}\)</span>, <span class="math notranslate nohighlight">\(\alpha_k\)</span> soddisfa le seguenti condizioni, note come <strong>condizioni di Wolfe</strong>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{cases}
+    f(x_k - \alpha_k \nabla f(x_k)) \leq f(x_k) - c_1 \alpha_k || \nabla f(x_k) ||_2^2 \\
+    \nabla f(x_k)^T \nabla f(x_k - \alpha_k \nabla f(x_k)) \leq c_2 || \nabla f(x_k) ||_2^2
+\end{cases}
+\end{split}\]</div>
+<p>dove <span class="math notranslate nohighlight">\(0 &lt; c_1 &lt; c_2 &lt; 1\)</span> sono due costanti. La prima condizione, nota come <strong>condizione di Armijo</strong>, richiede che <span class="math notranslate nohighlight">\(f(x_{k+1})\)</span> comporti una decrescita sufficientemente di <span class="math notranslate nohighlight">\(f(x_k)\)</span>. Infatti, siccome <span class="math notranslate nohighlight">\(c_1 \alpha_k || \nabla f(x_k) ||_2^2 &gt; 0\)</span>, chiaramente la condizione di Armijo implica che <span class="math notranslate nohighlight">\(f(x_{k+1}) \leq f(x_k) - c_1 \alpha_k || \nabla f(x_k) ||_2^2 &lt; f(x_k)\)</span>.</p>
+<section id="algoritmo-di-backtracing">
+<h2>Algoritmo di backtracing<a class="headerlink" href="#algoritmo-di-backtracing" title="Link to this heading">#</a></h2>
+<p>Ma come fare ad assicurarsi che le condizione di Wolfe vengano rispettate? Per farlo, esiste un algoritmo semplice ma estremamente efficace chiamato <strong>algoritmo di backtracing</strong>, il cui funzionamento è il seguente:</p>
+<ul class="simple">
+<li><p>Si inizializza <span class="math notranslate nohighlight">\(\alpha_k\)</span> con una stima di partenza (in genere, <span class="math notranslate nohighlight">\(\alpha_k = 1\)</span>);</p></li>
+<li><p>Si controlla se <span class="math notranslate nohighlight">\(\alpha_k\)</span> soddisfa la condizione di Armijo;</p></li>
+<li><p>Se si, allora l’algoritmo termina. Altrimenti, si riduce il valore di <span class="math notranslate nohighlight">\(\alpha_k\)</span> e si ripete dallo step precedente.</p></li>
+</ul>
+<p>Un’implementazione dell’algoritmo di backtracing è la seguente:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">backtracking</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">rho</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Algoritmo di backtracking per Discesa Gradiente.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    f       : Funzione obiettivo.</span>
+<span class="sd">    df      : Gradiente della funzione obiettivo.</span>
+<span class="sd">    x       : Iterato x_k.</span>
+<span class="sd">    alpha   : Stima iniziale di alpha(default 1).</span>
+<span class="sd">    rho     : Fattore di riduzione (default 0.5).</span>
+<span class="sd">    c       : Costante delle condizioni di Armijo (default 1e-4).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    alpha   : Learning rate calcolato con backtracking.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">while</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">df</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="o">&gt;</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">c</span> <span class="o">*</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">df</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span><span class="p">:</span>
+        <span class="n">alpha</span> <span class="o">*=</span> <span class="n">rho</span>
+    <span class="k">return</span> <span class="n">alpha</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>E’ possibile dimostrare che, se <span class="math notranslate nohighlight">\(\alpha_k\)</span> viene scelto tramite algoritmo di backtracking, allora necessariamente soddisferà le condizioni di Wolfe, e l’algoritmo di Discesa del Gradiente convergerà.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>L’algoritmo di backtracing <strong>NON</strong> seleziona il valore migliore possibile del parametro <span class="math notranslate nohighlight">\(\alpha_k\)</span>. Non assicura, cioè, che la funzione raggiungerà il minimo nel minor numero possibile di step.</p>
+</div>
+<p>Vediamo come utilizzare l’algoritmo di backtracking per trovare la soluzione di minimo al problema definito sopra.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">GD_backtracking</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">x_true</span><span class="p">,</span> <span class="n">maxit</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">tolf</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">tolx</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Implementa il metodo di discesa del gradiente con passo scelto con backtracking applicato ad una funzione f(x) della quale si conosce la derivata df(x). </span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    f (function): la funzione obiettivo che si vuole minimizzare</span>
+<span class="sd">    df (function): la derivata (o gradiente) della funzione obiettivo</span>
+<span class="sd">    x0 (ndarray): valore iniziale dell&#39;algoritmo</span>
+<span class="sd">    x_true (ndarray): la soluzione esatta dell&#39;algoritmo (nota SOLO in fase di test)</span>
+<span class="sd">    maxit (int): numero di iterazioni</span>
+<span class="sd">    tolf (float): tolleranza di || grad(f) ||_2</span>
+<span class="sd">    tolx (float): tolleranza di || x_{k+1} - x_k ||_2</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Inizializzazione</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">rel_err</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">maxit</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="p">))</span>
+    <span class="n">obj_val</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">maxit</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="p">))</span>
+    <span class="n">grad_norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">maxit</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="p">))</span>
+
+    <span class="c1"># Ciclo iterativo (uso un ciclo while)</span>
+    <span class="n">condizione</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">while</span> <span class="n">condizione</span><span class="p">:</span>
+        <span class="c1"># Scelta di alpha_k con backtracking</span>
+        <span class="n">alpha</span> <span class="o">=</span> <span class="n">backtracking</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Aggiornamento x_{k+1} = x_k - alpha_k df(x_k)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x0</span> <span class="o">-</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">df</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span>
+
+        <span class="c1"># Calcolo dell&#39;errore e salvataggio</span>
+        <span class="n">rel_err</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">x_true</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x_true</span><span class="p">)</span>
+        <span class="n">obj_val</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">grad_norm</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">df</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+
+        <span class="c1"># Check condizioni di arresto</span>
+        <span class="n">condizione</span> <span class="o">=</span> <span class="p">(</span><span class="n">k</span> <span class="o">&lt;</span> <span class="n">maxit</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">df</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="o">&gt;</span> <span class="n">tolf</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">x0</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">tolx</span><span class="p">)</span>
+
+        <span class="c1"># Se l&#39;algoritmo termina per || x_{k+1} - x_k || &lt; tolx, stampare il warning</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">x0</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">tolx</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Algoritmo terminato per condizione su tolx.&quot;</span><span class="p">)</span>
+            
+        <span class="c1"># Preparazione per step successivo</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">x0</span> <span class="o">=</span> <span class="n">x</span>
+
+    <span class="c1"># Se l&#39;algoritmo si ferma prima di maxit, tagliare i valori inutilizzati delle metriche</span>
+    <span class="k">if</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">maxit</span><span class="p">:</span>
+        <span class="n">rel_err</span> <span class="o">=</span> <span class="n">rel_err</span><span class="p">[:</span><span class="n">k</span><span class="p">]</span>
+        <span class="n">obj_val</span> <span class="o">=</span> <span class="n">obj_val</span><span class="p">[:</span><span class="n">k</span><span class="p">]</span>
+        <span class="n">grad_norm</span> <span class="o">=</span> <span class="n">grad_norm</span><span class="p">[:</span><span class="n">k</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">rel_err</span><span class="p">,</span> <span class="n">obj_val</span><span class="p">,</span> <span class="n">grad_norm</span>
+
+<span class="c1"># Fissiamo i parametri dell&#39;algoritmo (iperparametri)</span>
+<span class="n">x0</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">x_true</span> <span class="o">=</span> <span class="mf">0.31492</span>
+<span class="n">maxit</span> <span class="o">=</span> <span class="mi">1000</span>
+
+<span class="c1"># Calcoliamo la soluzione</span>
+<span class="n">x_sol</span><span class="p">,</span> <span class="n">rel_err</span><span class="p">,</span> <span class="n">obj_val</span><span class="p">,</span> <span class="n">grad_norm</span> <span class="o">=</span> <span class="n">GD_backtracking</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">x_true</span><span class="p">,</span> <span class="n">maxit</span><span class="p">,</span> <span class="n">tolf</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">tolx</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Algoritmo terminato in </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">rel_err</span><span class="p">)</span><span class="si">}</span><span class="s2"> iterazioni.&quot;</span><span class="p">)</span>
+
+<span class="c1"># Visualizziamo le metriche</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rel_err</span><span class="p">)),</span> <span class="n">rel_err</span><span class="p">,</span> <span class="s2">&quot;r-&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;k&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Rel. Err.&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Rel. Err.&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">obj_val</span><span class="p">)),</span> <span class="n">obj_val</span><span class="p">,</span> <span class="s2">&quot;r-&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;k&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;f(x)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Funzione obiettivo&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">grad_norm</span><span class="p">)),</span> <span class="n">grad_norm</span><span class="p">,</span> <span class="s2">&quot;r-&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;k&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;|| df(x) ||_2&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Norma gradiente&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Algoritmo terminato in 37 iterazioni.
+</pre></div>
+</div>
+<img alt="../_images/7b44f62b1bb7ba8563eaa56f7b073b92be0b6c9af7594259efa657dabc5ecc99.png" src="../_images/7b44f62b1bb7ba8563eaa56f7b073b92be0b6c9af7594259efa657dabc5ecc99.png" />
+<img alt="../_images/b4af04695cf7a9aa0420e00ad536e8ea2ede9756ed37a9e9010e2f30ebc4e131.png" src="../_images/b4af04695cf7a9aa0420e00ad536e8ea2ede9756ed37a9e9010e2f30ebc4e131.png" />
+<img alt="../_images/7c337d7971ccc36435a8be957285168bd01ac54761e53899e791e719da1ce977.png" src="../_images/7c337d7971ccc36435a8be957285168bd01ac54761e53899e791e719da1ce977.png" />
+</div>
+</div>
+<p>Da notare come il metodo di backtracking ha un costo. Infatti, per trovare il valore del learning rate tale da soddisfare le condizioni di Armijo, è a volte necessario eseguire varie volte il ciclo che definisce l’algoritmo, che richiede a sua volta di calcolare il valore di un possibile <span class="math notranslate nohighlight">\(x_{k+1}\)</span> per ogni dato <span class="math notranslate nohighlight">\(\alpha_k\)</span>. Come risultato, può capitare che a livello di tempo di esecuzione, l’algoritmo con metodo di backtracking richieda molto più tempo a convergere di quanto sia necessario con scelta fissa del passo (il quale, però, non ha certezza di covergere!).</p>
+<blockquote>
+<div><p><strong>Esercizio:</strong> Confrontare su uno stesso plot il risultato ottenuto con il metodo di backtracking e differenti valori di passo fisso <span class="math notranslate nohighlight">\(\alpha\)</span>. Commentare sul metodo migliore in questo caso. Confrontare anche il tempo richiesto da ciascun metodo a convergere.</p>
+</div></blockquote>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -550,7 +1062,15 @@ x_{k+1} = x_k - \alpha_k \nabla f(x_k).
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Metodo di Discesa del Gradiente</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#metodo-di-discesa-del-gradiente-gd">Metodo di discesa del gradiente (GD)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#metodo-di-discesa-del-gradiente-gd">Metodo di discesa del gradiente (GD)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metodo-di-discesa-del-gradiente-in-python">Metodo di Discesa del Gradiente in Python</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#criteri-di-arresto">Criteri di Arresto</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#scelta-del-passo">Scelta del passo</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#algoritmo-di-backtracing">Algoritmo di backtracing</a></li>
+</ul>
+</li>
 </ul>
 
   </nav></div>
