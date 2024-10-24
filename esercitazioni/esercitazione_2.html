@@ -450,15 +450,15 @@ document.write(`
 - <span class="math notranslate nohighlight">\(g(x)=x-f(x)e^{x/2}\)</span>
 - <span class="math notranslate nohighlight">\(g(x)=x-f(x)e^{-x/2}\)</span></p>
 <p>Per analizzare i risultati utilizzare strumenti grafici e tabelle. In particolare:
-- Disegnare il grafico della funzione <span class="math notranslate nohighlight">\(f\)</span> nell’intervallo <span class="math notranslate nohighlight">\(I = [-1, 1]\)</span> e verificare che <span class="math notranslate nohighlight">\(x^*\)</span> sia lo zero di <span class="math notranslate nohighlight">\(f(x)\)</span> in <span class="math notranslate nohighlight">\([-1, 1]\)</span>.
+- Disegnare il grafico della funzione <span class="math notranslate nohighlight">\(f(x)\)</span> nell’intervallo <span class="math notranslate nohighlight">\(I = [-1, 1]\)</span> e verificare che <span class="math notranslate nohighlight">\(x^*\)</span> sia lo zero di <span class="math notranslate nohighlight">\(f(x)\)</span> in <span class="math notranslate nohighlight">\([-1, 1]\)</span>.
 - Confrontare l’accuratezza delle soluzioni trovate e il numero di iterazioni effettuate dai solutori.
-- graficare per ogni metodo l’errore assoluto <span class="math notranslate nohighlight">\(|x_k-x^*|\)</span> ad ogni iterazione k.</p>
+- graficare per ogni metodo l’errore assoluto <span class="math notranslate nohighlight">\(|x_k - x^*|\)</span> ad ogni iterazione k.</p>
 </section>
 <section id="risoluzione-di-sistemi-lineari">
 <h2>Risoluzione di sistemi lineari<a class="headerlink" href="#risoluzione-di-sistemi-lineari" title="Link to this heading">#</a></h2>
-<p>Creato un problema test di dimensione variabile <span class="math notranslate nohighlight">\(n\)</span>  la cui soluzione esatta sia un vettore <span class="math notranslate nohighlight">\(x\)</span> generato a piacere e <span class="math notranslate nohighlight">\(b\)</span> il termine noto ottenuto moltiplicando la matrice <span class="math notranslate nohighlight">\(A\)</span> per la soluzione <span class="math notranslate nohighlight">\(x\)</span>:
+<p>Creato un problema test di dimensione variabile <span class="math notranslate nohighlight">\(n\)</span> la cui soluzione esatta sia un vettore <span class="math notranslate nohighlight">\(x\)</span> generato a piacere e <span class="math notranslate nohighlight">\(y\)</span> il termine noto ottenuto moltiplicando la matrice <span class="math notranslate nohighlight">\(A\)</span> per la soluzione <span class="math notranslate nohighlight">\(x\)</span>:
 - calcolare il numero di condizione tramite opportuna funzione Python
-- risolvere il sistema lineare <span class="math notranslate nohighlight">\(Ax=b\)</span> con la fattorizzazione LU o Cholesky.
+- risolvere il sistema lineare <span class="math notranslate nohighlight">\(Ax = y\)</span> con la fattorizzazione LU o Cholesky.
 - Calcolare l’ errore relativo rispetto alla soluzione esatta. Variare la dimensione <span class="math notranslate nohighlight">\(n\)</span> del sistema e fare un grafico dell’errore al variare di <span class="math notranslate nohighlight">\(n\)</span> e uno del numero di condizione al variare di <span class="math notranslate nohighlight">\(n\)</span>.</p>
 <p><strong>Problemi test da utilizzare:</strong>
 - Una matrice di numeri casuali <span class="math notranslate nohighlight">\(A\)</span> generata con la funzione <code class="docutils literal notranslate"><span class="pre">np.random.randn</span></code>.
@@ -466,11 +466,12 @@ document.write(`
 </section>
 <section id="minimi-quadrati">
 <h2>Minimi quadrati<a class="headerlink" href="#minimi-quadrati" title="Link to this heading">#</a></h2>
-<p>Assegnata una matrice <span class="math notranslate nohighlight">\(A\)</span> di numeri casuali (funzione <code class="docutils literal notranslate"><span class="pre">np.random.normal</span></code>) di dimensione <span class="math notranslate nohighlight">\(m \times n\)</span>, <span class="math notranslate nohighlight">\(m&gt;n\)</span> fissati, scegliere un vettore <span class="math notranslate nohighlight">\(\alpha\)</span> (per esempio con elementi costanti) come soluzione esatta per creare un problema test e calcolare il termine noto <span class="math notranslate nohighlight">\(y=A \alpha + v\)</span>, dove <span class="math notranslate nohighlight">\(v\)</span> è un vettore di numeri casuali generato con la funzione precedente (utilizzare una varianza in [0.01,0.1]). Quindi risolvere il problema  di minimi quadrati:
-$<span class="math notranslate nohighlight">\(
+<p>Assegnata una matrice <span class="math notranslate nohighlight">\(A\)</span> di numeri casuali (funzione <code class="docutils literal notranslate"><span class="pre">np.random.normal</span></code>) di dimensione <span class="math notranslate nohighlight">\(m \times n\)</span>, <span class="math notranslate nohighlight">\(m&gt;n\)</span> fissati, scegliere un vettore <span class="math notranslate nohighlight">\(\alpha\)</span> (per esempio con elementi costanti) come soluzione esatta per creare un problema test e calcolare il termine noto <span class="math notranslate nohighlight">\(y=A \alpha + e\)</span>, dove <span class="math notranslate nohighlight">\(e\)</span> è un vettore di numeri casuali generato con la funzione precedente (utilizzare una varianza in <span class="math notranslate nohighlight">\([0.01,0.1]\)</span>). Quindi risolvere il problema  di minimi quadrati:</p>
+<div class="math notranslate nohighlight">
+\[
 \min_\alpha ||A \alpha - y||_2^2
-\)</span>$
-sia utilizzando le equazioni normali che la SVD di A. Inoltre:
+\]</div>
+<p>sia utilizzando le equazioni normali che la SVD di A. Inoltre:
 - Confrontare le due soluzioni.
 - Calcolare la norma due del vettore dei residui in entrambi i casi.</p>
 </section>
