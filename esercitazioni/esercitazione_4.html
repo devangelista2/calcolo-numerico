@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Esercitazione: Algebra lineare con Python &#8212; Calcolo Numerico</title>
+    <title>Esercitazione: Imaging e Problemi Inversi &#8212; Calcolo Numerico</title>
   
   
   
@@ -57,13 +57,10 @@
     <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'esercitazioni/esercitazione_1';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'esercitazioni/esercitazione_4';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Esercitazione: Zeri di funzione e sistemi lineari" href="esercitazione_2.html" />
-    <link rel="prev" title="Metodo dei Gradienti Coniugati" href="../ottimizzazione/CGLS.html" />
+    <link rel="prev" title="Esercitazione: Approssimazione di dati e Ottimizzazione" href="esercitazione_3.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -220,10 +217,10 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Esercitazioni</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Esercitazione: Algebra lineare con Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="esercitazione_1.html">Esercitazione: Algebra lineare con Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="esercitazione_2.html">Esercitazione: Zeri di funzione e sistemi lineari</a></li>
 <li class="toctree-l1"><a class="reference internal" href="esercitazione_3.html">Esercitazione: Approssimazione di dati e Ottimizzazione</a></li>
-<li class="toctree-l1"><a class="reference internal" href="esercitazione_4.html">Esercitazione: Imaging e Problemi Inversi</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Esercitazione: Imaging e Problemi Inversi</a></li>
 </ul>
 
     </div>
@@ -295,7 +292,7 @@
       
       
       
-      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fesercitazioni/esercitazione_1.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fesercitazioni/esercitazione_4.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -325,7 +322,7 @@
       
       
       
-      <li><a href="../_sources/esercitazioni/esercitazione_1.ipynb" target="_blank"
+      <li><a href="../_sources/esercitazioni/esercitazione_4.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -396,9 +393,7 @@ document.write(`
   </button>
 `);
 </script>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</button>
+
 </div></div>
       
     </div>
@@ -409,19 +404,11 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Esercitazione: Algebra lineare con Python</h1>
+    <h1>Esercitazione: Imaging e Problemi Inversi</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
-            <div>
-                <h2> Contents </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#testing">Testing</a></li>
-</ul>
-            </nav>
         </div>
     </div>
 </div>
@@ -431,76 +418,18 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="esercitazione-algebra-lineare-con-python">
-<h1>Esercitazione: Algebra lineare con Python<a class="headerlink" href="#esercitazione-algebra-lineare-con-python" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="esercitazione-imaging-e-problemi-inversi">
+<h1>Esercitazione: Imaging e Problemi Inversi<a class="headerlink" href="#esercitazione-imaging-e-problemi-inversi" title="Link to this heading">#</a></h1>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>Si ricorda che questa prima esercitazione è <strong>solo</strong> a scopo didattico. NON è richiesta la consegna di questa esercitazione, nè il suo contenuto sarà richiesto all’esame.</p>
-<p>Siccome da qui in avanti lavoreremo costantemente con operazioni del tipo descritto sopra, lo scopo dell’esercitazione è solo quello di farvi prendere dimestichezza con questi metodi. Inoltre, cercare di ottimizzare gli algoritmi per massimizzare l’efficienza in un linguaggio come Python è, oltre che un attività “divertente”, un buon modo di imparare a ragionare che sarà sicuramente utile sia in futuro, che nel resto del corso.</p>
-</div>
-<p>Gli oggetti fondanti dell’algebra lineare sono, come avete visto, matrici e vettori, indicati in seguito con le lettere maiuscole dell’alfabeto latino (<span class="math notranslate nohighlight">\(A\)</span>, <span class="math notranslate nohighlight">\(B\)</span>, …) e con le lettere minuscole dell’alfabeto latino (<span class="math notranslate nohighlight">\(v\)</span>, <span class="math notranslate nohighlight">\(w\)</span>, …), rispettivamente.</p>
-<p>Dal punto di vista pratico, i vettori non sono altro che array, mentre le matrici possono essere viste come degli array di array, dove ciascun elemento interno rappresenta gli elementi della matrice per righe (o per colonne).</p>
-<p>La differenza principale tra i classici array e gli operatori di algebra lineare sono le operazioni tra essi. Ad esempio, la somma di due vettori di lunghezza uguale da come risultato un vettore della stessa lunghezza, con i valori ottenuti sommando elemento per elemento, mentre la somma di due array su Python li concatena, come abbiamo visto.</p>
-<p>Similmente, esistono due prodotti possibili tra vettori e tra matrici e vettori: il prodotto “classico”, che corrisponde alla moltiplicazione elemento per elemento, e il <strong>prodotto riga-per-colonna</strong>. Si ricorda che in formule, questi si esprimono così:</p>
-<p>siano <span class="math notranslate nohighlight">\(v = (v_1, \dots, v_n)\)</span>, <span class="math notranslate nohighlight">\(w = (w_1, \dots, w_n)\)</span>, <span class="math notranslate nohighlight">\(A = (a_{i, j})_{i, j=1, \dots, m, n}\)</span> due vettori ed una matrice. Allora:</p>
-<div class="math notranslate nohighlight">
-\[
-(v + w)_i = (v_i + w_i) \quad (v * w)_i = (v_i * w_i) \quad (Av)_i = \sum_{j=1}^n a_{i, j} v_j.
-\]</div>
-<p>In questa esercitazione, si richiede di scrivere un piccolo pacchetto Python che implementa le principali funzioni di algebra lineare, senza utilizzare nessun pacchetto esterno se non le funzioni base di Python (quindi, senza utilizzare <code class="docutils literal notranslate"><span class="pre">numpy</span></code>).</p>
-<p>In particolare, i vettori saranno rappresentati dalle liste, mentre le matrici saranno delle liste di liste, dove ciascuna lista interna rappresenta una riga (o una colonna) della matrice.</p>
-<p>Le operazioni da implementare dovranno seguire le consuete regole di operazione tra vettori di algebra lineare, ad esempio una funzione <code class="docutils literal notranslate"><span class="pre">somma(v,</span> <span class="pre">w)</span></code> deve sommare i vettori <code class="docutils literal notranslate"><span class="pre">v</span></code> e <code class="docutils literal notranslate"><span class="pre">w</span></code>, elemento per elemento. Stessa cosa per la funzione <code class="docutils literal notranslate"><span class="pre">prodotto_riga_per_colonna(A,</span> <span class="pre">v)</span></code>, che deve implementare il classico prodotto riga-per-colonna tra matrice e vettore (o, alternativamente, tra due vettori).</p>
-<p>Quali operazioni implementare sono a discrezione dello studente. Si elenca qui sotto una serie di funzioni che possono essere implementate, a titolo di suggerimento:</p>
+<p>Lo svolgimento di questa esercitazione è <strong>obbligatoria</strong> per sostenere l’esame. L’esercitazione può essere consegnata in qualiasi momento e NON è richiesto di consegnarla entro una specifica data. L’unico vincolo è che <strong>dovrà</strong> essere consegnata su Virtuale <em>prima</em> del proprio esame scritto, poiché i risultati di tale esercitazione saranno discussi durante l’esame orale.</p>
+<p>L’esercitazione dovrà essere svolta eseguendo tutte le prove richieste, e i risultati dovranno essere collezionati e brevemente commentati tramite una delle due seguenti modalità:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">somma(v,</span> <span class="pre">w)</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">differenza(v,</span> <span class="pre">w)</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">prodotto(v,</span> <span class="pre">w)</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">prodotto_riga_per_colonna(A,</span> <span class="pre">v)</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">prodotto_scalare(v,</span> <span class="pre">w)</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">prodotto_vettore_per_scalare(v,</span> <span class="pre">w)</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">potenza_prodotto_riga_per_colonna(A,</span> <span class="pre">p)</span></code></p></li>
+<li><p>Un documento PDF (o Word) contenente uno screenshot dello snippet di codice, i risultati associati a tale snippet, e un commento a tali risultati.</p></li>
+<li><p>Un Notebook di Python come quelli utilizzati a lezione, con celle di codice contenenti le soluzioni agli esercizi, alternate ad un breve commento degli esercizi stessi. Tuttavia, i codici <strong>NON</strong> devono essere lanciati durante l’esame, ma lo studente deve presentarsi all’esame con il programma già eseguito e con l’output delle celle ancora visibile.</p></li>
 </ul>
-<p>Oltre che delle funzioni di utilità, come ad esempio:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">shape(v)</span></code>: che ritorna la shape del vettore/matrice in input</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ndim(v)</span></code>: che ritorna 1 se <code class="docutils literal notranslate"><span class="pre">v</span></code> è un vettore, 2 se è una matrice</p></li>
-</ul>
-<section id="testing">
-<h2>Testing<a class="headerlink" href="#testing" title="Link to this heading">#</a></h2>
-<p>Come abbiamo più volte ricordato, l’aspetto forse più importante quando si lavora con l’algebra lineare computazionale è <strong>l’efficienza</strong>. Infatti, è meno raro di quanto si pensa trovarsi a lavorare con vettori e matrici con milioni di elementi l’uno.</p>
-<p>Si chiede quindi di testare l’efficienza del proprio codice utilizzando le funzioni contenute nella libreria <code class="docutils literal notranslate"><span class="pre">time</span></code>. Sotto un esempio di come utilizzare tale libereria per misirare l’efficienza di un codice.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
-
-<span class="c1"># Inizializzazione delle variabili</span>
-<span class="n">v</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">10_000</span>
-
-<span class="c1"># Far partire il tempo</span>
-<span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-
-<span class="c1"># Eseguire operazioni varie</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10_000</span><span class="p">):</span>
-    <span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
-
-<span class="c1"># Misurare il tempo alla fine dell&#39;esecuzione</span>
-<span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-
-<span class="c1"># Stampare il tempo</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tempo impiegato: </span><span class="si">{</span><span class="n">end_time</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start_time</span><span class="si">}</span><span class="s2">s&quot;</span><span class="p">)</span>
-</pre></div>
+<p>Presentarsi all’esame con codice completo ma ancora da eseguire o senza una versione PDF con risultati già presenti, può compromettere la riuscita dell’esame orale.</p>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Tempo impiegato: 0.0013501644134521484s
-</pre></div>
-</div>
-</div>
-</div>
-<p>Come abbiamo visto, i cicli <code class="docutils literal notranslate"><span class="pre">for</span></code> e <code class="docutils literal notranslate"><span class="pre">while</span></code> in Python sono estremamente lenti.</p>
-<p>Esistono però su Python vari modi per riuscire ad evitarli (o almeno, minimizzarne l’impatto sul costo computazionale). Quindi lo svolgimento dell’esercitazione sopra può essere fatta anche in vista dell’efficienza, cercando di sviluppare l’implementazione più efficiente possibile.</p>
-<p>Ad esempio, prendere in considerazione operazioni come la <strong>list comprehension</strong>, operazioni built-in in Python, la pre-allocazione della memoria (inizializzando le variabili) per aumentare l’efficienza, nonché alcuni trick matematici che possono venire in mente per minimizzare il numero di operazioni e quindi massimizzare l’efficienza.</p>
-</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -534,22 +463,13 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../ottimizzazione/CGLS.html"
+       href="esercitazione_3.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Metodo dei Gradienti Coniugati</p>
+        <p class="prev-next-title">Esercitazione: Approssimazione di dati e Ottimizzazione</p>
       </div>
-    </a>
-    <a class="right-next"
-       href="esercitazione_2.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Esercitazione: Zeri di funzione e sistemi lineari</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
@@ -557,21 +477,6 @@ document.write(`
             </div>
             
             
-              
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> Contents
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#testing">Testing</a></li>
-</ul>
-  </nav></div>
-
-</div></div>
               
             
           </div>
