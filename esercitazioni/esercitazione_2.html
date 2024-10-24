@@ -63,7 +63,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Esercitazione: Approssimazione di dati e Ottimizzazione" href="esercitazione_3.html" />
-    <link rel="prev" title="Esercitazione: algebra lineare con Python" href="esercitazione_1.html" />
+    <link rel="prev" title="Esercitazione: Algebra lineare con Python" href="esercitazione_1.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -220,9 +220,10 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Esercitazioni</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="esercitazione_1.html">Esercitazione: algebra lineare con Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="esercitazione_1.html">Esercitazione: Algebra lineare con Python</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Esercitazione: Zeri di funzione e sistemi lineari</a></li>
 <li class="toctree-l1"><a class="reference internal" href="esercitazione_3.html">Esercitazione: Approssimazione di dati e Ottimizzazione</a></li>
+<li class="toctree-l1"><a class="reference internal" href="esercitazione_4.html">Esercitazione: Imaging e Problemi Inversi</a></li>
 </ul>
 
     </div>
@@ -446,23 +447,31 @@ document.write(`
 </div>
 <section id="zeri-di-funzione">
 <h2>Zeri di funzione<a class="headerlink" href="#zeri-di-funzione" title="Link to this heading">#</a></h2>
-<p>Utilizzare il metodo di bisezione, il metodo delle iterazioni di punto fisso e il metodo di Newton  per il calcolo dello zero della una funzione <span class="math notranslate nohighlight">\(f(x) = e^x - x^2 \)</span>, la cui soluzione è <span class="math notranslate nohighlight">\(x^* = -0.7034674\)</span>. Per il metodo delle iterazioni di punto fisso considerare come funzione <span class="math notranslate nohighlight">\(g(x)\)</span>:
-- <span class="math notranslate nohighlight">\(g(x)=x-f(x)e^{x/2}\)</span>
-- <span class="math notranslate nohighlight">\(g(x)=x-f(x)e^{-x/2}\)</span></p>
-<p>Per analizzare i risultati utilizzare strumenti grafici e tabelle. In particolare:
-- Disegnare il grafico della funzione <span class="math notranslate nohighlight">\(f(x)\)</span> nell’intervallo <span class="math notranslate nohighlight">\(I = [-1, 1]\)</span> e verificare che <span class="math notranslate nohighlight">\(x^*\)</span> sia lo zero di <span class="math notranslate nohighlight">\(f(x)\)</span> in <span class="math notranslate nohighlight">\([-1, 1]\)</span>.
-- Confrontare l’accuratezza delle soluzioni trovate e il numero di iterazioni effettuate dai solutori.
-- Graficare per ogni metodo l’errore assoluto <span class="math notranslate nohighlight">\(|x_k - x^*|\)</span> ad ogni iterazione k.</p>
+<p>Utilizzare il metodo di bisezione, il metodo delle iterazioni di punto fisso e il metodo di Newton  per il calcolo dello zero della una funzione <span class="math notranslate nohighlight">\(f(x) = e^x - x^2 \)</span>, la cui soluzione è <span class="math notranslate nohighlight">\(x^* = -0.7034674\)</span>. Per il metodo delle iterazioni di punto fisso considerare come funzione <span class="math notranslate nohighlight">\(g(x)\)</span>:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(g(x)=x-f(x)e^{x/2}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(g(x)=x-f(x)e^{-x/2}\)</span></p></li>
+</ul>
+<p>Per analizzare i risultati utilizzare strumenti grafici e tabelle. In particolare:</p>
+<ul class="simple">
+<li><p>Disegnare il grafico della funzione <span class="math notranslate nohighlight">\(f(x)\)</span> nell’intervallo <span class="math notranslate nohighlight">\(I = [-1, 1]\)</span> e verificare che <span class="math notranslate nohighlight">\(x^*\)</span> sia lo zero di <span class="math notranslate nohighlight">\(f(x)\)</span> in <span class="math notranslate nohighlight">\([-1, 1]\)</span>.</p></li>
+<li><p>Confrontare l’accuratezza delle soluzioni trovate e il numero di iterazioni effettuate dai solutori.</p></li>
+<li><p>Graficare per ogni metodo l’errore assoluto <span class="math notranslate nohighlight">\(|x_k - x^*|\)</span> ad ogni iterazione k.</p></li>
+</ul>
 </section>
 <section id="risoluzione-di-sistemi-lineari">
 <h2>Risoluzione di sistemi lineari<a class="headerlink" href="#risoluzione-di-sistemi-lineari" title="Link to this heading">#</a></h2>
-<p>Creato un problema test di dimensione variabile <span class="math notranslate nohighlight">\(n\)</span> la cui soluzione esatta sia un vettore <span class="math notranslate nohighlight">\(x\)</span> generato a piacere e <span class="math notranslate nohighlight">\(y\)</span> il termine noto ottenuto moltiplicando la matrice <span class="math notranslate nohighlight">\(A\)</span> per la soluzione <span class="math notranslate nohighlight">\(x\)</span>:
-- Calcolare il numero di condizione tramite opportuna funzione Python
-- Risolvere il sistema lineare <span class="math notranslate nohighlight">\(Ax = y\)</span> con la fattorizzazione LU o Cholesky.
-- Calcolare l’ errore relativo rispetto alla soluzione esatta. Variare la dimensione <span class="math notranslate nohighlight">\(n\)</span> del sistema e fare un grafico dell’errore al variare di <span class="math notranslate nohighlight">\(n\)</span> e uno del numero di condizione al variare di <span class="math notranslate nohighlight">\(n\)</span>.</p>
-<p><strong>Problemi test da utilizzare:</strong>
-- Una matrice di numeri casuali <span class="math notranslate nohighlight">\(A\)</span> generata con la funzione <code class="docutils literal notranslate"><span class="pre">np.random.randn</span></code>.
-- Una matrice di Hilbert di dimensione <span class="math notranslate nohighlight">\(n\)</span> (con <span class="math notranslate nohighlight">\(n\)</span> variabile fra 2 e 15) utilizzando la funzione <code class="docutils literal notranslate"><span class="pre">scipy.linalg.hilb</span></code>.</p>
+<p>Creato un problema test di dimensione variabile <span class="math notranslate nohighlight">\(n\)</span> la cui soluzione esatta sia un vettore <span class="math notranslate nohighlight">\(x\)</span> generato a piacere e <span class="math notranslate nohighlight">\(y\)</span> il termine noto ottenuto moltiplicando la matrice <span class="math notranslate nohighlight">\(A\)</span> per la soluzione <span class="math notranslate nohighlight">\(x\)</span>:</p>
+<ul class="simple">
+<li><p>Calcolare il numero di condizione tramite opportuna funzione Python</p></li>
+<li><p>Risolvere il sistema lineare <span class="math notranslate nohighlight">\(Ax = y\)</span> con la fattorizzazione LU o Cholesky.</p></li>
+<li><p>Calcolare l’ errore relativo rispetto alla soluzione esatta. Variare la dimensione <span class="math notranslate nohighlight">\(n\)</span> del sistema e fare un grafico dell’errore al variare di <span class="math notranslate nohighlight">\(n\)</span> e uno del numero di condizione al variare di <span class="math notranslate nohighlight">\(n\)</span>.</p></li>
+</ul>
+<p><strong>Problemi test da utilizzare:</strong></p>
+<ul class="simple">
+<li><p>Una matrice di numeri casuali <span class="math notranslate nohighlight">\(A\)</span> generata con la funzione <code class="docutils literal notranslate"><span class="pre">np.random.randn</span></code>.</p></li>
+<li><p>Una matrice di Hilbert di dimensione <span class="math notranslate nohighlight">\(n\)</span> (con <span class="math notranslate nohighlight">\(n\)</span> variabile fra 2 e 15) utilizzando la funzione <code class="docutils literal notranslate"><span class="pre">scipy.linalg.hilb</span></code>.</p></li>
+</ul>
 </section>
 <section id="minimi-quadrati">
 <h2>Minimi quadrati<a class="headerlink" href="#minimi-quadrati" title="Link to this heading">#</a></h2>
@@ -471,9 +480,11 @@ document.write(`
 \[
 \min_\alpha ||A \alpha - y||_2^2
 \]</div>
-<p>sia utilizzando le equazioni normali che la SVD di A. Inoltre:
-- Confrontare le due soluzioni.
-- Calcolare la norma due del vettore dei residui in entrambi i casi.</p>
+<p>sia utilizzando le equazioni normali che la SVD di A. Inoltre:</p>
+<ul class="simple">
+<li><p>Confrontare le due soluzioni.</p></li>
+<li><p>Calcolare la norma due del vettore dei residui in entrambi i casi.</p></li>
+</ul>
 </section>
 </section>
 
@@ -513,7 +524,7 @@ document.write(`
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Esercitazione: algebra lineare con Python</p>
+        <p class="prev-next-title">Esercitazione: Algebra lineare con Python</p>
       </div>
     </a>
     <a class="right-next"
