@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Esercitazione: Approssimazione di dati con Minimi Quadrati Regolarizzati &#8212; Calcolo Numerico</title>
+    <title>Esercitazione: Zeri di funzione e sistemi lineari &#8212; Calcolo Numerico</title>
   
   
   
@@ -57,10 +57,13 @@
     <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'esercitazioni/esercitazione_2';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="Esercitazione: algebra lineare con Python" href="esercitazione_1.html" />
+    <link rel="next" title="Esercitazione: Approssimazione di dati e Ottimizzazione" href="esercitazione_3.html" />
+    <link rel="prev" title="Esercitazione: Algebra lineare con Python" href="esercitazione_1.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -210,12 +213,17 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../ottimizzazione/intro.html">Problemi di Ottimizzazione</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ottimizzazione/GD.html">Metodo di Discesa del Gradiente</a></li>
+
+
+
 <li class="toctree-l1"><a class="reference internal" href="../ottimizzazione/CGLS.html">Metodo dei Gradienti Coniugati</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Esercitazioni</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="esercitazione_1.html">Esercitazione: algebra lineare con Python</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Esercitazione: Approssimazione di dati con Minimi Quadrati Regolarizzati</a></li>
+<li class="toctree-l1"><a class="reference internal" href="esercitazione_1.html">Esercitazione: Algebra lineare con Python</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Esercitazione: Zeri di funzione e sistemi lineari</a></li>
+<li class="toctree-l1"><a class="reference internal" href="esercitazione_3.html">Esercitazione: Approssimazione di dati e Ottimizzazione</a></li>
+<li class="toctree-l1"><a class="reference internal" href="esercitazione_4.html">Esercitazione: Imaging e Problemi Inversi</a></li>
 </ul>
 
     </div>
@@ -388,7 +396,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -399,11 +409,21 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Esercitazione: Approssimazione di dati con Minimi Quadrati Regolarizzati</h1>
+    <h1>Esercitazione: Zeri di funzione e sistemi lineari</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#zeri-di-funzione">Zeri di funzione</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#risoluzione-di-sistemi-lineari">Risoluzione di sistemi lineari</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minimi-quadrati">Minimi quadrati</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -413,15 +433,59 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="esercitazione-approssimazione-di-dati-con-minimi-quadrati-regolarizzati">
-<h1>Esercitazione: Approssimazione di dati con Minimi Quadrati Regolarizzati<a class="headerlink" href="#esercitazione-approssimazione-di-dati-con-minimi-quadrati-regolarizzati" title="Link to this heading">#</a></h1>
-<p><strong>Work in progress…</strong></p>
+  <section class="tex2jax_ignore mathjax_ignore" id="esercitazione-zeri-di-funzione-e-sistemi-lineari">
+<h1>Esercitazione: Zeri di funzione e sistemi lineari<a class="headerlink" href="#esercitazione-zeri-di-funzione-e-sistemi-lineari" title="Link to this heading">#</a></h1>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>Lo svolgimento di questa esercitazione è <strong>obbligatoria</strong> per sostenere l’esame. L’esercitazione può essere consegnata in qualiasi momento e NON è richiesto di consegnarla entro una specifica data. L’unico vincolo è che <strong>dovrà</strong> essere consegnata su Virtuale <em>prima</em> del proprio esame scritto, poiché i risultati di tale esercitazione saranno discussi durante l’esame orale.</p>
-<p>L’esercitazione dovrà essere svolta eseguendo tutte le prove richieste, e i risultati dovranno essere collezionati e discussi in un documento PDF (o Word) contenente uno screenshot dello snippet di codice, i risultati associati a tale snippet, e un commento ai risultati.</p>
-<p>E’ possibile alternativamente eseguire i codici direttamente su Notebook e commentare i risultati all’interno dell’editor di Python stesso. Tuttavia, i codici <strong>NON</strong> devono essere lanciati durante l’esame, ma lo studente deve presentarsi all’esame con il programma già eseguito e, possibilmente, scaricato in versione PDF (può essere fatto direttamente dal file <code class="docutils literal notranslate"><span class="pre">.ipynb</span></code>). Presentarsi all’esame con codice completo ma ancora da eseguire e senza una versione PDF con risultati già presenti, può compromettere la riuscita dell’esame orale.</p>
+<p>L’esercitazione dovrà essere svolta eseguendo tutte le prove richieste, e i risultati dovranno essere collezionati e brevemente commentati tramite una delle due seguenti modalità:</p>
+<ul class="simple">
+<li><p>Un documento PDF (o Word) contenente uno screenshot dello snippet di codice, i risultati associati a tale snippet, e un commento a tali risultati.</p></li>
+<li><p>Un Notebook di Python come quelli utilizzati a lezione, con celle di codice contenenti le soluzioni agli esercizi, alternate ad un breve commento degli esercizi stessi. Tuttavia, i codici <strong>NON</strong> devono essere lanciati durante l’esame, ma lo studente deve presentarsi all’esame con il programma già eseguito e con l’output delle celle ancora visibile.</p></li>
+</ul>
+<p>Presentarsi all’esame con codice completo ma ancora da eseguire o senza una versione PDF con risultati già presenti, può compromettere la riuscita dell’esame orale.</p>
 </div>
+<section id="zeri-di-funzione">
+<h2>Zeri di funzione<a class="headerlink" href="#zeri-di-funzione" title="Link to this heading">#</a></h2>
+<p>Utilizzare il metodo di bisezione, il metodo delle iterazioni di punto fisso e il metodo di Newton  per il calcolo dello zero della una funzione <span class="math notranslate nohighlight">\(f(x) = e^x - x^2 \)</span>, la cui soluzione è <span class="math notranslate nohighlight">\(x^* = -0.7034674\)</span>. Per il metodo delle iterazioni di punto fisso considerare come funzione <span class="math notranslate nohighlight">\(g(x)\)</span>:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(g(x)=x-f(x)e^{x/2}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(g(x)=x-f(x)e^{-x/2}\)</span></p></li>
+</ul>
+<p>Per analizzare i risultati utilizzare strumenti grafici e tabelle. In particolare:</p>
+<ul class="simple">
+<li><p>Disegnare il grafico della funzione <span class="math notranslate nohighlight">\(f(x)\)</span> nell’intervallo <span class="math notranslate nohighlight">\(I = [-1, 1]\)</span> e verificare che <span class="math notranslate nohighlight">\(x^*\)</span> sia lo zero di <span class="math notranslate nohighlight">\(f(x)\)</span> in <span class="math notranslate nohighlight">\([-1, 1]\)</span>.</p></li>
+<li><p>Confrontare l’accuratezza delle soluzioni trovate e il numero di iterazioni effettuate dai solutori.</p></li>
+<li><p>Graficare per ogni metodo l’errore assoluto <span class="math notranslate nohighlight">\(|x_k - x^*|\)</span> ad ogni iterazione k.</p></li>
+</ul>
+</section>
+<section id="risoluzione-di-sistemi-lineari">
+<h2>Risoluzione di sistemi lineari<a class="headerlink" href="#risoluzione-di-sistemi-lineari" title="Link to this heading">#</a></h2>
+<p>Creato un problema test di dimensione variabile <span class="math notranslate nohighlight">\(n\)</span> la cui soluzione esatta sia un vettore <span class="math notranslate nohighlight">\(x\)</span> generato a piacere e <span class="math notranslate nohighlight">\(y\)</span> il termine noto ottenuto moltiplicando la matrice <span class="math notranslate nohighlight">\(A\)</span> per la soluzione <span class="math notranslate nohighlight">\(x\)</span>:</p>
+<ul class="simple">
+<li><p>Calcolare il numero di condizione tramite opportuna funzione Python</p></li>
+<li><p>Risolvere il sistema lineare <span class="math notranslate nohighlight">\(Ax = y\)</span> con la fattorizzazione LU o Cholesky.</p></li>
+<li><p>Calcolare l’ errore relativo rispetto alla soluzione esatta. Variare la dimensione <span class="math notranslate nohighlight">\(n\)</span> del sistema e fare un grafico dell’errore al variare di <span class="math notranslate nohighlight">\(n\)</span> e uno del numero di condizione al variare di <span class="math notranslate nohighlight">\(n\)</span>.</p></li>
+</ul>
+<p><strong>Problemi test da utilizzare:</strong></p>
+<ul class="simple">
+<li><p>Una matrice di numeri casuali <span class="math notranslate nohighlight">\(A\)</span> generata con la funzione <code class="docutils literal notranslate"><span class="pre">np.random.randn</span></code>.</p></li>
+<li><p>Una matrice di Hilbert di dimensione <span class="math notranslate nohighlight">\(n\)</span> (con <span class="math notranslate nohighlight">\(n\)</span> variabile fra 2 e 15) utilizzando la funzione <code class="docutils literal notranslate"><span class="pre">scipy.linalg.hilb</span></code>.</p></li>
+</ul>
+</section>
+<section id="minimi-quadrati">
+<h2>Minimi quadrati<a class="headerlink" href="#minimi-quadrati" title="Link to this heading">#</a></h2>
+<p>Assegnata una matrice <span class="math notranslate nohighlight">\(A\)</span> di numeri casuali (funzione <code class="docutils literal notranslate"><span class="pre">np.random.normal</span></code>) di dimensione <span class="math notranslate nohighlight">\(m \times n\)</span>, <span class="math notranslate nohighlight">\(m&gt;n\)</span> fissati, scegliere un vettore <span class="math notranslate nohighlight">\(\alpha\)</span> (per esempio con elementi costanti) come soluzione esatta per creare un problema test e calcolare il termine noto <span class="math notranslate nohighlight">\(y=A \alpha + e\)</span>, dove <span class="math notranslate nohighlight">\(e\)</span> è un vettore di numeri casuali generato con la funzione precedente (utilizzare una varianza in <span class="math notranslate nohighlight">\([0.01,0.1]\)</span>). Quindi risolvere il problema  di minimi quadrati:</p>
+<div class="math notranslate nohighlight">
+\[
+\min_\alpha ||A \alpha - y||_2^2
+\]</div>
+<p>sia utilizzando le equazioni normali che la SVD di A. Inoltre:</p>
+<ul class="simple">
+<li><p>Confrontare le due soluzioni.</p></li>
+<li><p>Calcolare la norma due del vettore dei residui in entrambi i casi.</p></li>
+</ul>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -460,8 +524,17 @@ document.write(`
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Esercitazione: algebra lineare con Python</p>
+        <p class="prev-next-title">Esercitazione: Algebra lineare con Python</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="esercitazione_3.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Esercitazione: Approssimazione di dati e Ottimizzazione</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
@@ -469,6 +542,23 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#zeri-di-funzione">Zeri di funzione</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#risoluzione-di-sistemi-lineari">Risoluzione di sistemi lineari</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minimi-quadrati">Minimi quadrati</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

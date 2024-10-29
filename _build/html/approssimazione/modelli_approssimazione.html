@@ -213,6 +213,7 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../ottimizzazione/intro.html">Problemi di Ottimizzazione</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ottimizzazione/GD.html">Metodo di Discesa del Gradiente</a></li>
+
 <li class="toctree-l1"><a class="reference internal" href="../ottimizzazione/CGLS.html">Metodo dei Gradienti Coniugati</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Esercitazioni</span></p>
@@ -837,7 +838,7 @@ X = U \Sigma V^T,
 <p>Ricordando che le matrici <span class="math notranslate nohighlight">\(U\)</span> e <span class="math notranslate nohighlight">\(V\)</span> sono ortognali, le equazioni normali diventano:</p>
 <div class="math notranslate nohighlight">
 \[
-X^T X \alpha = X^T y \iff V \Sigma^2 V^T = V \Sigma U^T y \iff \Sigma^2 V^T = \Sigma U^T y
+X^T X \alpha = X^T y \iff V \Sigma^2 V^T \alpha = V \Sigma U^T y \iff \Sigma^2 V^T \alpha = \Sigma U^T y
 \]</div>
 <p>La cui soluzione esplicita è:</p>
 <div class="math notranslate nohighlight">

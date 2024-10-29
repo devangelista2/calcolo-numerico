@@ -31,3 +31,5 @@ parts:
     chapters:
       - file: esercitazioni/esercitazione_1
       - file: esercitazioni/esercitazione_2
+      - file: esercitazioni/esercitazione_3
+      - file: esercitazioni/esercitazione_4

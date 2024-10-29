@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Esercitazione: algebra lineare con Python &#8212; Calcolo Numerico</title>
+    <title>Esercitazione: Algebra lineare con Python &#8212; Calcolo Numerico</title>
   
   
   
@@ -62,7 +62,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'esercitazioni/esercitazione_1';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Esercitazione: Approssimazione di dati con Minimi Quadrati Regolarizzati" href="esercitazione_2.html" />
+    <link rel="next" title="Esercitazione: Zeri di funzione e sistemi lineari" href="esercitazione_2.html" />
     <link rel="prev" title="Metodo dei Gradienti Coniugati" href="../ottimizzazione/CGLS.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -213,12 +213,17 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../ottimizzazione/intro.html">Problemi di Ottimizzazione</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ottimizzazione/GD.html">Metodo di Discesa del Gradiente</a></li>
+
+
+
 <li class="toctree-l1"><a class="reference internal" href="../ottimizzazione/CGLS.html">Metodo dei Gradienti Coniugati</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Esercitazioni</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Esercitazione: algebra lineare con Python</a></li>
-<li class="toctree-l1"><a class="reference internal" href="esercitazione_2.html">Esercitazione: Approssimazione di dati con Minimi Quadrati Regolarizzati</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Esercitazione: Algebra lineare con Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="esercitazione_2.html">Esercitazione: Zeri di funzione e sistemi lineari</a></li>
+<li class="toctree-l1"><a class="reference internal" href="esercitazione_3.html">Esercitazione: Approssimazione di dati e Ottimizzazione</a></li>
+<li class="toctree-l1"><a class="reference internal" href="esercitazione_4.html">Esercitazione: Imaging e Problemi Inversi</a></li>
 </ul>
 
     </div>
@@ -404,7 +409,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Esercitazione: algebra lineare con Python</h1>
+    <h1>Esercitazione: Algebra lineare con Python</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -427,7 +432,12 @@ document.write(`
                 <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="esercitazione-algebra-lineare-con-python">
-<h1>Esercitazione: algebra lineare con Python<a class="headerlink" href="#esercitazione-algebra-lineare-con-python" title="Link to this heading">#</a></h1>
+<h1>Esercitazione: Algebra lineare con Python<a class="headerlink" href="#esercitazione-algebra-lineare-con-python" title="Link to this heading">#</a></h1>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Si ricorda che questa prima esercitazione è <strong>solo</strong> a scopo didattico. NON è richiesta la consegna di questa esercitazione, nè il suo contenuto sarà richiesto all’esame.</p>
+<p>Siccome da qui in avanti lavoreremo costantemente con operazioni del tipo descritto sopra, lo scopo dell’esercitazione è solo quello di farvi prendere dimestichezza con questi metodi. Inoltre, cercare di ottimizzare gli algoritmi per massimizzare l’efficienza in un linguaggio come Python è, oltre che un attività “divertente”, un buon modo di imparare a ragionare che sarà sicuramente utile sia in futuro, che nel resto del corso.</p>
+</div>
 <p>Gli oggetti fondanti dell’algebra lineare sono, come avete visto, matrici e vettori, indicati in seguito con le lettere maiuscole dell’alfabeto latino (<span class="math notranslate nohighlight">\(A\)</span>, <span class="math notranslate nohighlight">\(B\)</span>, …) e con le lettere minuscole dell’alfabeto latino (<span class="math notranslate nohighlight">\(v\)</span>, <span class="math notranslate nohighlight">\(w\)</span>, …), rispettivamente.</p>
 <p>Dal punto di vista pratico, i vettori non sono altro che array, mentre le matrici possono essere viste come degli array di array, dove ciascun elemento interno rappresenta gli elementi della matrice per righe (o per colonne).</p>
 <p>La differenza principale tra i classici array e gli operatori di algebra lineare sono le operazioni tra essi. Ad esempio, la somma di due vettori di lunghezza uguale da come risultato un vettore della stessa lunghezza, con i valori ottenuti sommando elemento per elemento, mentre la somma di due array su Python li concatena, come abbiamo visto.</p>
@@ -490,11 +500,6 @@ document.write(`
 <p>Come abbiamo visto, i cicli <code class="docutils literal notranslate"><span class="pre">for</span></code> e <code class="docutils literal notranslate"><span class="pre">while</span></code> in Python sono estremamente lenti.</p>
 <p>Esistono però su Python vari modi per riuscire ad evitarli (o almeno, minimizzarne l’impatto sul costo computazionale). Quindi lo svolgimento dell’esercitazione sopra può essere fatta anche in vista dell’efficienza, cercando di sviluppare l’implementazione più efficiente possibile.</p>
 <p>Ad esempio, prendere in considerazione operazioni come la <strong>list comprehension</strong>, operazioni built-in in Python, la pre-allocazione della memoria (inizializzando le variabili) per aumentare l’efficienza, nonché alcuni trick matematici che possono venire in mente per minimizzare il numero di operazioni e quindi massimizzare l’efficienza.</p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Si ricorda che questa prima esercitazione è <strong>solo</strong> a scopo didattico. NON è richiesta la consegna di questa esercitazione, nè il suo contenuto sarà richiesto all’esame.</p>
-<p>Siccome da qui in avanti lavoreremo costantemente con operazioni del tipo descritto sopra, lo scopo dell’esercitazione è solo quello di farvi prendere dimestichezza con questi metodi. Inoltre, cercare di ottimizzare gli algoritmi per massimizzare l’efficienza in un linguaggio come Python è, oltre che un attività “divertente”, un buon modo di imparare a ragionare che sarà sicuramente utile sia in futuro, che nel resto del corso.</p>
-</div>
 </section>
 </section>
 
@@ -542,7 +547,7 @@ document.write(`
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Esercitazione: Approssimazione di dati con Minimi Quadrati Regolarizzati</p>
+        <p class="prev-next-title">Esercitazione: Zeri di funzione e sistemi lineari</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
