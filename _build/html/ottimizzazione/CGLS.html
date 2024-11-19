@@ -1,0 +1,765 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Metodo dei Gradienti Coniugati &#8212; Calcolo Numerico</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'ottimizzazione/CGLS';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Esercitazione: Algebra lineare con Python" href="../esercitazioni/esercitazione_1.html" />
+    <link rel="prev" title="Metodo di Discesa del Gradiente" href="GD.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Calcolo Numerico - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Calcolo Numerico - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Calcolo Numerico
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduzione a Python</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../intro/variabili.html">Variabili e tipi di dato</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/array.html">Array: Liste e Tuple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/iterabili_stringhe_dizionari.html">Iterabili: stringhe e dizionari</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/condizione.html">La condizione <code class="docutils literal notranslate"><span class="pre">if</span></code> e la logica booleana</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/cicli.html">I cicli <code class="docutils literal notranslate"><span class="pre">for</span></code> e <code class="docutils literal notranslate"><span class="pre">while</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/funzioni.html">Funzioni</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/librerie.html">Incrementare le funzionalità di base tramite le librerie</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/path_file.html">Gestione del <code class="docutils literal notranslate"><span class="pre">path</span></code> e files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/errori.html">Gestione degli errori su Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/numpy.html">Python per l’algebra lineare: <code class="docutils literal notranslate"><span class="pre">numpy</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/matplotlib.html">Visualizzazione con <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code></a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Approssimazione di dati</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../approssimazione/intro_dati.html">Caricamento dei Dati e Visualizzazione</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../approssimazione/modelli_approssimazione.html">Modelli di Approssimazione e Minimi Quadrati</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../approssimazione/overfit_underfit_regolarizzazione.html">Underfit, Overfit e Regolarizzazione</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Ottimizzazione</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Problemi di Ottimizzazione</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GD.html">Metodo di Discesa del Gradiente</a></li>
+
+
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Metodo dei Gradienti Coniugati</a></li>
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Esercitazioni</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../esercitazioni/esercitazione_1.html">Esercitazione: Algebra lineare con Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../esercitazioni/esercitazione_2.html">Esercitazione: Zeri di funzione e sistemi lineari</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../esercitazioni/esercitazione_3.html">Esercitazione: Approssimazione di dati e Ottimizzazione</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../esercitazioni/esercitazione_4.html">Esercitazione: Imaging e Problemi Inversi</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fottimizzazione/CGLS.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/ottimizzazione/CGLS.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Metodo dei Gradienti Coniugati</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Metodo dei Gradienti Coniugati</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#implementazione">Implementazione</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#condizioni-di-arresto">Condizioni di arresto</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#convergenza-dell-algoritmo-cgls">Convergenza dell’algoritmo CGLS</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#cgls-per-minimi-quadrati-regolarizzati-con-tikhonov">CGLS per minimi quadrati regolarizzati (con Tikhonov)</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="metodo-dei-gradienti-coniugati">
+<h1>Metodo dei Gradienti Coniugati<a class="headerlink" href="#metodo-dei-gradienti-coniugati" title="Link to this heading">#</a></h1>
+<p>L’algoritmo dei gradienti coniugati (CG) è un algoritmo di algebra lineare fondamentale per risolvere sistemi lineari della forma:</p>
+<div class="math notranslate nohighlight">
+\[
+Ax = y,
+\]</div>
+<p>particolarmente efficace quando la matrice <span class="math notranslate nohighlight">\(A\)</span> è <strong>grande</strong> e <strong>sparsa</strong> (ovvero, con tanti elementi nulli). Tale algoritmo è però più comunemente utilizzato per risolvere il problema ai minimi quadrati:</p>
+<div class="math notranslate nohighlight">
+\[
+\min_{x \in \mathbb{R}^n} \frac{1}{2} || Ax - y ||_2^2,
+⁡\]</div>
+<p>senza fare uso <em>esplicitamente</em> delle equazioni normali (a differenza di quanto avevamo visto per i metodi SVD, Cholesky e Discesa del Gradiente). Quando L’algoritmo CG viene applicato a problemi ai minimi quadrati, prende il nome di CGLS (Conjugate Gradient Least Squares). Uno dei vantaggi principali di CGLS, rispetto agli algoritmi precedentemente studiati è il fatto che, non facendo uso delle equazioni normali, questo si comporta molto meglio quando la matrice <span class="math notranslate nohighlight">\(A\)</span> è molto mal condizionata. Infatti, è noto che:</p>
+<div class="math notranslate nohighlight">
+\[
+k_2(A^T A) = k_2(A)^2,
+\]</div>
+<p>e quindi se <span class="math notranslate nohighlight">\(A\)</span> è mal condizionata, allora il numero di condizionamento della matrice delle equazioni normali <span class="math notranslate nohighlight">\(A^T A\)</span> è molto più grande, portando ad un’amplificazione degli errori numerici.</p>
+<p>Come tutti gli algoritmi comunemente utilizzati per risolvere problemi di Algebra Lineare, CGLS è un algoritmo <strong>iterativo</strong>, e richiede perciò nella sua implementazione di scegliere un’iterato iniziare (da cui partire per trovare la soluzione), un numero massimo di passi iterativi (per evitare che l’algoritmo possa entrare in un loop senza fine), e di un criterio di arresto. Vedremo nella prossima sezione come scegliere queste componenti.</p>
+</section>
+<section id="implementazione">
+<h1>Implementazione<a class="headerlink" href="#implementazione" title="Link to this heading">#</a></h1>
+<p>L’implementazione dell’algoritmo CGLS è abbastanza complessa e sfrutta alcuni cavilli implementativi per massimizzarne l’efficienza. Per quanto ci riguarda, è sufficiente notare due aspetti fondamentali di tale algoritmo, che saranno particolarmente chiave per la sua applicazione all’imaging:</p>
+<ol class="arabic simple">
+<li><p>L’algoritmo fa uso della matrice <span class="math notranslate nohighlight">\(A\)</span> solo all’interno di operazioni del tipo <span class="math notranslate nohighlight">\(Ax\)</span> oppure <span class="math notranslate nohighlight">\(A^T z\)</span>.</p></li>
+<li><p>L’algoritmo utilizza il minimo numero possibile di operazioni del tipo <span class="math notranslate nohighlight">\(Ax\)</span> e <span class="math notranslate nohighlight">\(A^T z\)</span>.</p></li>
+</ol>
+<p>Queste due proprietà sono fondamentali per applicazioni dove la matrice <span class="math notranslate nohighlight">\(A\)</span> è veramente molto grande (ad esempio nei problemi di imaging, dove la dimensione <span class="math notranslate nohighlight">\((m, n)\)</span> di <span class="math notranslate nohighlight">\(A\)</span> è dell’ordine dei milioni di righe per milioni di colonne). Infatti, in questi casi, memorizzare esplicitamente la matrice <span class="math notranslate nohighlight">\(A\)</span> in memoria può essere proibitivo, e spesso è possibile utilizzare ad <span class="math notranslate nohighlight">\(A\)</span> solo tramite algoritmi ottimizzati che, però, permettono di accedere solo ad operazioni del tipo <span class="math notranslate nohighlight">\(Ax\)</span> o <span class="math notranslate nohighlight">\(A^T z\)</span>. Questo implica, inoltre, che il calcolo di operazioni matrice-vettore che contengono la matrice <span class="math notranslate nohighlight">\(A\)</span> sono spesso il collo di bottiglia dell’algoritmo, in termini di efficienza. Per questo motivo, minimizzare il numero di applicazioni di <span class="math notranslate nohighlight">\(A\)</span>, rende l’algoritmo molto più efficiente.</p>
+<p>Andiamo quindi a discutere gli step principali dell’algoritmo, e a vederne un’implementazione in Python.</p>
+<p><strong>Inizializzazione:</strong> Dato un’iterato iniziale <span class="math notranslate nohighlight">\(x_0 \in \mathbb{R}^n\)</span> a libera scelta (spesso, per comodità, scelto essere uguale al vettore di zeri), si calcola:</p>
+<ul class="simple">
+<li><p>Il residuo iniziale <span class="math notranslate nohighlight">\(r_0 = A^T(y - Ax_0)\)</span>;</p></li>
+<li><p>Il vettore direzione iniziale <span class="math notranslate nohighlight">\(p_0 = r_0\)</span>.</p></li>
+</ul>
+<p><strong>Aggiornamento:</strong> Per ogni <span class="math notranslate nohighlight">\(k = 0, 1, \dots, \texttt{maxit}\)</span>:</p>
+<ul class="simple">
+<li><p>Calcola il vettore <span class="math notranslate nohighlight">\(q_k = Ap_k\)</span>,</p></li>
+<li><p>Calcola il parametro <span class="math notranslate nohighlight">\(\alpha_k = \frac{|| r_k ||_2^2}{|| q_k ||_2^2}\)</span>,</p></li>
+<li><p>Aggiorna la soluzione <span class="math notranslate nohighlight">\(x_{k+1} = x_k + \alpha_k p_k\)</span>,</p></li>
+<li><p>Aggiorna il residuo <span class="math notranslate nohighlight">\(r_{k+1} = r_k - \alpha_k A^T q_k\)</span>,</p></li>
+<li><p>Calcola il parametro <span class="math notranslate nohighlight">\(\beta_k = \frac{|| r_{k+1} ||_2^2}{|| r_k ||_2^2}\)</span>,</p></li>
+<li><p>Aggiora la direzione <span class="math notranslate nohighlight">\(p_{k+1} = r_k + \beta_k p_k\)</span>.</p></li>
+</ul>
+</section>
+<section id="condizioni-di-arresto">
+<h1>Condizioni di arresto<a class="headerlink" href="#condizioni-di-arresto" title="Link to this heading">#</a></h1>
+<p>Il critero di arresto tipico di CGLS è differente da quelli a cui siete stati abituati da altri algoritmi iterativi come ad esempio il metodo di discesa del gradiente o i metodi degli zeri. Infatti, essendo stato sviluppato specificatamente per risolvere problemi ai minimi quadrati, il suo criterio di arresto si basa sul controllare se il residuo <span class="math notranslate nohighlight">\(r_k = A^T(y - Ax_k)\)</span> (che è la quantità che si vuole minimizzare) abbia norma minore o uguale ad una tolleranza fissata. In particolare, dato un valore di <span class="math notranslate nohighlight">\(\texttt{tol} &gt; 0\)</span>, si interrompe l’algoritmo per quel valore di <span class="math notranslate nohighlight">\(k\)</span> tale che:</p>
+<div class="math notranslate nohighlight">
+\[
+|| r_k ||_2 &lt; \texttt{tol} \cdot || r_0 ||_2.
+\]</div>
+<p>Siamo quindi pronti a vedere un’implementazione Python di tale algoritmo:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="k">def</span> <span class="nf">cgls</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span> <span class="n">maxit</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+    <span class="c1"># Inizializzazione</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>  <span class="c1"># x0 = 0</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">r0</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">A</span> <span class="o">@</span> <span class="n">x</span><span class="p">)</span>     <span class="c1"># residuo iniziale</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>              <span class="c1"># direzione iniziale</span>
+    
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">maxit</span><span class="p">):</span>
+        <span class="c1"># Calcolo valori richiesti</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="n">A</span> <span class="o">@</span> <span class="n">p</span>
+        <span class="n">alpha</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">r</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+
+        <span class="c1"># Aggiornamento di x e di r</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">p</span>
+        <span class="n">r_new</span> <span class="o">=</span> <span class="n">r</span> <span class="o">-</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">A</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">q</span>
+        
+        <span class="c1"># Criterio di arresto</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">r_new</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">tol</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">r0</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Convergenza raggiunta in </span><span class="si">{</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1"> iterazioni.&#39;</span><span class="p">)</span>
+            <span class="k">break</span>
+        
+        <span class="c1"># Aggiornamento dei parametri</span>
+        <span class="n">beta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">r_new</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">r</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">r_new</span> <span class="o">+</span> <span class="n">beta</span> <span class="o">*</span> <span class="n">p</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">r_new</span>
+    
+    <span class="k">return</span> <span class="n">x</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="convergenza-dell-algoritmo-cgls">
+<h1>Convergenza dell’algoritmo CGLS<a class="headerlink" href="#convergenza-dell-algoritmo-cgls" title="Link to this heading">#</a></h1>
+<p>Un’interessante proprietà dell’algoritmo CGLS riguarda la sua convergenza. Infatti, a differenza degli altri algoritmi iterativi visti a lezione la cui convergenza avveniva a infinito (ovvero, per ottenere la soluzione <strong>esatta</strong>, era necessario iterare il problema infinite volte), CGLS gode della seguente proprietà:</p>
+<blockquote>
+<div><p>Se <span class="math notranslate nohighlight">\(A \in \mathbb{R}^{m \times n}\)</span>, allora l’algoritmo CGLS convergerà alla soluzione <strong>esatta</strong> del problema ai minimi quadrati in <strong>al massimo</strong> <span class="math notranslate nohighlight">\(n\)</span> iterazioni.</p>
+</div></blockquote>
+<p>Di conseguenza, è sempre possibile scegliere <code class="docutils literal notranslate"><span class="pre">maxit</span></code><span class="math notranslate nohighlight">\( = n\)</span>, avendo la certezza <em>teorica</em> che l’algoritmo terminerà per il criterio d’arresto entro il valore fissato di <code class="docutils literal notranslate"><span class="pre">maxit</span></code>.</p>
+</section>
+<section id="cgls-per-minimi-quadrati-regolarizzati-con-tikhonov">
+<h1>CGLS per minimi quadrati regolarizzati (con Tikhonov)<a class="headerlink" href="#cgls-per-minimi-quadrati-regolarizzati-con-tikhonov" title="Link to this heading">#</a></h1>
+<p>L’algoritmo CGLS sopra proposto può essere facilmente modificato per risolvere problemi ai minimi quadrati regolarizzati con Tikhonov, già trattati precedentemente, della forma:</p>
+<div class="math notranslate nohighlight">
+\[
+\min_{x} \frac{1}{2} || Ax - y ||_2^2 + \frac{\lambda}{2} || Lx ||_2^2,
+\]</div>
+<p>dove <span class="math notranslate nohighlight">\(L \in \mathbb{R}^{d \times n}\)</span> è la matrice di Tikhonov, spesso scelta uguale alla matrice identità, per semplicità, e <span class="math notranslate nohighlight">\(\lambda &gt; 0\)</span> è il parametro di regolarizzazione. Abbiamo già visto come questo problema ha equazioni normali:</p>
+<div class="math notranslate nohighlight">
+\[
+(A^T A + \lambda L^T L) x = A^T y,
+\]</div>
+<p>e può quindi essere risolto con CGLS, facendo attenzione al termine <span class="math notranslate nohighlight">\(\lambda L^T L\)</span> che non era precedentemente presente. Il codice Python modificato per CGLS regolarizzato diventa quindi:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="k">def</span> <span class="nf">cgls_tikhonov</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">lam</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">maxit</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Algoritmo CGLS per risolvere il problema ai minimi quadrati regolarizzati con Tikhonov:</span>
+<span class="sd">    min_x (1/2) * ||Ax - y||_2^2 + (lam/2) * ||Lx||_2^2</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Inizializzazione</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">r0</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">A</span> <span class="o">@</span> <span class="n">x</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">r</span> <span class="o">-</span> <span class="n">lam</span> <span class="o">*</span> <span class="p">(</span><span class="n">L</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="p">(</span><span class="n">L</span> <span class="o">@</span> <span class="n">x</span><span class="p">))</span> 
+    <span class="n">z</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="c1"># z prende il posto di &quot;p&quot; come direzione</span>
+
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">maxit</span><span class="p">):</span>
+        <span class="c1"># Calcolo valori richiesti</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="n">A</span> <span class="o">@</span> <span class="n">p</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">L</span> <span class="o">@</span> <span class="n">p</span>
+        <span class="n">alpha</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">z</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+        
+        <span class="c1"># Calcolo del coefficiente alpha</span>
+        <span class="n">alpha</span> <span class="o">=</span> <span class="p">(</span><span class="n">z</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">z</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">q</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">q</span> <span class="o">+</span> <span class="n">lam</span> <span class="o">*</span> <span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">t</span><span class="p">))</span>
+        
+        <span class="c1"># Aggiornamento di x</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">p</span>
+        
+        <span class="c1"># Aggiornamento del residuo</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">r</span> <span class="o">-</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">q</span>
+        
+        <span class="c1"># Verifica del criterio di arresto</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">tol</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">r0</span><span class="p">):</span>
+            <span class="k">break</span>
+        
+        <span class="c1"># Calcolo della nuova direzione z</span>
+        <span class="n">z_new</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">r</span> <span class="o">-</span> <span class="n">lam</span> <span class="o">*</span> <span class="p">(</span><span class="n">L</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="p">(</span><span class="n">L</span> <span class="o">@</span> <span class="n">x</span><span class="p">))</span>
+        
+        <span class="c1"># Calcolo del coefficiente beta</span>
+        <span class="n">beta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">z_new</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">z</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+        
+        <span class="c1"># Aggiornamento della direzione p</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">z_new</span> <span class="o">+</span> <span class="n">beta</span> <span class="o">*</span> <span class="n">p</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="n">z_new</span>
+
+    <span class="k">return</span> <span class="n">x</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Da notare come la versione aggiornata di CGLS per regolarizzazione con Tikhonov differisce da quella standard praticamente solo nel fatto che, al posto del residuo classico, si utilizza un residuo <em>modificato</em> che tiene in considerazione la matrice <span class="math notranslate nohighlight">\(L\)</span>. Tale termine è indicato con <code class="docutils literal notranslate"><span class="pre">z</span></code> nell’algoritmo sopra.</p>
+<p>Vediamo come utilizzare le due versioni di CGLS proposte.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Applichiamo CGLS per la risoluzione di un problema ai minimi quadrati (regolarizzato e non).</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">100</span> <span class="c1"># dimensione del problema (matrice A quadrata di dimensione n x n)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># impostiamo un seed (per la riproducibilità)</span>
+
+<span class="c1"># Problema test</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+<span class="n">L</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="n">x_true</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">A</span> <span class="o">@</span> <span class="n">x_true</span> <span class="o">+</span> <span class="mf">0.05</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># Vettore di osservazioni con rumore</span>
+
+<span class="n">lam</span> <span class="o">=</span> <span class="mf">0.1</span>  <span class="c1"># Parametro di regolarizzazione</span>
+
+<span class="c1"># Risoluzione del problema con CGLS standard</span>
+<span class="n">x_cgls</span> <span class="o">=</span> <span class="n">cgls</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">maxit</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># Risoluzione del problema con CGLS regolarizzato</span>
+<span class="n">x_cgls_tik</span> <span class="o">=</span> <span class="n">cgls_tikhonov</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">lam</span><span class="p">,</span> <span class="n">maxit</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># Visualizziamo le soluzioni</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_true</span><span class="p">,</span> <span class="s1">&#39;b-&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_cgls</span><span class="p">,</span> <span class="s1">&#39;r-&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_cgls_tik</span><span class="p">,</span> <span class="s1">&#39;k-&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s2">&quot;True&quot;</span><span class="p">,</span> <span class="s2">&quot;CGLS&quot;</span><span class="p">,</span> <span class="s2">&quot;CGLS-Tik&quot;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2cda3f6f03051bb50f0d96759d1ac8f9edfd5644d8c760144b500537dc0fccba.png" src="../_images/2cda3f6f03051bb50f0d96759d1ac8f9edfd5644d8c760144b500537dc0fccba.png" />
+</div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./ottimizzazione"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="GD.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Metodo di Discesa del Gradiente</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../esercitazioni/esercitazione_1.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Esercitazione: Algebra lineare con Python</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Metodo dei Gradienti Coniugati</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#implementazione">Implementazione</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#condizioni-di-arresto">Condizioni di arresto</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#convergenza-dell-algoritmo-cgls">Convergenza dell’algoritmo CGLS</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#cgls-per-minimi-quadrati-regolarizzati-con-tikhonov">CGLS per minimi quadrati regolarizzati (con Tikhonov)</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Davide Evangelista
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

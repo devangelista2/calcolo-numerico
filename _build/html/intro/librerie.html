@@ -1,0 +1,741 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Incrementare le funzionalità di base tramite le librerie &#8212; Calcolo Numerico</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'intro/librerie';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Gestione del path e files" href="path_file.html" />
+    <link rel="prev" title="Funzioni" href="funzioni.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Calcolo Numerico - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Calcolo Numerico - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Calcolo Numerico
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduzione a Python</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="variabili.html">Variabili e tipi di dato</a></li>
+<li class="toctree-l1"><a class="reference internal" href="array.html">Array: Liste e Tuple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iterabili_stringhe_dizionari.html">Iterabili: stringhe e dizionari</a></li>
+<li class="toctree-l1"><a class="reference internal" href="condizione.html">La condizione <code class="docutils literal notranslate"><span class="pre">if</span></code> e la logica booleana</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cicli.html">I cicli <code class="docutils literal notranslate"><span class="pre">for</span></code> e <code class="docutils literal notranslate"><span class="pre">while</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="funzioni.html">Funzioni</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Incrementare le funzionalità di base tramite le librerie</a></li>
+<li class="toctree-l1"><a class="reference internal" href="path_file.html">Gestione del <code class="docutils literal notranslate"><span class="pre">path</span></code> e files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="errori.html">Gestione degli errori su Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy.html">Python per l’algebra lineare: <code class="docutils literal notranslate"><span class="pre">numpy</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="matplotlib.html">Visualizzazione con <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code></a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Approssimazione di dati</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../approssimazione/intro_dati.html">Caricamento dei Dati e Visualizzazione</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../approssimazione/modelli_approssimazione.html">Modelli di Approssimazione e Minimi Quadrati</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../approssimazione/overfit_underfit_regolarizzazione.html">Underfit, Overfit e Regolarizzazione</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Ottimizzazione</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ottimizzazione/intro.html">Problemi di Ottimizzazione</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ottimizzazione/GD.html">Metodo di Discesa del Gradiente</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../ottimizzazione/CGLS.html">Metodo dei Gradienti Coniugati</a></li>
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Esercitazioni</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../esercitazioni/esercitazione_1.html">Esercitazione: Algebra lineare con Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../esercitazioni/esercitazione_2.html">Esercitazione: Zeri di funzione e sistemi lineari</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../esercitazioni/esercitazione_3.html">Esercitazione: Approssimazione di dati e Ottimizzazione</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../esercitazioni/esercitazione_4.html">Esercitazione: Imaging e Problemi Inversi</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fintro/librerie.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/intro/librerie.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Incrementare le funzionalità di base tramite le librerie</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pacchetti-built-in">Pacchetti <code class="docutils literal notranslate"><span class="pre">built-in</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importare-una-libreria-con-renaming">Importare una libreria con renaming</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#moduli-definiti-dall-utente">Moduli definiti dall’utente</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pip-e-conda"><code class="docutils literal notranslate"><span class="pre">pip</span></code> e <code class="docutils literal notranslate"><span class="pre">conda</span></code></a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="incrementare-le-funzionalita-di-base-tramite-le-librerie">
+<h1>Incrementare le funzionalità di base tramite le librerie<a class="headerlink" href="#incrementare-le-funzionalita-di-base-tramite-le-librerie" title="Link to this heading">#</a></h1>
+<p>Tutti i programmi esistenti, dai videogiochi, ai modelli di intelligenza artificiali, possono essere implementati utilizzando le funzionalità viste fino ad ora. Ma per farlo, oltre ad una conoscenza dettagliata di tutti gli aspetti che compongono tali software, sarebbe necessario scrivere un programma gigantesco, composto da milioni di righe di codice.</p>
+<p>Per evitare che chiunque voglia intraprendere un progetto complesso in Python debba riscriversi da zero tutte le funzioni di base, negli anni sono stati implementati una serie di <strong>pacchetti</strong> di funzioni, ciascuno contenente delle specifiche funzionalità. Quando ce ne fosse bisogno, è quindi possibile caricare in memoria tali pacchetti, così da avere a disposizione tutta una gamma di funzioni in grado di aiutarci a risolvere il nostro problema.</p>
+<section id="pacchetti-built-in">
+<h2>Pacchetti <code class="docutils literal notranslate"><span class="pre">built-in</span></code><a class="headerlink" href="#pacchetti-built-in" title="Link to this heading">#</a></h2>
+<p>La maggior parte dei pacchetti che implementano funzioni genericamente utili, sono <code class="docutils literal notranslate"><span class="pre">built-in</span></code>, ovvero possono essere richiamate direttamente da Python, senza dover scaricare nulla di extra.</p>
+<p>Per caricare in memoria una libreria <code class="docutils literal notranslate"><span class="pre">built-in</span></code>, basta semplicemente utilizzare il comando <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">NOME_LIBRERIA</span></code>. Per convenzione, il caricamento delle librerie viene sempre fatto come prima cosa, all’interno del proprio script di codice.</p>
+<p>Vediamo ad esempio le librerie <code class="docutils literal notranslate"><span class="pre">built-in</span></code> <code class="docutils literal notranslate"><span class="pre">random</span></code> e <code class="docutils literal notranslate"><span class="pre">math</span></code>, che implementano funzioni per lavorare con estrazioni casuali e tutte le funzioni matematiche di base, rispettivamente.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Importiamo le librerie random e math</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">math</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Per richiamare una funzione di libreria, è necessario indicare il nome della funzione, preceduto dal nome della libreria che lo contiene, separati da un <code class="docutils literal notranslate"><span class="pre">.</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Estriamo un numero casuale tra 0 e 1</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="c1"># La funzione random() del pacchetto random, </span>
+                    <span class="c1"># estrae un numero in (0, 1)</span>
+
+<span class="c1"># Calcoliamo y = e^x</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;e^</span><span class="si">{</span><span class="n">x</span><span class="si">:</span><span class="s2">0.3f</span><span class="si">}</span><span class="s2"> = </span><span class="si">{</span><span class="n">y</span><span class="si">:</span><span class="s2">0.3f</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>e^0.773 = 2.167.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="importare-una-libreria-con-renaming">
+<h2>Importare una libreria con renaming<a class="headerlink" href="#importare-una-libreria-con-renaming" title="Link to this heading">#</a></h2>
+<p>Quando all’interno di uno stesso codice è necessario utilizzare varie volte una stessa libreria, scrivere tutte le volte il nome della libreria prima delle funzioni può diventare inefficiente, specialmente se il nome della libreria è lungo.</p>
+<p>Per risolvere questo problema, Python introduce la possibilità di dare un nome personalizzato alla libreria importata, così da renderla più semplice da utilizzare nei riferimenti delle funzioni.</p>
+<p>Vediamo ad esempio come importare la libreria <code class="docutils literal notranslate"><span class="pre">random</span></code>, chiamandola con il nome personalizzato <code class="docutils literal notranslate"><span class="pre">rnd</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">random</span> <span class="k">as</span> <span class="nn">rnd</span>
+
+<span class="c1"># Genero un numero casuale</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">rnd</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.4807141157196192
+</pre></div>
+</div>
+</div>
+</div>
+<p>Se invece abbiamo intenzione di utilizzare la libreria con molta frequenza, Python offre anche la possibilità di integrare le funzioni di libreria con il linguaggio Python base, in maniera da poterle utilizzare senza dover utilizzare alcun riferimento per utilizzarne le funzioni.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Se la libreria contiene una funzione che ha lo stesso nome di un’altra funzione di Python, questo procedimento andrà a sovrascrivere la funzione originale. Quindi, utilizzare questa funzione con cautela.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="c1"># Genero un numero casuale</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">random</span><span class="p">()</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">asin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.3609837284570607
+</pre></div>
+</div>
+</div>
+</div>
+<p>Un’altra funzionalità interessante utilizzabile quando si va ad importare una libreria in uno script Python, è la possibilità di importare non l’intera libreria, ma solo alcune funzioni specifiche in modo da ridurre il tempo richiesto per il caricamento della libreria stessa.</p>
+<p>Vediamo ad esempio come importare le funzioni seno, coseno e tangente dalla libreria <code class="docutils literal notranslate"><span class="pre">math</span></code>, senza importare l’intera libreria.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">sin</span><span class="p">,</span> <span class="n">cos</span><span class="p">,</span> <span class="n">tan</span>
+<span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="c1"># Genero un numero casuale</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">random</span><span class="p">()</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="c1"># Importata</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="moduli-definiti-dall-utente">
+<h2>Moduli definiti dall’utente<a class="headerlink" href="#moduli-definiti-dall-utente" title="Link to this heading">#</a></h2>
+<p>Chiaramente, è assolutamente possibile scrivere una propria <em>libreria</em>, ovvero una propria collezione di funzioni, che possono essere d’aiuto per sviluppare progetti più complessi. Anzi, ogni progetto che si rispetti implementa dei moduli personalizzati di funzioni che migliorano la lettura del codice, dislocando le funzionalità in più file, ciascuno contenente delle specifiche funzioni.</p>
+<p>Supponiamo ad esempio di scrivere un paio di funzioni di utilità per un programma di contabilità: una che prende in input un prezzo di EUR e lo converte in USD con un certo cambio (di default il cambio attuale di 1 EUR = 1.10 USD), l’altro che viceversa converte un prezzo in USD, in EUR.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">eur_to_usd</span><span class="p">(</span><span class="n">prezzo</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">tasso</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.10</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Preso in input il prezzo in EUR e il tasso di cambio, lo converte in USD </span>
+<span class="sd">    e ritorna tale valore.</span>
+
+<span class="sd">    Parameters:</span>
+
+<span class="sd">    prezzo (float): il prezzo in euro.</span>
+<span class="sd">    tasso (float): il tasso di cambio da EUR in USD.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    (float): il prezzo in dollari.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">prezzo</span> <span class="o">*</span> <span class="n">tasso</span>
+
+<span class="k">def</span> <span class="nf">usd_to_eur</span><span class="p">(</span><span class="n">prezzo</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">tasso</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.91</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Preso in input il prezzo in USD e il tasso di cambio, lo converte in EUR </span>
+<span class="sd">    e ritorna tale valore.</span>
+
+<span class="sd">    Parameters:</span>
+
+<span class="sd">    prezzo (float): il prezzo in dollari.</span>
+<span class="sd">    tasso (float): il tasso di cambio da USD in EUR.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    (float): il prezzo in euro.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">prezzo</span> <span class="o">*</span> <span class="n">tasso</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>E supponiamo di salvare il file con queste funzioni all’interno della cartella del progetto, chiamandolo <code class="docutils literal notranslate"><span class="pre">conversioni.py</span></code>.</p>
+<p>A questo punto, è possibile importare queste funzioni in un’altro script per poterle utilizzare in un qualunque programma, semplicemente facendo:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">conversioni</span>
+
+<span class="c1"># Prezzo in euro</span>
+<span class="n">prezzo_EUR</span> <span class="o">=</span> <span class="mi">550</span>
+<span class="n">prezzo_USD</span> <span class="o">=</span> <span class="n">conversioni</span><span class="o">.</span><span class="n">eur_to_usd</span><span class="p">(</span><span class="n">prezzo_EUR</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>o, se il file <code class="docutils literal notranslate"><span class="pre">conversioni.py</span></code> si trova all’interno di una cartella <code class="docutils literal notranslate"><span class="pre">utilita</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">utilita</span> <span class="kn">import</span> <span class="n">conversioni</span>
+
+<span class="c1"># Prezzo in euro</span>
+<span class="n">prezzo_EUR</span> <span class="o">=</span> <span class="mi">550</span>
+<span class="n">prezzo_USD</span> <span class="o">=</span> <span class="n">conversioni</span><span class="o">.</span><span class="n">eur_to_usd</span><span class="p">(</span><span class="n">prezzo_EUR</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="pip-e-conda">
+<h2><code class="docutils literal notranslate"><span class="pre">pip</span></code> e <code class="docutils literal notranslate"><span class="pre">conda</span></code><a class="headerlink" href="#pip-e-conda" title="Link to this heading">#</a></h2>
+<p>Quando si lavora con funzioni più specifiche o di uso meno comune, quasi sicuramente non sarà disponibile una libreria <code class="docutils literal notranslate"><span class="pre">built-in</span></code> che implementa tali funzionalità. In tal caso, è possibile attingere dalla quasi infinita lista di librerie disponibili online, pensate per svolgere pressoché qualuqune compito.</p>
+<p>Per scaricare ed installare sul proprio environment virtuale una libreria specifica, è possibile utilizzare uno dei due più comuni <code class="docutils literal notranslate"><span class="pre">package-manager</span></code> ad oggi: <code class="docutils literal notranslate"><span class="pre">pip</span></code> e <code class="docutils literal notranslate"><span class="pre">conda</span></code>. Il loro funzionamento è molto simile: in generale, su <code class="docutils literal notranslate"><span class="pre">pip</span></code> sono disponibili molte più librerie, ma spesso si vengono a generare dei conflitti (poiché <code class="docutils literal notranslate"><span class="pre">pip</span></code> non ha un controllo sulle incompatibilità tra versioni), mentre su <code class="docutils literal notranslate"><span class="pre">conda</span></code> sono disponibili meno librerie, ma si occupa lui di gestire la compatibilità tra le versioni delle librerie.</p>
+<p>In ogni caso, per installare una libreria con <code class="docutils literal notranslate"><span class="pre">pip</span></code>, posizionarsi sul virtual environment corretto con il comando:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">activate</span> <span class="o">&lt;</span><span class="n">nome_environment</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>E poi lanciare il comando:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">&lt;</span><span class="n">nome_libreria</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Similmente, per installare una libreria tramite <code class="docutils literal notranslate"><span class="pre">conda</span></code>, il comando in genere è:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="o">&lt;</span><span class="n">nome_libreria</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>tranne per alcune librerie, che hanno dei comandi particolari per essere installate. Fare riferimento alla pagina di installazione della libreria per questi specifici casi.</p>
+<p>Una volta installato una libreria, questa sarà disponibile nello stesso modo in cui lo sono le librerie built-in. Quindi, possono essere importate semplicemente con il comando:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="o">&lt;</span><span class="n">nome_libreria</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./intro"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="funzioni.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Funzioni</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="path_file.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Gestione del <code class="docutils literal notranslate"><span class="pre">path</span></code> e files</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pacchetti-built-in">Pacchetti <code class="docutils literal notranslate"><span class="pre">built-in</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importare-una-libreria-con-renaming">Importare una libreria con renaming</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#moduli-definiti-dall-utente">Moduli definiti dall’utente</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pip-e-conda"><code class="docutils literal notranslate"><span class="pre">pip</span></code> e <code class="docutils literal notranslate"><span class="pre">conda</span></code></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Davide Evangelista
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
