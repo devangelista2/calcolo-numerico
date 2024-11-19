@@ -1,0 +1,113 @@
+[33mcommit a63e755434f1791615c98b987c5c06d6dc01ee1f[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m
+Author: devangelista2 <davide.evangelista5@unibo.it>
+Date:   Tue Nov 19 12:11:11 2024 +0100
+
+    Done HW3
+
+[33mcommit 3b7ce89b31b84f958be770f98aec84c030663861[m
+Author: devangelista2 <davide.evangelista5@unibo.it>
+Date:   Tue Nov 19 12:05:41 2024 +0100
+
+    Done HW3
+
+[33mcommit 25193eedbead6710bb8198845b29d13fb0754e8e[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Davide Evangelista <davide.evangelista5@unibo.it>
+Date:   Tue Nov 5 14:51:40 2024 +0100
+
+    Added README
+
+[33mcommit f9034a8ead70e6e79e2b47a47c5c3b72a93c250e[m
+Author: Davide Evangelista <davide.evangelista5@unibo.it>
+Date:   Tue Nov 5 14:50:20 2024 +0100
+
+    Added README
+
+[33mcommit 916f1a9254a8552f3b81d24a518c10fd4ebe5e0e[m
+Author: Davide Evangelista <davide.evangelista5@unibo.it>
+Date:   Mon Nov 4 20:28:37 2024 +0100
+
+    compiled version
+
+[33mcommit 89edb53c91938ad30f521f6bc37e769d277108d4[m
+Author: Davide Evangelista <davide.evangelista5@unibo.it>
+Date:   Mon Nov 4 20:27:15 2024 +0100
+
+    Done cgls
+
+[33mcommit d742019faf757951dd705c9999034e25b28b0574[m
+Author: Davide Evangelista <davide.evangelista5@unibo.it>
+Date:   Tue Oct 29 12:05:03 2024 +0100
+
+    Added inverse problems library
+
+[33mcommit 6a75b06cb7a68586dcc794ef946ff27a75bf1817[m
+Author: Davide Evangelista <davideevangelista@MacBook-Air-di-Davide.local>
+Date:   Tue Oct 15 09:10:18 2024 +0200
+
+    Almost done with optimization
+
+[33mcommit 9a69715f1e43c5ec11c4184f748a12ccffcbe55e[m
+Author: Davide Evangelista <davideevangelista@MacBook-Air-di-Davide.local>
+Date:   Mon Oct 14 09:36:00 2024 +0200
+
+    Moved esercitazioni into different chapter
+
+[33mcommit c6c5386aa9c81045e1ec8d878aba0c807ebda4ea[m
+Author: Davide Evangelista <davideevangelista@MacBook-Air-di-Davide.local>
+Date:   Sun Oct 13 18:47:16 2024 +0200
+
+    Finished Approssimazione
+
+[33mcommit aa1c1562e52706edb84b26ecf431ad295cb15014[m
+Author: devangelista2 <davide.evangelista5@unibo.it>
+Date:   Sat Oct 12 15:50:22 2024 +0200
+
+    aa
+
+[33mcommit b777d656d187568cb30b14f4edae3fd23664cbce[m
+Author: Davide Evangelista <davideevangelista@MacBook-Air-di-Davide.local>
+Date:   Sat Oct 12 14:53:19 2024 +0200
+
+    Preparing approximation class
+
+[33mcommit 44f8e931804f9755944f15a36c7ff5cbb3aad198[m
+Author: Davide Evangelista <davideevangelista@MacBook-Air-di-Davide.local>
+Date:   Thu Oct 10 09:58:57 2024 +0200
+
+    setup approssimazione
+
+[33mcommit ea6c5dcc6b69e66c186ac1c57856833a022ef186[m
+Author: Davide Evangelista <davideevangelista@MacBook-Air-di-Davide.local>
+Date:   Wed Oct 9 18:22:19 2024 +0200
+
+    begin with optimization
+
+[33mcommit d02ff4ac9e9953bae7243e8cc18726e2eb8bf764[m
+Author: Davide Evangelista <davideevangelista@MacBook-Air-di-Davide.local>
+Date:   Mon Oct 7 15:27:31 2024 +0200
+
+    Fixed visualization error in esercitazione1
+
+[33mcommit e282edb15365025560c6f0956f2fd0abdbf14386[m
+Author: Davide Evangelista <davideevangelista@MacBook-Air-di-Davide.local>
+Date:   Tue Sep 24 11:53:06 2024 +0200
+
+    Lezione 1
+
+[33mcommit de45c01742de620693a5c049beb5587e3a7cbb91[m
+Author: Davide Evangelista <davideevangelista@MacBook-Air-di-Davide.local>
+Date:   Fri Sep 6 18:57:07 2024 +0200
+
+    Added first class
+
+[33mcommit 88ce5c11c7d41b6102a7725cb88fb5bc5aa423b3[m
+Author: Davide Evangelista <79574167+devangelista2@users.noreply.github.com>
+Date:   Mon Sep 2 21:59:17 2024 +0200
+
+    prova1
+
+[33mcommit f19b75c4b54148c3e92cf77dcbd411a501bac4fc[m
+Author: Davide Evangelista <79574167+devangelista2@users.noreply.github.com>
+Date:   Mon Sep 2 21:58:27 2024 +0200
+
+    Initial commit
