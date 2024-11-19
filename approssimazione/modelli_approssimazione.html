@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -214,12 +214,20 @@
 <li class="toctree-l1"><a class="reference internal" href="../ottimizzazione/intro.html">Problemi di Ottimizzazione</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ottimizzazione/GD.html">Metodo di Discesa del Gradiente</a></li>
 
+
+
 <li class="toctree-l1"><a class="reference internal" href="../ottimizzazione/CGLS.html">Metodo dei Gradienti Coniugati</a></li>
+
+
+
+
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Esercitazioni</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../esercitazioni/esercitazione_1.html">Esercitazione: algebra lineare con Python</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../esercitazioni/esercitazione_2.html">Esercitazione: Approssimazione di dati con Minimi Quadrati Regolarizzati</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../esercitazioni/esercitazione_1.html">Esercitazione: Algebra lineare con Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../esercitazioni/esercitazione_2.html">Esercitazione: Zeri di funzione e sistemi lineari</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../esercitazioni/esercitazione_3.html">Esercitazione: Approssimazione di dati e Ottimizzazione</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../esercitazioni/esercitazione_4.html">Esercitazione: Imaging e Problemi Inversi</a></li>
 </ul>
 
     </div>
@@ -598,7 +606,7 @@ E(\alpha, \alpha_{true}) = \frac{|| \alpha - \alpha_{true} ||}{|| \alpha_{true} 
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/0124c32170c12e82c8f13a7e5c6156c11bdef4b582d3d15f7e07470b79720c92.png" src="../_images/0124c32170c12e82c8f13a7e5c6156c11bdef4b582d3d15f7e07470b79720c92.png" />
+<img alt="../_images/4ed7c2f967c1555f473889d0f70c2748001fd4234305ac54a3e3637029fa5ced.png" src="../_images/4ed7c2f967c1555f473889d0f70c2748001fd4234305ac54a3e3637029fa5ced.png" />
 </div>
 </div>
 </section>
@@ -693,7 +701,7 @@ r(\alpha) := || X\alpha - y ||_2^2,
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Residuo: 36.46438622278704.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Residuo: 18.482997072698282.
 </pre></div>
 </div>
 </div>
@@ -799,7 +807,7 @@ X^T X = L L^T.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/9518ab835f85393b882bdb8272aa879f1a83e3e4f3ea3f908d10ef307758f28a.png" src="../_images/9518ab835f85393b882bdb8272aa879f1a83e3e4f3ea3f908d10ef307758f28a.png" />
+<img alt="../_images/8c6fa75aae3aa8b1688b55791a48e72123937048a8990e02a91c19688f7ec517.png" src="../_images/8c6fa75aae3aa8b1688b55791a48e72123937048a8990e02a91c19688f7ec517.png" />
 </div>
 </div>
 <p>E’ abbastanza chiaro che la curva ricostruita non riesce ad approssimare correttamente i dati. Prima di discutere le ragioni e le possibili soluzioni di questo comportamento, vediamo come risolvere in maniera alternativa il problema ai minimi quadrati tramite decomposizione a valori singolari.</p>
@@ -872,7 +880,7 @@ X^T X \alpha = X^T y \iff V \Sigma^2 V^T \alpha = V \Sigma U^T y \iff \Sigma^2 V
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/f4a400f08721c0c0a25b22e2fdceaef4417c07c089d1ddbbb5e321c5eb2a5a51.png" src="../_images/f4a400f08721c0c0a25b22e2fdceaef4417c07c089d1ddbbb5e321c5eb2a5a51.png" />
+<img alt="../_images/69ad529c8fe566a867165d043b8a2a0cba848fcff61f03f17a39576497b1d9eb.png" src="../_images/69ad529c8fe566a867165d043b8a2a0cba848fcff61f03f17a39576497b1d9eb.png" />
 </div>
 </div>
 <p>Le soluzioni <span class="math notranslate nohighlight">\(\alpha_{chol}\)</span> e <span class="math notranslate nohighlight">\(\alpha_{SVD}\)</span> sono, come ci si aspetta, identiche, poiché soluzioni dello stesso problema dei minimi quadrati, che ha soluzione unica.</p>

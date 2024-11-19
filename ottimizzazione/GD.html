@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -217,11 +217,17 @@
 
 
 <li class="toctree-l1"><a class="reference internal" href="CGLS.html">Metodo dei Gradienti Coniugati</a></li>
+
+
+
+
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Esercitazioni</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../esercitazioni/esercitazione_1.html">Esercitazione: algebra lineare con Python</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../esercitazioni/esercitazione_2.html">Esercitazione: Approssimazione di dati con Minimi Quadrati Regolarizzati</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../esercitazioni/esercitazione_1.html">Esercitazione: Algebra lineare con Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../esercitazioni/esercitazione_2.html">Esercitazione: Zeri di funzione e sistemi lineari</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../esercitazioni/esercitazione_3.html">Esercitazione: Approssimazione di dati e Ottimizzazione</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../esercitazioni/esercitazione_4.html">Esercitazione: Imaging e Problemi Inversi</a></li>
 </ul>
 
     </div>
@@ -828,11 +834,11 @@ Errore Relativo della soluzione calcolata: 0.03453.
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Algoritmo terminato in 9 iterazioni.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/5_/jhznq71n5mg661ykhh5bg7nc0000gn/T/ipykernel_77188/3632210909.py:5: RuntimeWarning: overflow encountered in exp
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/5_/jhznq71n5mg661ykhh5bg7nc0000gn/T/ipykernel_1379/3632210909.py:5: RuntimeWarning: overflow encountered in exp
   return (x-1) ** 2 + np.exp(x)
-/var/folders/5_/jhznq71n5mg661ykhh5bg7nc0000gn/T/ipykernel_77188/2071672784.py:2: RuntimeWarning: overflow encountered in exp
+/var/folders/5_/jhznq71n5mg661ykhh5bg7nc0000gn/T/ipykernel_1379/2071672784.py:2: RuntimeWarning: overflow encountered in exp
   return 2*(x-1) + np.exp(x)
-/var/folders/5_/jhznq71n5mg661ykhh5bg7nc0000gn/T/ipykernel_77188/2347787700.py:25: RuntimeWarning: invalid value encountered in scalar subtract
+/var/folders/5_/jhznq71n5mg661ykhh5bg7nc0000gn/T/ipykernel_1379/2347787700.py:25: RuntimeWarning: invalid value encountered in scalar subtract
   x = x0 - alpha * df(x0)
 </pre></div>
 </div>

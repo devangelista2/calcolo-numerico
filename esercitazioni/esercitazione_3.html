@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -57,10 +57,13 @@
     <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'esercitazioni/esercitazione_3';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="Esercitazione: Algebra Lineare" href="esercitazione_2.html" />
+    <link rel="next" title="Esercitazione: Imaging e Problemi Inversi" href="esercitazione_4.html" />
+    <link rel="prev" title="Esercitazione: Zeri di funzione e sistemi lineari" href="esercitazione_2.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -214,12 +217,17 @@
 
 
 <li class="toctree-l1"><a class="reference internal" href="../ottimizzazione/CGLS.html">Metodo dei Gradienti Coniugati</a></li>
+
+
+
+
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Esercitazioni</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="esercitazione_1.html">Esercitazione: algebra lineare con Python</a></li>
-<li class="toctree-l1"><a class="reference internal" href="esercitazione_2.html">Esercitazione: Algebra Lineare</a></li>
+<li class="toctree-l1"><a class="reference internal" href="esercitazione_1.html">Esercitazione: Algebra lineare con Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="esercitazione_2.html">Esercitazione: Zeri di funzione e sistemi lineari</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Esercitazione: Approssimazione di dati e Ottimizzazione</a></li>
+<li class="toctree-l1"><a class="reference internal" href="esercitazione_4.html">Esercitazione: Imaging e Problemi Inversi</a></li>
 </ul>
 
     </div>
@@ -392,7 +400,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -408,6 +418,15 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#approssimazione-di-dati">Approssimazione di dati</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ottimizzazione-con-discesa-gradiente">Ottimizzazione con Discesa Gradiente</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -429,6 +448,110 @@ document.write(`
 </ul>
 <p>Presentarsi all’esame con codice completo ma ancora da eseguire o senza una versione PDF con risultati già presenti, può compromettere la riuscita dell’esame orale.</p>
 </div>
+<section id="approssimazione-di-dati">
+<h2>Approssimazione di dati<a class="headerlink" href="#approssimazione-di-dati" title="Link to this heading">#</a></h2>
+<p>Scaricare tramite Virtuale il file <code class="docutils literal notranslate"><span class="pre">data_hw.csv</span></code>, inserirlo nella cartella del progetto (per esempio, supponiamo di inserirlo nel path <em>relativo</em> <code class="docutils literal notranslate"><span class="pre">./data/data_hw.csv</span></code>), e caricarlo su Python (utilizzando <code class="docutils literal notranslate"><span class="pre">pandas</span></code>).
+Fatto ciò, il dataset si presenterà come un’array composto da 50 righe e 2 colonne. Le due colonne (chiamate <code class="docutils literal notranslate"><span class="pre">x</span></code> e <code class="docutils literal notranslate"><span class="pre">y</span></code>), indicano i valori in <code class="docutils literal notranslate"><span class="pre">x</span></code> e in <code class="docutils literal notranslate"><span class="pre">y</span></code> di una serie di dati (rumorosi) che si vuole analizzare. Sono note due informazioni sui dati in questione:</p>
+<ul class="simple">
+<li><p>La funzione che lega <code class="docutils literal notranslate"><span class="pre">y</span></code> ad <code class="docutils literal notranslate"><span class="pre">x</span></code> è un polinomio di un certo grado <code class="docutils literal notranslate"><span class="pre">d_true</span></code>, il cui valore non è noto.</p></li>
+<li><p>I dati in <code class="docutils literal notranslate"><span class="pre">y</span></code> sono corrotti da del rumore Gaussiano con una certa intensità <code class="docutils literal notranslate"><span class="pre">sigma</span></code>, anch’essa ignota.</p></li>
+</ul>
+<p>In questo esercizione si vuole approssimare <code class="docutils literal notranslate"><span class="pre">y</span></code> il meglio possibile, utilizzando le tecniche di approssimazione dati viste a lezione. Tenendo a mente quanto fatto nella rispettiva lezione,</p>
+<ul>
+<li><p>Visualizzare (tramite un plot) i dati. Stimare (tramite ragionamento) il possibile grado del polinomio che ha generato i dati.</p></li>
+<li><p>Scelta una stima <code class="docutils literal notranslate"><span class="pre">d</span></code> per il grado del polinomio, impostare il problema ai minimi quadrati</p>
+<div class="math notranslate nohighlight">
+\[
+  \min_{\alpha \in \mathbb{R}^{d+1}} || X \alpha - y ||_2^2,
+  \]</div>
+<p>dove <span class="math notranslate nohighlight">\(\alpha \in \mathbb{R}^{d+1}\)</span> rappresenterà (una volta risolto) il vettore dei coefficienti del polinomio, mentre <span class="math notranslate nohighlight">\(X \in \mathbb{R}^{n \times d+1}\)</span> è la matrice di Vandermonde associata ad <span class="math notranslate nohighlight">\(x\)</span>.</p>
+</li>
+<li><p>Risolvere il problema ai minimi quadrati tramite metodo delle Equazioni Normali, utilizzando:</p>
+<ul class="simple">
+<li><p>Il metodo di Cholesky (dopo aver controllato che la matrice ne soddisfa le ipotesi di applicabilità),</p></li>
+<li><p>Soluzione tramite decomposizione SVD,</p></li>
+<li><p>Algoritmo dei Gradienti Coniugati (CGLS).
+Confrontare i tre metodi misurando sia il tempo impiegato, che plottando (sullo stesso plot) i polinomi descritti dalla soluzione dei tre metodi, commentando su quale (a occhio) approssima meglio i dati.</p></li>
+</ul>
+</li>
+<li><p>Ripetere l’esperimento sopra variando il grado <code class="docutils literal notranslate"><span class="pre">d</span></code> del polinomio approssimante in <span class="math notranslate nohighlight">\(\{ 0, 1, 2, 3, \dots, 8 \}\)</span>. Per quale scelta di <code class="docutils literal notranslate"><span class="pre">d</span></code> il polinomio approssimante meglio approssima i dati?</p></li>
+<li><p>Per <code class="docutils literal notranslate"><span class="pre">d</span></code> = 6, impostare il problema ai minimi quadrati regolarizzato con Tikhonov,</p>
+<div class="math notranslate nohighlight">
+\[
+  \min_{\alpha \in \mathbb{R}^{d+1}} \frac{1}{2}|| X \alpha - y ||_2^2 + \frac{\lambda}{2} || Lx ||_2^2,
+  \]</div>
+<p>con <span class="math notranslate nohighlight">\(L\)</span> matrice identità, e <span class="math notranslate nohighlight">\(\lambda &gt; 0\)</span> parametro di regolarizzazione.</p>
+</li>
+<li><p>Risolvere il problema ai minimi quadrati regolarizzato con Tikhonov utilizzando:</p>
+<ul class="simple">
+<li><p>Il metodo di Cholesky (dopo aver controllato che la matrice ne soddisfa le ipotesi di applicabilità),</p></li>
+<li><p>Soluzione tramite decomposizione SVD,</p></li>
+<li><p>Algoritmo dei Gradienti Coniugati (CGLS).
+Visualizzare le soluzioni ottenute sul grafico al variare della scelta del parametro <span class="math notranslate nohighlight">\(\lambda &gt; 0\)</span>. Per quale valore di <span class="math notranslate nohighlight">\(\lambda\)</span> il polinomio approssimante meglio approssima i dati?</p></li>
+</ul>
+</li>
+<li><p>Ripetere l’esperimento sopra variando il grado <code class="docutils literal notranslate"><span class="pre">d</span></code> del polinomio approssimante.</p></li>
+<li><p>Ripetere l’esperimento sopra utilizzando come matrice di Tikhonov <span class="math notranslate nohighlight">\(L\)</span> la matrice:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  L = \begin{bmatrix} 
+        1 &amp; -1 &amp; 0 &amp; 0 &amp; \dots &amp; 0 \\
+        0 &amp; 1 &amp; -1 &amp; 0 &amp; \dots &amp; 0 \\ 
+        0 &amp; 0 &amp; 1 &amp; -1 &amp; \dots &amp; 0 \\ 
+        0 &amp; 0 &amp; 0 &amp; 1 &amp; \dots &amp; 0 \\ 
+        \vdots &amp; \vdots &amp; \vdots &amp; \vdots &amp; \vdots &amp; \vdots \\ 
+        0 &amp; 0 &amp; 0 &amp; 0 &amp; \dots &amp; -1 \\ 
+        0 &amp; 0 &amp; 0 &amp; 0 &amp; \dots &amp; 1 \\ 
+      \end{bmatrix},
+  \end{split}\]</div>
+<p>ovvero la matrice (di dimensione <span class="math notranslate nohighlight">\(n \times n\)</span>, dove <span class="math notranslate nohighlight">\(n\)</span> è uguale al numero di elementi di <span class="math notranslate nohighlight">\(x\)</span>), che ha tutti valori <span class="math notranslate nohighlight">\(1\)</span> sulla diagonale, e valori <span class="math notranslate nohighlight">\(-1\)</span> sulla sovra-diagonale. Come cambiano i risultati precedenti per questa scelta di <span class="math notranslate nohighlight">\(L\)</span>?</p>
+</li>
+<li><p>Sapendo ora che <code class="docutils literal notranslate"><span class="pre">d_true</span></code> = 4 e <code class="docutils literal notranslate"><span class="pre">alpha_true</span> <span class="pre">=</span> <span class="pre">np.array([0,</span> <span class="pre">1,</span> <span class="pre">6,</span> <span class="pre">0,</span> <span class="pre">-3])</span></code>, misurare (per <strong>alcuni</strong> degli esperimenti fatti sopra (i più promettenti)) l’errore relativo tra il valore di <code class="docutils literal notranslate"><span class="pre">alpha</span></code> calcolato e <code class="docutils literal notranslate"><span class="pre">alpha_true</span></code>, e confrontare visivamente su grafico i polinomi approssimanti rispetto al polinomio reale (senza rumore) ottenuto tramite <code class="docutils literal notranslate"><span class="pre">alpha_true</span></code>. Commentare i risultati ottenuti.</p></li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>L’errore relativo tra <code class="docutils literal notranslate"><span class="pre">alpha</span></code> e <code class="docutils literal notranslate"><span class="pre">alpha_true</span></code> può ovviamente essere calcolato <strong>solo</strong> nel caso in cui il grado <code class="docutils literal notranslate"><span class="pre">d</span></code> del polinomio approssimante sia uguale a 4. In tutti gli altri casi, limitarsi ad un confronto visivo sul grafico.</p>
+</div>
+</section>
+<section id="ottimizzazione-con-discesa-gradiente">
+<h2>Ottimizzazione con Discesa Gradiente<a class="headerlink" href="#ottimizzazione-con-discesa-gradiente" title="Link to this heading">#</a></h2>
+<p>Utilizzando il metodo di Discesa del Gradiente (GD) visto a lezione, risolvere il problema di minimo:</p>
+<div class="math notranslate nohighlight">
+\[
+\min_{x \in \mathbb{R}^n} f(x),
+\]</div>
+<p>per le seguenti funzioni <span class="math notranslate nohighlight">\(f(x)\)</span>:</p>
+<ol class="arabic">
+<li><p><span class="math notranslate nohighlight">\(f: \mathbb{R}^2 \to \mathbb{R}\)</span> tale che:</p>
+<div class="math notranslate nohighlight">
+\[
+   f(x_1, x_2) = (x_1 - 3)^2 + (x_2 - 1)^2,
+   \]</div>
+<p>con soluzione esatta <span class="math notranslate nohighlight">\(x_{true} = (3, 1)\)</span>.</p>
+</li>
+<li><p><span class="math notranslate nohighlight">\(f: \mathbb{R}^2 \to \mathbb{R}\)</span> tale che:</p>
+<div class="math notranslate nohighlight">
+\[
+   f(x_1, x_2) = 10(x_1 - 1)^2 + (x_2 - 2)^2,
+   \]</div>
+<p>con soluzione esatta <span class="math notranslate nohighlight">\(x_{true} = (1, 2)\)</span>.</p>
+</li>
+<li><p><span class="math notranslate nohighlight">\(f: \mathbb{R} \to \mathbb{R}\)</span> tale che:</p>
+<div class="math notranslate nohighlight">
+\[
+   f(x) = x^4 + x^3 - 2x^2 - 2x,
+   \]</div>
+<p>con soluzione esatta <span class="math notranslate nohighlight">\(x_{true} = 0.92222\)</span>.</p>
+</li>
+</ol>
+<ul class="simple">
+<li><p>Per ognuna delle funzioni sopra, utilizzare sia il metodo GD con passo fisso sia utilizzando backtracking, provando vari valori del passo <span class="math notranslate nohighlight">\(\alpha &gt; 0\)</span> nel caso in cui non si utilizzi backtracking. Utilizza <code class="docutils literal notranslate"><span class="pre">maxit</span></code> = 100, <code class="docutils literal notranslate"><span class="pre">tolf</span></code> = <code class="docutils literal notranslate"><span class="pre">tolx</span></code> = <code class="docutils literal notranslate"><span class="pre">1e-6</span></code>. Per le funzioni 1. e 2., scegliere <code class="docutils literal notranslate"><span class="pre">x0</span></code> come vettore di zeri. Confrontare le soluzioni ottenute con e senza backtracking in termini di tempo di esecuzione e velocità di convergenza (misurata in termini di numero di iterazioni richieste per convergere).</p></li>
+<li><p>Visualizzare su un grafico il valore di <span class="math notranslate nohighlight">\(|| \nabla f(x_k) ||_2\)</span> sia per la soluzione con backtracking sia per alcuni valori di <span class="math notranslate nohighlight">\(\alpha\)</span>, e commenta su quale metodo performa meglio e perché. La soluzione con backtracking è <em>sempre</em> più veloce di quella con passo fisso?</p></li>
+<li><p>Visualizzare su un grafico il valore dell’errore relativo <span class="math notranslate nohighlight">\(RE(x_{true}, x_k)\)</span> sia per la soluzione con backtracking sia per alcuni valori di <span class="math notranslate nohighlight">\(\alpha\)</span>, e commenta i risultati ottenuti.</p></li>
+<li><p>Fare un plot della funzione 3. nell’intervallo <span class="math notranslate nohighlight">\([-3, 3]\)</span>, cosa osservi? Provare ad eseguire il metodo GD con e senza backtracking variando il valore di <code class="docutils literal notranslate"><span class="pre">x0</span></code>. Cosa osservi?</p></li>
+<li><p><em>Opzionale (Diffile)</em>: Fare un contour plot delle funzioni 1. e 2. (vedi documentazione per <code class="docutils literal notranslate"><span class="pre">plt.contour</span></code>) e visualizza, sullo stesso grafico, il percorso generato dall’algoritmo GD. In particolare, rappresentare sul grafico bi-dimensionale la posizione di tutti gli iterati <span class="math notranslate nohighlight">\(x_k\)</span>  dell’algoritmo GD, collegati da un segmento, così da controllare il diverso comportamento di GD quando si utilizza o meno il backtracking.</p></li>
+</ul>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -467,8 +590,17 @@ document.write(`
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Esercitazione: Algebra Lineare</p>
+        <p class="prev-next-title">Esercitazione: Zeri di funzione e sistemi lineari</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="esercitazione_4.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Esercitazione: Imaging e Problemi Inversi</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
@@ -476,6 +608,22 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#approssimazione-di-dati">Approssimazione di dati</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ottimizzazione-con-discesa-gradiente">Ottimizzazione con Discesa Gradiente</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

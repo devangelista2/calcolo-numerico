@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -213,12 +213,21 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../ottimizzazione/intro.html">Problemi di Ottimizzazione</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ottimizzazione/GD.html">Metodo di Discesa del Gradiente</a></li>
+
+
+
 <li class="toctree-l1"><a class="reference internal" href="../ottimizzazione/CGLS.html">Metodo dei Gradienti Coniugati</a></li>
+
+
+
+
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Esercitazioni</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../esercitazioni/esercitazione_1.html">Esercitazione: algebra lineare con Python</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../esercitazioni/esercitazione_2.html">Esercitazione: Approssimazione di dati con Minimi Quadrati Regolarizzati</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../esercitazioni/esercitazione_1.html">Esercitazione: Algebra lineare con Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../esercitazioni/esercitazione_2.html">Esercitazione: Zeri di funzione e sistemi lineari</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../esercitazioni/esercitazione_3.html">Esercitazione: Approssimazione di dati e Ottimizzazione</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../esercitazioni/esercitazione_4.html">Esercitazione: Imaging e Problemi Inversi</a></li>
 </ul>
 
     </div>
@@ -532,7 +541,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/aa86ef6453d1821af1c43bdafea9318a24270c183bf81c5361f736c838f36a8a.png" src="../_images/aa86ef6453d1821af1c43bdafea9318a24270c183bf81c5361f736c838f36a8a.png" />
+<img alt="../_images/d9f5bd52ba3c0e877e31d91dcd77bbcab447e4e0935c8c98629e99e701cec70d.png" src="../_images/d9f5bd52ba3c0e877e31d91dcd77bbcab447e4e0935c8c98629e99e701cec70d.png" />
 </div>
 </div>
 </section>
@@ -561,12 +570,12 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Residuo per d = 0: 15.226258219028505.
-Residuo per d = 1: 2.0446252514250354.
-Residuo per d = 2: 0.3789625593465004.
-Residuo per d = 3: 0.18084065682790015.
-Residuo per d = 4: 0.18081400297500388.
-Residuo per d = 5: 0.1760406591381283.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Residuo per d = 0: 11.129715649628796.
+Residuo per d = 1: 0.6966655288217509.
+Residuo per d = 2: 0.14183253721679662.
+Residuo per d = 3: 0.11095505687709191.
+Residuo per d = 4: 0.09488396922543249.
+Residuo per d = 5: 0.07877346130984002.
 </pre></div>
 </div>
 </div>
@@ -665,7 +674,7 @@ X^T X \alpha - X^T y + \lambda \alpha = 0,
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/25a0dd6808aa0f5bceb43c381f586d755e57b18fc1c7d9a120393a94e5ad9516.png" src="../_images/25a0dd6808aa0f5bceb43c381f586d755e57b18fc1c7d9a120393a94e5ad9516.png" />
+<img alt="../_images/7b2e65bde7a6cd34486ba2372bcef4d616b62f3b801427214dd8f3880e85d89a.png" src="../_images/7b2e65bde7a6cd34486ba2372bcef4d616b62f3b801427214dd8f3880e85d89a.png" />
 </div>
 </div>
 <p>E’ dunque abbastanza palese come, per valori relativamente piccoli di <span class="math notranslate nohighlight">\(\lambda\)</span>, la soluzione ottenuta è molto migliore di quella che avevamo visto nel caso precedente in cui non era presente il termine di regolarizzazione, e come questo metodo permette di ottenere un buon modello approssimante anche senza stimare in maniera precisa il grado <em>corretto</em> del polinomio.</p>

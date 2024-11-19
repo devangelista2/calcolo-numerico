@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -478,7 +478,7 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <img alt="../../_images/eae69cd3e8a70224e4c1d0b5adaf5ae438365900592d3d9bc4b96ec50c71440f.png" src="../../_images/eae69cd3e8a70224e4c1d0b5adaf5ae438365900592d3d9bc4b96ec50c71440f.png" />
-<img alt="../../_images/9371b8c04e74e4cc9e715dbb2d7494188e3a715ae1683c17a637c5d88e7ee901.png" src="../../_images/9371b8c04e74e4cc9e715dbb2d7494188e3a715ae1683c17a637c5d88e7ee901.png" />
+<img alt="../../_images/03340e0fdb134778e00b5540082248c79835287cbd58a609991cf7478b801d79.png" src="../../_images/03340e0fdb134778e00b5540082248c79835287cbd58a609991cf7478b801d79.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -516,7 +516,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/2912143ed930511d891fff04a9ceed1a45cf337b6286466b4ddb6923a9d59d6d.png" src="../../_images/2912143ed930511d891fff04a9ceed1a45cf337b6286466b4ddb6923a9d59d6d.png" />
+<img alt="../../_images/9037535c0772c85ade81c2605e788229ebba6d94506c3b1d056aa1be49502064.png" src="../../_images/9037535c0772c85ade81c2605e788229ebba6d94506c3b1d056aa1be49502064.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -567,7 +567,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/7d33866823d7cba7ff8f0d6d72b4635092fc7d414b0a5644b1b934f888900360.png" src="../../_images/7d33866823d7cba7ff8f0d6d72b4635092fc7d414b0a5644b1b934f888900360.png" />
+<img alt="../../_images/ea8a9898c5f7d7131986578b8db76aef5610ebb6c317bacb4ad9489832bc0f27.png" src="../../_images/ea8a9898c5f7d7131986578b8db76aef5610ebb6c317bacb4ad9489832bc0f27.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -618,7 +618,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/4044865ad57929391ad02aa4e19c70ca1f69df17589e5986123ce547b6d3c7f2.png" src="../../_images/4044865ad57929391ad02aa4e19c70ca1f69df17589e5986123ce547b6d3c7f2.png" />
+<img alt="../../_images/7be8c7f5d661bc90af95b92bbfda1345abff885d6e0f1fd61e7581354304580b.png" src="../../_images/7be8c7f5d661bc90af95b92bbfda1345abff885d6e0f1fd61e7581354304580b.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -671,33 +671,19 @@ document.write(`
 <span class="g g-Whitespace">     </span><span class="mi">19</span> <span class="c1"># Visualizzazione ricostruzione</span>
 <span class="g g-Whitespace">     </span><span class="mi">20</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
 
-<span class="nn">File ~/calcolo-numerico/Lezioni/InverseProblems/ProblemiInversi/solvers.py:153,</span> in <span class="ni">GDTotalVariation.solve</span><span class="nt">(self, y, lmbda, x0, kmax, tolf, tolx)</span>
-<span class="g g-Whitespace">    </span><span class="mi">150</span> <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">grad_f</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">lmbda</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">152</span> <span class="c1"># Scelta di alpha_k con backtracking</span>
-<span class="ne">--&gt; </span><span class="mi">153</span> <span class="n">alpha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">backtracking</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">lmbda</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">155</span> <span class="c1"># Aggiornamento x_{k+1} = x_k - alpha_k df(x_k)</span>
-<span class="g g-Whitespace">    </span><span class="mi">156</span> <span class="n">x</span> <span class="o">=</span> <span class="n">x0</span> <span class="o">-</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">df</span>
+<span class="nn">File ~/calcolo-numerico/Lezioni/InverseProblems/ProblemiInversi/solvers.py:150,</span> in <span class="ni">GDTotalVariation.solve</span><span class="nt">(self, y, lmbda, x0, kmax, tolf, tolx)</span>
+<span class="g g-Whitespace">    </span><span class="mi">147</span> <span class="n">condizione</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="g g-Whitespace">    </span><span class="mi">148</span> <span class="k">while</span> <span class="n">condizione</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">149</span>     <span class="c1"># Calcolo gradiente</span>
+<span class="ne">--&gt; </span><span class="mi">150</span>     <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">grad_f</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">lmbda</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">152</span>     <span class="c1"># Scelta di alpha_k con backtracking</span>
+<span class="g g-Whitespace">    </span><span class="mi">153</span>     <span class="n">alpha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">backtracking</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">lmbda</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
-<span class="nn">File ~/calcolo-numerico/Lezioni/InverseProblems/ProblemiInversi/solvers.py:244,</span> in <span class="ni">GDTotalVariation.backtracking</span><span class="nt">(self, df, x, y, lmbda, alpha, rho, c)</span>
-<span class="g g-Whitespace">    </span><span class="mi">230</span> <span class="k">def</span> <span class="nf">backtracking</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">lmbda</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">rho</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">231</span><span class="w">     </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="g g-Whitespace">    </span><span class="mi">232</span><span class="sd">     Algoritmo di backtracking per Discesa Gradiente.</span>
-<span class="g g-Whitespace">    </span><span class="mi">233</span><span class="sd"> </span>
-<span class="sd">   (...)</span>
-<span class="g g-Whitespace">    </span><span class="mi">241</span><span class="sd">     alpha   : Learning rate calcolato con backtracking.</span>
-<span class="g g-Whitespace">    </span><span class="mi">242</span><span class="sd">     &quot;&quot;&quot;</span>
-<span class="g g-Whitespace">    </span><span class="mi">243</span>     <span class="k">while</span> <span class="p">(</span>
-<span class="ne">--&gt; </span><span class="mi">244</span>         <span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">df</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">lmbda</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">245</span>         <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">lmbda</span><span class="p">)</span> <span class="o">+</span> <span class="n">c</span> <span class="o">*</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">df</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
-<span class="g g-Whitespace">    </span><span class="mi">246</span>     <span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">247</span>         <span class="n">alpha</span> <span class="o">*=</span> <span class="n">rho</span>
-<span class="g g-Whitespace">    </span><span class="mi">249</span>         <span class="k">if</span> <span class="n">alpha</span> <span class="o">&lt;</span> <span class="mf">1e-6</span><span class="p">:</span>
-
-<span class="nn">File ~/calcolo-numerico/Lezioni/InverseProblems/ProblemiInversi/solvers.py:185,</span> in <span class="ni">GDTotalVariation.f</span><span class="nt">(self, x, y, lmbda)</span>
-<span class="g g-Whitespace">    </span><span class="mi">184</span> <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">lmbda</span><span class="p">):</span>
-<span class="ne">--&gt; </span><span class="mi">185</span>     <span class="n">J</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">A</span> <span class="o">@</span> <span class="n">x</span> <span class="o">-</span> <span class="n">y</span><span class="p">))</span>
-<span class="g g-Whitespace">    </span><span class="mi">186</span>     <span class="n">R</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">TV_beta</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">188</span>     <span class="k">return</span> <span class="n">J</span> <span class="o">+</span> <span class="n">lmbda</span> <span class="o">*</span> <span class="n">R</span>
+<span class="nn">File ~/calcolo-numerico/Lezioni/InverseProblems/ProblemiInversi/solvers.py:195,</span> in <span class="ni">GDTotalVariation.grad_f</span><span class="nt">(self, x, y, lmbda)</span>
+<span class="g g-Whitespace">    </span><span class="mi">194</span> <span class="k">def</span> <span class="nf">grad_f</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">lmbda</span><span class="p">):</span>
+<span class="ne">--&gt; </span><span class="mi">195</span>     <span class="n">grad_J</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">A</span> <span class="o">@</span> <span class="n">x</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">196</span>     <span class="n">grad_R</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">grad_TV_beta</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">198</span>     <span class="k">return</span> <span class="n">grad_J</span> <span class="o">+</span> <span class="n">lmbda</span> <span class="o">*</span> <span class="n">grad_R</span>
 
 <span class="nn">File ~/calcolo-numerico/Lezioni/InverseProblems/ProblemiInversi/operators.py:14,</span> in <span class="ni">Operator.__matmul__</span><span class="nt">(self, x)</span>
 <span class="g g-Whitespace">     </span><span class="mi">13</span> <span class="k">def</span> <span class="fm">__matmul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
@@ -740,12 +726,12 @@ document.write(`
 <span class="ne">--&gt; </span><span class="mi">215</span> <span class="n">output</span> <span class="o">=</span> <span class="n">_raw_fft</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">inv_norm</span><span class="p">)</span>
 <span class="g g-Whitespace">    </span><span class="mi">216</span> <span class="k">return</span> <span class="n">output</span>
 
-<span class="nn">File /opt/anaconda3/envs/teaching/lib/python3.12/site-packages/numpy/fft/_pocketfft.py:70,</span> in <span class="ni">_raw_fft</span><span class="nt">(a, n, axis, is_real, is_forward, inv_norm)</span>
-<span class="g g-Whitespace">     </span><span class="mi">67</span>         <span class="n">a</span> <span class="o">=</span> <span class="n">z</span>
-<span class="g g-Whitespace">     </span><span class="mi">69</span> <span class="k">if</span> <span class="n">axis</span> <span class="o">==</span> <span class="n">a</span><span class="o">.</span><span class="n">ndim</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span>
-<span class="ne">---&gt; </span><span class="mi">70</span>     <span class="n">r</span> <span class="o">=</span> <span class="n">pfi</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">is_real</span><span class="p">,</span> <span class="n">is_forward</span><span class="p">,</span> <span class="n">fct</span><span class="p">)</span>
+<span class="nn">File /opt/anaconda3/envs/teaching/lib/python3.12/site-packages/numpy/fft/_pocketfft.py:73,</span> in <span class="ni">_raw_fft</span><span class="nt">(a, n, axis, is_real, is_forward, inv_norm)</span>
 <span class="g g-Whitespace">     </span><span class="mi">71</span> <span class="k">else</span><span class="p">:</span>
 <span class="g g-Whitespace">     </span><span class="mi">72</span>     <span class="n">a</span> <span class="o">=</span> <span class="n">swapaxes</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="ne">---&gt; </span><span class="mi">73</span>     <span class="n">r</span> <span class="o">=</span> <span class="n">pfi</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">is_real</span><span class="p">,</span> <span class="n">is_forward</span><span class="p">,</span> <span class="n">fct</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">74</span>     <span class="n">r</span> <span class="o">=</span> <span class="n">swapaxes</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">75</span> <span class="k">return</span> <span class="n">r</span>
 
 <span class="ne">KeyboardInterrupt</span>: 
 </pre></div>

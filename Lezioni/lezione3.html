@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -192,7 +192,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../intro/errori.html">Gestione degli errori su Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../intro/numpy.html">Python per l’algebra lineare: <code class="docutils literal notranslate"><span class="pre">numpy</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../intro/matplotlib.html">Visualizzazione con <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../intro/esercitazione.html">Esercitazione: algebra lineare con Python</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Approssimazione di dati</span></p>
 <ul class="nav bd-sidenav">
@@ -202,13 +201,31 @@
 <li class="toctree-l1"><a class="reference internal" href="../approssimazione/modelli_approssimazione.html">Modelli di Approssimazione e Minimi Quadrati</a></li>
 
 
+
 <li class="toctree-l1"><a class="reference internal" href="../approssimazione/overfit_underfit_regolarizzazione.html">Underfit, Overfit e Regolarizzazione</a></li>
+
+
+
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Ottimizzazione</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../ottimizzazione/intro.html">Problemi di Ottimizzazione</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ottimizzazione/GD.html">Metodo di Discesa del Gradiente</a></li>
+
+
+
 <li class="toctree-l1"><a class="reference internal" href="../ottimizzazione/CGLS.html">Metodo dei Gradienti Coniugati</a></li>
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Esercitazioni</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../esercitazioni/esercitazione_1.html">Esercitazione: Algebra lineare con Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../esercitazioni/esercitazione_2.html">Esercitazione: Zeri di funzione e sistemi lineari</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../esercitazioni/esercitazione_3.html">Esercitazione: Approssimazione di dati e Ottimizzazione</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../esercitazioni/esercitazione_4.html">Esercitazione: Imaging e Problemi Inversi</a></li>
 </ul>
 
     </div>
@@ -440,7 +457,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;esempio.txt&#39;]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;esempio.txt&#39;, &#39;day_wise.csv&#39;, &#39;data_hw.csv&#39;]
 </pre></div>
 </div>
 </div>
@@ -649,10 +666,10 @@ float32
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 1.50822019 -1.11149352]
- [-0.17095825 -0.67213603]]
-[[0.45984698 0.12219051]
- [0.29291164 0.85978626]]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[-1.55088753 -0.8810344 ]
+ [ 0.18119844 -0.5942623 ]]
+[[0.65768987 0.09456384]
+ [0.81680856 0.73217574]]
 </pre></div>
 </div>
 </div>
@@ -784,12 +801,12 @@ Divisione: [ 1.  -0.5  0. ].
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.97121602 0.69630072 0.43457467 0.89563939 0.25081943]
-[0.94780067 0.51778791 0.3595959  0.94261772 0.36898935]
-[0.53404145 0.20408125 0.80521689 0.91252763 0.52692436]
-[ True  True  True False False]
-[ True  True False  True False]
-[ True  True False False False]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.68216746 0.24079195 0.11525857 0.13800266 0.34760195]
+[0.77761393 0.43743837 0.13780199 0.42225251 0.11687666]
+[0.02186662 0.72493175 0.22141061 0.2289169  0.65970736]
+[False False False False  True]
+[ True False False  True False]
+[False False False False False]
 </pre></div>
 </div>
 </div>
@@ -826,8 +843,8 @@ Divisione: [ 1.  -0.5  0. ].
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[-0.74503243 -0.63255593  1.39757868  0.53921558  0.5495918 ]
-[-0.74503243 -0.63255593]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[ 1.49209062  2.19010805 -0.15253686 -0.75753358  0.57432696]
+[-0.15253686 -0.75753358]
 </pre></div>
 </div>
 </div>
@@ -886,11 +903,11 @@ Divisione: [ 1.  -0.5  0. ].
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Tempo impiegato con Python modo 1: 1.0188028812408447s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Tempo impiegato con Python modo 1: 1.3553111553192139s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Tempo impiegato con Python modo 2: 0.6222410202026367s
-Tempo impiegato con Numpy: 0.011337995529174805s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Tempo impiegato con Python modo 2: 0.6300599575042725s
+Tempo impiegato con Numpy: 0.011284112930297852s
 </pre></div>
 </div>
 </div>
