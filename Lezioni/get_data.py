@@ -14,7 +14,7 @@ a, b = 0, 1
 sigma = 0.2
 
 x = np.linspace(a, b, 50)
-alpha_true = np.array([0, 1, 6, 0, -3])
+alpha_true = np.array([0, 0, 4, 0, -3])
 
 y = f(x, alpha_true)
 y_delta = y + sigma * np.random.normal(0, 1, y.shape)
