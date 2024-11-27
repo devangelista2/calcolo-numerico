@@ -19,12 +19,12 @@ alpha_true = np.array([0, 0, 4, 0, -3])
 y = f(x, alpha_true)
 y_delta = y + sigma * np.random.normal(0, 1, y.shape)
 
-data = np.array([x, y])
+data = np.array([x, y_delta])
 df = pd.DataFrame(
     data.T,
     columns=("x", "y"),
 )
-df.to_csv("data_hw.csv")
+df.to_csv("./Lezioni/data/data_hw.csv")
 
 
 # SOLUZIONE
