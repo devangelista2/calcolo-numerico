@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -834,11 +834,11 @@ Errore Relativo della soluzione calcolata: 0.03453.
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Algoritmo terminato in 9 iterazioni.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/5_/jhznq71n5mg661ykhh5bg7nc0000gn/T/ipykernel_1379/3632210909.py:5: RuntimeWarning: overflow encountered in exp
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/5_/jhznq71n5mg661ykhh5bg7nc0000gn/T/ipykernel_34444/3632210909.py:5: RuntimeWarning: overflow encountered in exp
   return (x-1) ** 2 + np.exp(x)
-/var/folders/5_/jhznq71n5mg661ykhh5bg7nc0000gn/T/ipykernel_1379/2071672784.py:2: RuntimeWarning: overflow encountered in exp
+/var/folders/5_/jhznq71n5mg661ykhh5bg7nc0000gn/T/ipykernel_34444/2071672784.py:2: RuntimeWarning: overflow encountered in exp
   return 2*(x-1) + np.exp(x)
-/var/folders/5_/jhznq71n5mg661ykhh5bg7nc0000gn/T/ipykernel_1379/2347787700.py:25: RuntimeWarning: invalid value encountered in scalar subtract
+/var/folders/5_/jhznq71n5mg661ykhh5bg7nc0000gn/T/ipykernel_34444/2347787700.py:25: RuntimeWarning: invalid value encountered in scalar subtract
   x = x0 - alpha * df(x0)
 </pre></div>
 </div>
@@ -887,7 +887,7 @@ Errore Relativo della soluzione calcolata: 0.03453.
 <span class="sd">    Returns:</span>
 <span class="sd">    alpha   : Learning rate calcolato con backtracking.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">while</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">df</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="o">&gt;</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">c</span> <span class="o">*</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">df</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span><span class="p">:</span>
+    <span class="k">while</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">df</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="o">&gt;</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="n">c</span> <span class="o">*</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">df</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span><span class="p">:</span>
         <span class="n">alpha</span> <span class="o">*=</span> <span class="n">rho</span>
     <span class="k">return</span> <span class="n">alpha</span>
 </pre></div>
